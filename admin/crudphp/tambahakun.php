@@ -472,7 +472,7 @@
     <div class="form-group mt-2">
 
 <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
-    Tambah
+    Simpan
 </button>
 </div>
 </div>
