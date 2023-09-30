@@ -22,6 +22,30 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  @keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+
+  }
+
+
+}
+#navAkunAdmin, #navAkunMentor, #navAkunPengguna {
+  margin-left: 10px;
+}
+
+.nav-item.slide-down {
+  animation: slideDown 0.5s ease;
+}
+
+</style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -57,7 +81,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  active" href="../pages/tables.html">
+          <a class="nav-link active" href="#">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -74,6 +98,69 @@
               </svg>
             </div>
             <span class="nav-link-text ms-1">Daftar Akun</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navAkunAdmin">
+          <a class="nav-link active " href="#">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Akun Admin</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navAkunMentor">
+          <a class="nav-link  " href="../pages/akunMentor.php">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Akun Mentor</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navAkunPengguna">
+          <a class="nav-link  " href="../pages/akunPengguna.php">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Akun pengguna</span>
           </a>
         </li>
         <li class="nav-item">
@@ -93,6 +180,7 @@
                 </g>
               </svg>
             </div>
+            
             <span class="nav-link-text ms-1">Course</span>
           </a>
         </li>
@@ -834,6 +922,9 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+
+
+
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -846,6 +937,23 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+
+
+
+    $(document).ready(function(){
+  // $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
+  // $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
+  // $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
+
+  $(".nav-link.active").click(function(){
+    $("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+    $("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+    $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+  });
+});
+
+
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

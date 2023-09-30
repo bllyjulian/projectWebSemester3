@@ -22,6 +22,30 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+  @keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+
+  }
+
+
+}
+#navAkunAdmin, #navAkunMentor, #navAkunPengguna {
+  margin-left: 15px;
+}
+
+.nav-item.slide-down {
+  animation: slideDown 0.5s ease;
+}
+
+</style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -37,7 +61,7 @@
     <div class="collapse navbar-collapse h-100  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  active" href="../pages/dashboard.html">
+          <a class="nav-link  active" href="#">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>shop </title>
@@ -57,7 +81,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/akun.php">
+          <a class="nav-link active1" href="#" id="daftarAkun">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -76,6 +100,89 @@
             <span class="nav-link-text ms-1">Daftar Akun</span>
           </a>
         </li>
+        <li class="nav-item" id="navAkunAdmin" style="display: none;">
+          <a class="nav-link  " href="../pages/akunAdmin.php">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Akun Admin</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navAkunMentor" style="display: none;">
+          <a class="nav-link  " href="../pages/billing.html">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Akun Mentor</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navAkunPengguna" style="display: none;">
+          <a class="nav-link  " href="../pages/billing.html">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Akun pengguna</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  " href="../pages/billing.html">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <span class="nav-link-text ms-1">Course</span>
+          </a>
         <li class="nav-item">
           <a class="nav-link  " href="../pages/billing.html">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -206,22 +313,7 @@
         </li>
       </ul>
     </div>
-    <!-- <div class="sidenav-footer mx-3 ">
-      <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
-        <div class="full-background" style="background-image: url('../assets/img/curved-images/white-curved.jpg')"></div>
-        <div class="card-body text-start p-3 w-100">
-          <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
-            <i class="ni ni-diamond text-dark text-gradient text-lg top-0" aria-hidden="true" id="sidenavCardIcon"></i>
-          </div>
-          <div class="docs-info">
-            <h6 class="text-white up mb-0">Need help?</h6>
-            <p class="text-xs font-weight-bold">Please check our docs</p>
-            <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard" target="_blank" class="btn btn-white btn-sm w-100 mb-0">Documentation</a>
-          </div>
-        </div>
-      </div>
-      <a class="btn bg-gradient-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Upgrade to pro</a>
-    </div> -->
+
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -1244,6 +1336,18 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    $(document).ready(function(){
+  $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
+  $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
+  $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
+
+  $(".nav-link.active1").click(function(){
+    $("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+    $("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+    $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+  });
+});
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
