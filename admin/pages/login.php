@@ -148,9 +148,6 @@
               </div>
               <div class="card-body">
                 <form role="form text-left" method="post" action="../crudphp/proses.php?aksi=login" id="formlogin">
-                  <!-- <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="email-addon">
-                  </div> -->
                   <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
                   </div>

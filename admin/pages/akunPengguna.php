@@ -418,7 +418,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Tabel Akun</h6>
+              <h6>Akun Pengguna</h6>
               <button class="btn bg-gradient-success w-10 px-3 mb-2 active"><a href="../crudphp/tambahakun.php">Tambah</a></button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">

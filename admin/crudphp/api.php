@@ -1,5 +1,4 @@
 <?php
-// Koneksi ke database
 $conn = mysqli_connect("localhost", "root", "", "codingcamp");
 
 // Cek koneksi

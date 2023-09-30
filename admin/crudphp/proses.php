@@ -34,7 +34,6 @@
         $status = $_POST["status"];
         $id_lvl = $_POST["hak_akses"];
     
-        // Buat array data
         $data = array(
             $username,
             $nama_lengkap,
@@ -95,7 +94,7 @@
             echo "<script>window.location='index.php';</script>";
         }
     }
-
+ 
     if(!empty($_GET['aksi'] == 'logout'))
     {
         session_destroy();
