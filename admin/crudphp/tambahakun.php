@@ -328,43 +328,78 @@
     <div class="container-fluid py-4">
     <main class="main-content  mt-0">
     <section class="min-vh-100 card mb-4">
-      <div class="container p-5">
+
+    <div class="container p-3">
       <div class="card-body w-100">
-                <form role="form text-left" method="post" action="../crudphp/proses.php?aksi=login" id="formlogin">
-                  <div class="mb-3">
-                    <Label class="text-lg font-weight-bold">Masukkan Username</Label>
-                    <input style="height: 45px;" type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
-                  </div>
-                  <div class="mb-3">
-                  <Label class="text-lg font-weight-bold">Masukkan Password</Label>
-                    <input style="height: 45px;" type="password" class="form-control" placeholder="Masukkan Password" aria-label="Password" aria-describedby="password-addon" name="pass" required="required" autocomplete="off">
-                  </div>
-                  <div class="mb-3">
-                    <Label class="text-lg font-weight-bold">Masukkan Username</Label>
-                    <input style="height: 45px;" type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
-                  </div>
-                  <div class="mb-3">
-                    <Label class="text-lg font-weight-bold">Masukkan Username</Label>
-                    <input style="height: 45px;" type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
-                  </div>
-                  <div class="mb-3">
-                    <Label class="text-lg font-weight-bold">Masukkan Username</Label>
-                    <input style="height: 45px;" type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
-                  </div>
-                  <div class="mb-3">
-                    <Label class="text-lg font-weight-bold">Masukkan Username</Label>
-                    <input style="height: 45px;" type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
-                  </div>
-                  <div class="mb-3">
-                    <Label class="text-lg font-weight-bold">Masukkan Username</Label>
-                    <input style="height: 45px;" type="text" class="form-control" placeholder="Masukkan Username" aria-label="Username" aria-describedby="email-addon" name="user" required="required" autocomplete="off">
-                  </div>
-                  <div class="text-center">
-                    <button style="height: 50px;" type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" name="proses_login" >Tambah</button>
-                  </div>
-                </form>
-  </main>
+        <form method="post" action="proses.php?aksi=tambahakun" enctype="multipart/form-data"> 
+        <div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="username">Username</label>
+            <input type="text" class="form-control" required name="username" id="username" placeholder="" autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
+            <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap" placeholder="" autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="password">Password</label>
+            <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="email">Email</label>
+            <input type="email" class="form-control" required name="email" id="email" placeholder="" autocomplete="off">
+        </div>
+
+    </div>
+    
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
+            <input type="number" class="form-control" required name="nomor_hp" id="nomor_hp" placeholder="" autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="status">Status</label>
+            <select class="form-control" required name="status" id="status">
+                <option value="mahasiswa">Mahasiswa</option>
+                <option value="pelajar">Pelajar</option>
+                <option value="bekerja">Bekerja</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="hak_akses">Hak Akses</label>
+            <select class="form-control" required name="hak_akses" id="hak_akses">
+                <option value="SPA01">Admin</option>
+                <option value="MTR01">Mentor</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="foto_profil">Foto Profil</label>
+            <input type="file" class="form-control" required name="foto_profil" id="foto_profil" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group mt-2">
+
+<button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
+    Tambah
+</button>
+</div>
+</div>
+    
+         
+        </form>
       </div>
+    </div>
+
+    </section>
+
+        
+  </main>
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

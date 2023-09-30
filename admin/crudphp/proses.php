@@ -24,20 +24,43 @@
         }
 
     }
-
-    if(!empty($_GET['aksi'] == "tambah")) {
-        $data[] =  $_POST["kd_barang"];
-        $data[] =  $_POST["nama_barang"];
-        $data[] =  $_POST["satuan"];
-        $data[] =  $_POST["harga"];
-
-        $sql = "INSERT INTO barang (kd_barang,nama_barang,satuan,harga ) VALUES ( ?,?,?,?)";
-        $row = $koneksi->prepare($sql);
-        $row->execute($data);
-
-        echo "<script>window.location='index.php';</script>";
-
+    if ($_GET['aksi'] == "tambahakun") {
+        $username = $_POST["username"];
+        $nama_lengkap = $_POST["nama_lengkap"];
+        $password = $_POST["password"];
+        $foto_profil = file_get_contents($_FILES["foto_profil"]["tmp_name"]);
+        $no_hp = $_POST["nomor_hp"];
+        $email = $_POST["email"];
+        $status = $_POST["status"];
+        $id_lvl = $_POST["hak_akses"];
+    
+        // Buat array data
+        $data = array(
+            $username,
+            $nama_lengkap,
+            $password,
+            $foto_profil,
+            $no_hp,
+            $email,
+            $status,
+            $id_lvl
+        );
+    
+        $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+    
+        // Eksekusi query dengan menggunakan array $data
+        $stmt->execute($data);
+        // Cek apakah data berhasil disimpan
+    if ($stmt->rowCount() > 0) {
+        echo "<script>alert('Data berhasil disimpan');</script>";
+    } else {
+        echo "<script>alert('Gagal menyimpan data');</script>";
     }
+    
+        echo "<script>window.location='tambahakun.php';</script>";
+    }
+    
 
     if(!empty($_GET['aksi'] == "edit")) {
         $id =  (int)$_GET["id"];
