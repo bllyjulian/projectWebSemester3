@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.cdnfonts.com/css/persian');
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 65px;
+  backdrop-filter: blur(100px);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+
+  transition: top 0.4s;
+  z-index: 3;
+}
+
+.logonavkiri {
+  margin-left: 70px;
+  display: flex;
+  align-items: center;
+}
+.logoapp {
+  width: 60px;
+}
+.nav-kanan {
+  display: flex;
+  margin-right: 70px;
+}
+
+li {
+  padding: 10px;
+  list-style-type: none;
+}
+li a {
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
+  -webkit-tap-highlight-color: transparent;
+}
+
+li a {
+  position: relative;
+}
+
+li a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #007D49;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease, background-color 0.5s ease;
+  border-radius: 10px; 
+}
+
+li a:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+  background-color: #007D49;
+  border-radius: 2px;
+}
+
+li a:hover {
+  color: #007D49; 
+}
+
+.pray {
+  font-size: 18px;
+  margin-left: 15;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+.khu {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007D49;
+  font-family: 'Poppins', sans-serif;
+}
+.Home {
+  height: 100vh;
+  background-color: white;
+  position: relative;
+  background-size: cover;
+}
+.slashatasHome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  height: auto;
+}
+.slashbwhHome {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  max-width: 100%;
+  height: auto;
+  
+}
+.containerHome {
+  display: flex;
+  justify-content: center;
+  gap: 0px;  /*sementara */
+  height: 400px;
+  padding-top: 6rem;
+  position: relative;
+}
+.iconhpHome {
+  width: 450px;
+  margin-top: 50px;
+
+}
+.textHome {
+  margin-top: 150px;
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+
+}
+.buttonHome {
+  margin-top: 20px;
+}
+.tomboldownload {
+  width: 200px;
+  background: black;
+  border: none;
+  border-radius: 10px;
+
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  top: 310px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  height: 60px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.tomboldownload:hover {
+  background: #007D49;
+  color: white;
+  transition: all ease-in-out .3s;
+  box-shadow: none;
+  font-size: 16px;
+}
+.title-awal1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: left;
+}
+.title-awal1 .praykhu-hijau {
+  color: #007D49;
+}
+.title-awal2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  text-align: left;
+  color: gray;
+}
+.title-awal3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  text-align: left;
+  font-weight: normal;
+}
+.kenapaharus {
+  height: 600px;
+  background: rgb(77,27,165);
+  background: linear-gradient(180deg, rgba(77,27,165,1) 0%, rgba(157,80,187,1) 100%);
+}
+.Tentang-Kami {
+  height: 100vh;
+  background-color: white;
+  position: relative;
+}
+.slashatasAbout {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.slashbwhAbout {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.Fitur {
+  height: 100vh;
+  background-color: green;
+}
+.Cara-Penggunaan {
+  height: 100vh;
+  background-color: orange;
+}
+.Kontak {
+  height: 100vh;
+  background-color: gray;
+}
+@media only screen and (max-width: 600px) {
+  .nav-kanan {
+    display: none;
+  }
+  .slashatasAbout, .slashatsHome, .slashbwhAbout, .slashbwhHome {
+    max-width: 100%;
+    height: auto;
+  }
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    backdrop-filter: none;
+    box-shadow: none;
+    position: sticky;
+    top: 0;
+  }
+  .logonavkiri {
+    margin-left: 10px;
+  }
+  .logoapp {
+    width: 40px; /* Adjust as needed */
+  }
+  .logoapp img {
+    width: 100%; /* Ensure the image fills the container */
+  }
+  .containerHome {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    
+  }
+  .title-awal1 {
+    
+    font-size: 30px; /* Adjust as needed */
+    text-align: center;
+  }
+  
+  .title-awal2 {
+    font-size: 20px; /* Adjust as needed */
+    text-align: center;
+  }
+  
+  .title-awal3 {
+    font-size: 16px; /* Adjust as needed */
+    text-align: center;
+  }
+  .tomboldownload {
+    width: 150px; /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+  }
+  .Home, .Tentang-Kami, .Fitur, .Cara-Penggunaan, .Kontak {
+    width: 100%;
+  }
+
+  
+  .textHome {
+     /* Adjust as needed */
+     margin-top: 0;
+    width: 100%;
+  }
+  
+  .iconhpHome {
+    width: 300px;
+    margin-left: 50px; /* Adjust as needed */
+    margin-top: 300px; /* Adjust as needed */
+  }
+  
+
+
+  
+}
