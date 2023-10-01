@@ -124,13 +124,13 @@
         $stmt->execute([$username]);
     
         if ($stmt->rowCount() > 0) {
-            echo "<script>alert('Data berhasil dihapus');</script>";
+
         } else {
             echo "<script>alert('Gagal menghapus data');</script>";
         }
     
         // Redirect atau lakukan aksi lain setelah penghapusan
-        echo "<script>window.location='../pages/akunAdmin.php';</script>";
+        echo "<script>window.location='../pages/akunMentor.php';</script>";
     }
     
     if(!empty($_GET['aksi'] == "edit")) {
