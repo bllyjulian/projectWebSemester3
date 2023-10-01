@@ -501,9 +501,17 @@
                 <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
                 <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
             </td>
+            <!-- <td class="text-center align-middle text-sm">
+                <span class="badge badge-sm bg-gradient-primary "><?= $r->id_lvl;?></span>
+            </td> -->
             <td class="text-center align-middle text-sm">
-                <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
-            </td>
+    <?php if ($r->id_lvl == "SPA01"): ?>
+        <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
+    <?php else: ?>
+        <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
+    <?php endif; ?>
+</td>
+
             <td class="align-middle text-center">
                 <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
             </td>
