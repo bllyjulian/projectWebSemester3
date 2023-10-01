@@ -418,68 +418,45 @@
 
     <div class="container p-3">
       <div class="card-body w-100">
-        
-        <form method="post" action="proses.php?aksi=tambahakun" enctype="multipart/form-data"> 
-        <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="username">Username</label>
-            <input type="text" class="form-control" required name="username" id="username" placeholder="" autocomplete="off">
-        </div>
-        
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
-            <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap" placeholder="" autocomplete="off">
-        </div>
-        
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="password">Password</label>
-            <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">
-        </div>
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="email">Email</label>
-            <input type="email" class="form-control" required name="email" id="email" placeholder="" autocomplete="off">
-        </div>
+      <?php
+require_once('koneksi.php');
 
-    </div>
-    
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
-            <input type="number" class="form-control" required name="nomor_hp" id="nomor_hp" placeholder="" autocomplete="off">
-        </div>
-        
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="status">Status</label>
-            <select class="form-control" required name="status" id="status">
-                <option value="mahasiswa">Mahasiswa</option>
-                <option value="pelajar">Pelajar</option>
-                <option value="bekerja">Bekerja</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="hak_akses">Hak Akses</label>
-            <select class="form-control" required name="hak_akses" id="hak_akses">
-                <option value="SPA01">Admin</option>
-                <option value="MTR01">Mentor</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="foto_profil">Foto Profil</label>
-            <input type="file" class="form-control" required name="foto_profil" id="foto_profil" placeholder="">
-        </div>
-    </div>
+if (isset($_GET['username'])) {
+    $username = $_GET['username'];
 
-    <div class="form-group mt-2">
+    // Ambil data pengguna berdasarkan username
+    $stmt = $koneksi->prepare("SELECT * FROM tb_akun WHERE username = ?");
+    $stmt->execute([$username]);
+    $data_pengguna = $stmt->fetch(PDO::FETCH_ASSOC);
 
-<button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
-    Simpan
-</button>
-</div>
-</div>
-    
-         
+    if ($data_pengguna) {
+        // Data pengguna ditemukan, tampilkan form edit
+?>
+        <form method="post" action="proses.php?aksi=editakun">
+            <div class="form-group">
+                <label class="text-lg font-weight-bold" for="username">Username</label>
+                <input type="text" class="form-control" required name="username" id="username" value="<?= $data_pengguna['username']; ?>" autocomplete="off">
+            </div>
+            <!-- Tambahkan elemen form untuk data pengguna lainnya -->
+            <div class="form-group">
+                <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
+                <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap" value="<?= $data_pengguna['nama_lengkap']; ?>" autocomplete="off">
+            </div>
+            <!-- ... (Tambahkan elemen form untuk data lainnya) -->
+
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
+<?php
+    } else {
+        echo "Data pengguna tidak ditemukan.";
+    }
+} else {
+    echo "Username tidak ditemukan.";
+}
+?>
+
+
+
       </div>
     </div>
 

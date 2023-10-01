@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -429,11 +431,59 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hak Akses</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Domisili</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
+                  <?php 
+                  require_once('../crudphp/koneksi.php');
+
+        $sql = "SELECT * FROM tb_akun";
+        $row = $koneksi->prepare($sql);
+        $row->execute();
+        $hasil = $row->fetchAll(PDO::FETCH_OBJ);
+        $no = 1; // Inisialisasi nomor
+        foreach($hasil as $r) {
+    ?>
+     <tr>
+            <td>
+                <div class="d-flex px-2 py-1">
+                    <div>
+                        <!-- Jika ada foto profil -->
+                        <img src="data:image/jpeg;base64,<?= base64_encode($r->foto_profil); ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
+                    </div>
+                    <div class="d-flex flex-column justify-content-left">
+                        <h6 class="mb-0 text-sm"><?= $r->nama_lengkap;?></h6>
+                        <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
+                <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
+            </td>
+            <td class="text-center align-middle text-sm">
+                <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
+            </td>
+            <td class="align-middle text-center">
+                <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
+            </td>
+            <td class="align-middle">
+            <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+        Edit
+    </a>
+    <a href="<?= "../crudphp/proses.php?aksi=hapusakun&username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Hapus user">
+        Hapus
+    </a>
+</td>
+
+        </tr>
+        <?php $no++; }?>
+
+
+
+
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">

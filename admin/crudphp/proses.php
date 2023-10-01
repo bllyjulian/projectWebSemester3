@@ -57,10 +57,82 @@
         echo "<script>alert('Gagal menyimpan data');</script>";
     }
     
+        echo "<script>window.location='../pages/akunAdmin.php';</script>";
+    }
+//edit akun
+    // if ($_GET['aksi'] == "editakun") {
+    //     $username = $_POST["username"];
+    //     $nama_lengkap = $_POST["nama_lengkap"];
+    //     $password = $_POST["password"];
+    //     $foto_profil = file_get_contents($_FILES["foto_profil"]["tmp_name"]);
+    //     $no_hp = $_POST["nomor_hp"];
+    //     $email = $_POST["email"];
+    //     $status = $_POST["status"];
+    //     $id_lvl = $_POST["hak_akses"];
+    
+    //     $data = array(
+    //         $username,
+    //         $nama_lengkap,
+    //         $password,
+    //         $foto_profil,
+    //         $no_hp,
+    //         $email,
+    //         $status,
+    //         $id_lvl,
+    //         $id
+    //     );
+    
+    //     $sql = "UPDATE tb_akun SET username = ?, nama_lengkap = ?, password = ?, foto_profil = ?, no_hp = ?, email = ?, status = ?, id_lvl = ? WHERE username = ?";
+    //     $stmt = $koneksi->prepare($sql);
+    
+    //     // Eksekusi query dengan menggunakan array $data
+    //     $stmt->execute($data);
+    
+    //     // Cek apakah data berhasil diubah
+    //     if ($stmt->rowCount() > 0) {
+    //         echo "<script>alert('Data berhasil diubah');</script>";
+    //     } else {
+    //         echo "<script>alert('Gagal mengubah data');</script>";
+    //     }
+    
+    //     echo "<script>window.location='../pages/akunAdmin.php';</script>";
+    // }
+    if ($_GET['aksi'] == "editakun") {
+        $username = $_POST["username"];
+        $nama_lengkap = $_POST["nama_lengkap"];
+        // tambahkan field lain sesuai kebutuhan
+    
+        // Jalankan query UPDATE
+        $stmt = $koneksi->prepare("UPDATE tb_akun SET nama_lengkap = ? WHERE username = ?");
+        $stmt->execute([$nama_lengkap, $username]);
+    
+        if ($stmt->rowCount() > 0) {
+            echo "<script>alert('Data berhasil diubah');</script>";
+        } else {
+            echo "<script>alert('Gagal mengubah data');</script>";
+        }
+    
         echo "<script>window.location='tambahakun.php';</script>";
     }
     
-
+    
+    if ($_GET['aksi'] == "hapusakun") {
+        $username = $_GET["username"];
+    
+        // Jalankan query DELETE
+        $stmt = $koneksi->prepare("DELETE FROM tb_akun WHERE username = ?");
+        $stmt->execute([$username]);
+    
+        if ($stmt->rowCount() > 0) {
+            echo "<script>alert('Data berhasil dihapus');</script>";
+        } else {
+            echo "<script>alert('Gagal menghapus data');</script>";
+        }
+    
+        // Redirect atau lakukan aksi lain setelah penghapusan
+        echo "<script>window.location='../pages/akunAdmin.php';</script>";
+    }
+    
     if(!empty($_GET['aksi'] == "edit")) {
         $id =  (int)$_GET["id"];
         $data[] =  $_POST["kd_barang"];
@@ -77,24 +149,6 @@
 
     }
 
-    if(!empty($_GET['aksi'] == "hapus")) {
-
-        $id =  (int)$_GET["id"]; // should be integer (id)
-        $sql = "SELECT * FROM barang WHERE id = ?";
-        $row = $koneksi->prepare($sql);
-        $row->execute(array($id));
-        $cek = $row->rowCount();
-        if($cek > 0)
-        {
-            $sql_delete = "DELETE FROM barang WHERE id = ?";
-            $row_delete = $koneksi->prepare($sql_delete);
-            $row_delete->execute(array($id));
-            echo "<script>window.location='index.php';</script>";
-        }else{
-            echo "<script>window.location='index.php';</script>";
-        }
-    }
- 
     if(!empty($_GET['aksi'] == 'logout'))
     {
         session_destroy();
