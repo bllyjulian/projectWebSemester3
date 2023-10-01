@@ -417,11 +417,45 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
       <div class="row">
+
+
+      <!-- </div> -->
         <div class="col-12">
+
           <div class="card mb-4">
-            <div class="card-header pb-0 d-flex justify-content-lg-between">
+            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
               <h6>Tabel Akun</h6>
-              <button class="btn bg-gradient-success w-auto px-3 mb-2 active"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
+              
+            </div> -->
+
+            <div class="card-header pb-0">
+
+              <div class="row">
+                <div class="col-lg-6 col-7">
+                  <h6>Akun Admin</h6>
+
+                </div>
+                <div class="col-lg-6 col-5 my-auto text-end">
+                  
+                  <div class="dropdown float-lg-end pe-4">
+
+                    
+                    <a class="cursor-pointer p-3" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-ellipsis-v text-secondary"></i>
+                    </a>
+
+
+                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -432,7 +466,10 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hak Akses</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center  text-uppercase text-secondary text-xxs font-weight-bolder">
+                      <button class="btn bg-gradient-success active"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
+                      </th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -445,16 +482,17 @@
         $hasil = $row->fetchAll(PDO::FETCH_OBJ);
         $no = 1; // Inisialisasi nomor
         foreach($hasil as $r) {
+          
     ?>
+
      <tr>
             <td>
                 <div class="d-flex px-2 py-1">
                     <div>
-                        <!-- Jika ada foto profil -->
                         <img src="data:image/jpeg;base64,<?= base64_encode($r->foto_profil); ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
                     </div>
                     <div class="d-flex flex-column justify-content-left">
-                        <h6 class="mb-0 text-sm"><?= $r->nama_lengkap;?></h6>
+                        <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
                         <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
                     </div>
                 </div>
@@ -469,7 +507,7 @@
             <td class="align-middle text-center">
                 <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
             </td>
-            <td class="align-middle">
+            <td class="align-middle text-center">
             <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
         Edit
     </a>
@@ -480,7 +518,14 @@
 
         </tr>
         <?php $no++; }?>
+        <p style="margin-left: 23px;" class="text-sm">
+                    <i class="fa fa-check text-info" aria-hidden="true"></i>
+                    <!-- <span class="font-weight-bold ms-1">30 done</span> this month -->
 
+                    <span class="font-weight-bold ms-1"><?= count($hasil); ?> Akun terdaftar</span>
+
+                  </p>
+        
 
 
 
