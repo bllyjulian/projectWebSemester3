@@ -507,10 +507,17 @@
             <td class="text-center align-middle text-sm">
     <?php if ($r->id_lvl == "SPA01"): ?>
         <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
+    <?php elseif ($r->id_lvl == "ADM01"): ?>
+        <span class="badge badge-sm bg-gradient-success">Admin</span>
+    <?php elseif ($r->id_lvl == "MTR01"): ?>
+        <span class="badge badge-sm bg-gradient-info">Mentor</span>
+    <?php elseif ($r->id_lvl == "USR01"): ?>
+        <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
     <?php else: ?>
         <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
     <?php endif; ?>
 </td>
+
 
             <td class="align-middle text-center">
                 <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
@@ -533,166 +540,6 @@
                     <span class="font-weight-bold ms-1"><?= count($hasil); ?> Akun terdaftar</span>
 
                   </p>
-        
-
-
-
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">+6282233236128</p>
-                      </td>
-                      <td class="text-center align-middle text-sm">
-                        <span class="badge badge-sm bg-gradient-primary">Developers</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-warning">Admin</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Pengguna</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-warning">Admin</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>

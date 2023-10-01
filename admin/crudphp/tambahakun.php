@@ -418,7 +418,7 @@
 
     <div class="container p-3">
       <div class="card-body w-100">
-        
+
         <form method="post" action="proses.php?aksi=tambahakun" enctype="multipart/form-data"> 
         <div class="row">
     <div class="col-sm-6">
@@ -460,8 +460,9 @@
         <div class="form-group">
             <label class="text-lg font-weight-bold" for="hak_akses">Hak Akses</label>
             <select class="form-control" required name="hak_akses" id="hak_akses">
-                <option value="SPA01">Admin</option>
+                <option value="ADM01">Admin</option>
                 <option value="MTR01">Mentor</option>
+                <option value="USR01">Pengguna</option>
             </select>
         </div>
         <div class="form-group">
