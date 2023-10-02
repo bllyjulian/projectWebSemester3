@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,7 +83,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">
+          <a class="nav-link active" href="../pages/akunSemua.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -100,8 +102,28 @@
             <span class="nav-link-text ms-1">Daftar Akun</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active1" href="#">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>office</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g id="office" transform="translate(153.000000, 2.000000)">
+                        <path class="color-background opacity-6" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
+                        <path class="color-background" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <span class="nav-link-text ms-1">Course</span>
+          </a>
+        </li>
         <li class="nav-item" id="navAkunAdmin">
-          <a class="nav-link " href="../pages/akunAdmin.php">
+          <a class="nav-link " href="#">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -122,7 +144,7 @@
           </a>
         </li>
         <li class="nav-item" id="navAkunMentor">
-          <a class="nav-link " href="../pages/akunMentor.php">
+          <a class="nav-link  " href="../pages/akunMentor.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -139,11 +161,11 @@
               </svg>
             </div>
             
-            <span class="nav-link-text ms-1">Akun Mentor</span>
+            <span class="nav-link-text ms-1">Daftar Akun</span>
           </a>
         </li>
         <li class="nav-item" id="navAkunPengguna">
-          <a class="nav-link active " href="#">
+          <a class="nav-link  " href="../pages/akunPengguna.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -159,7 +181,6 @@
                 </g>
               </svg>
             </div>
-            
             <span class="nav-link-text ms-1">Akun pengguna</span>
           </a>
         </li>
@@ -181,7 +202,7 @@
               </svg>
             </div>
             
-            <span class="nav-link-text ms-1">Course</span>
+            <span class="nav-link-text ms-1">Tantangan</span>
           </a>
         </li>
         <li class="nav-item">
@@ -202,7 +223,28 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Challenge</span>
+            <span class="nav-link-text ms-1">Postingan</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  " href="../pages/rtl.html">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>settings</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(304.000000, 151.000000)">
+                        <polygon class="color-background opacity-6" points="18.0883333 15.7316667 11.1783333 8.82166667 13.3333333 6.66666667 6.66666667 0 0 6.66666667 6.66666667 13.3333333 8.82166667 11.1783333 15.315 17.6716667"></polygon>
+                        <path class="color-background opacity-6" d="M31.5666667,23.2333333 C31.0516667,23.2933333 30.53,23.3333333 30,23.3333333 C29.4916667,23.3333333 28.9866667,23.3033333 28.48,23.245 L22.4116667,30.7433333 L29.9416667,38.2733333 C32.2433333,40.575 35.9733333,40.575 38.275,38.2733333 L38.275,38.2733333 C40.5766667,35.9716667 40.5766667,32.2416667 38.275,29.94 L31.5666667,23.2333333 Z"></path>
+                        <path class="color-background" d="M33.785,11.285 L28.715,6.215 L34.0616667,0.868333333 C32.82,0.315 31.4483333,0 30,0 C24.4766667,0 20,4.47666667 20,10 C20,10.99 20.1483333,11.9433333 20.4166667,12.8466667 L2.435,27.3966667 C0.95,28.7083333 0.0633333333,30.595 0.00333333333,32.5733333 C-0.0583333333,34.5533333 0.71,36.4916667 2.11,37.89 C3.47,39.2516667 5.27833333,40 7.20166667,40 C9.26666667,40 11.2366667,39.1133333 12.6033333,37.565 L27.1533333,19.5833333 C28.0566667,19.8516667 29.01,20 30,20 C35.5233333,20 40,15.5233333 40,10 C40,8.55166667 39.685,7.18 39.1316667,5.93666667 L33.785,11.285 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <span class="nav-link-text ms-1">Peringkat</span>
           </a>
         </li>
         <li class="nav-item">
@@ -415,11 +457,45 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
       <div class="row">
+
+
+      <!-- </div> -->
         <div class="col-12">
+
           <div class="card mb-4">
-            <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Akun Pengguna</h6>
-              <button class="btn bg-gradient-success w-10 px-3 mb-2 active"><a href="../crudphp/tambahakun.php">Tambah</a></button>
+            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
+              <h6>Tabel Akun</h6>
+              
+            </div> -->
+
+            <div class="card-header pb-0">
+
+              <div class="row">
+                <div class="col-lg-6 col-7">
+                  <h6>Daftar Akun</h6>
+
+                </div>
+                <div class="col-lg-6 col-5 my-auto text-end">
+                  
+                  <div class="dropdown float-lg-end pe-4">
+
+                    
+                    <a class="cursor-pointer p-3" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-ellipsis-v text-secondary"></i>
+                    </a>
+
+
+                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                      <li><a class="dropdown-item border-radius-md" href="../pages/akunAdmin.php">Akun Admin</a></li>
+                      <li><a class="dropdown-item border-radius-md" href="../pages/akunMentor.php">Akun Mentor</a></li>
+                      <li><a class="dropdown-item border-radius-md" href="../pages/akunPengguna.php">Akun Pengguna</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -429,394 +505,116 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hak Akses</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Domisili</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center  text-uppercase text-secondary text-xxs font-weight-bolder">
+                      <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
+                      </th>
+
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">+6282233236128</p>
-                      </td>
-                      <td class="text-center align-middle text-sm">
-                        <span class="badge badge-sm bg-gradient-primary">Developers</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-warning">Admin</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Pengguna</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/ppbilly.png" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-left">
-                            <h6 class="mb-0 text-sm">Bllyy</h6>
-                            <p class="text-xs text-secondary mb-0">billy@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Billy Julian S</p>
-                        <p class="text-xs text-secondary mb-0">082233236128</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-warning">Admin</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bondowoso</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit |
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                           Hapus
-                        </a>
-                      </td>
-                    </tr>
+                  <?php 
+                 require_once('../crudphp/koneksi.php');
+
+
+          // Menentukan jumlah item per halaman
+          $items_per_page = 7;
+
+          // Menghitung total data
+          $sql = "SELECT * FROM tb_akun";
+          $row = $koneksi->prepare($sql);
+          $row->execute();
+          $hasil = $row->fetchAll(PDO::FETCH_OBJ);
+          $total_data = count($hasil);
+
+          // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
+          $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+          // Menghitung indeks data untuk query
+          $start_index = ($current_page - 1) * $items_per_page;
+
+          // Mengambil data dengan membatasi jumlah
+          $sql = "SELECT * FROM tb_akun LIMIT $start_index, $items_per_page";
+          $row = $koneksi->prepare($sql);
+          $row->execute();
+          $hasil = $row->fetchAll(PDO::FETCH_OBJ);
+          $no = $start_index + 1; // Inisialisasi nomor
+                  foreach($hasil as $r) {
+                    
+    ?>
+
+     <tr>
+            <td>
+                <div class="d-flex px-2 py-1">
+                    <div>
+                        <img src="data:image/jpeg;base64,<?= base64_encode($r->foto_profil); ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
+                    </div>
+                    <div class="d-flex flex-column justify-content-left">
+                        <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
+                        <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
+                <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
+            </td>
+            <td class="text-center align-middle text-sm">
+    <?php if ($r->id_lvl == "SPA01"): ?>
+        <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
+    <?php elseif ($r->id_lvl == "ADM01"): ?>
+        <span class="badge badge-sm bg-gradient-success">Admin</span>
+    <?php elseif ($r->id_lvl == "MTR01"): ?>
+        <span class="badge badge-sm bg-gradient-info">Mentor</span>
+    <?php elseif ($r->id_lvl == "USR01"): ?>
+        <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
+    <?php else: ?>
+        <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
+    <?php endif; ?>
+</td>
+
+
+            <td class="align-middle text-center">
+                <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
+            </td>
+            <td class="align-middle text-center">
+            <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+        Edit
+    </a>
+    <a href="#" class="text-secondary font-weight-bold text-xs" onclick="confirmDelete('<?= $r->username;?>')">Hapus</a>
+
+</td>
+
+        </tr>
+        
+        <?php $no++; 
+      }
+      // Menampilkan navigasi "Next" jika ada data berikutnya
+if ($total_data > ($current_page * $items_per_page)): 
+      
+      
+      ?>
+
+            <!-- <a href="?page=<?= $current_page + 1 ?>" class="btn btn-primary">Next</a> -->
+<?php endif; ?>
+        <p style="margin-left: 23px;" class="text-sm">
+                    <i class="fa fa-check text-info" aria-hidden="true"></i>
+                    <!-- <span class="font-weight-bold ms-1">30 done</span> this month -->
+
+                    <span class="font-weight-bold ms-1"><?= count($hasil); ?> Akun terdaftar</span>
+
+                  </p>
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Daftar Pengguna</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center justify-content-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Completion</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Spotify</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">60%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Invision</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Jira</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">30%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Slack</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">0%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-webdev.svg" class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Webdev</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">80%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Adobe XD</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <div style="margin-right: 80px;" class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
+    <?php if ($current_page > 1): ?>
+        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
+    <?php endif; ?>
+
+    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm">Next &gt;</a>
+</div>
+
             </div>
           </div>
         </div>
@@ -906,10 +704,10 @@
           <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
         </div>
         <hr class="horizontal dark my-sm-4">
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard">Free Download</a>
-        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard">View documentation</a>
+        <!-- <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard">Free Download</a> -->
+        <!-- <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard">View documentation</a> -->
         <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/soft-ui-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
+          <!-- <a class="github-button" href="https://github.com/creativetimofficial/soft-ui-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a> -->
           <h6 class="mt-3">Thank you for sharing!</h6>
           <a href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
@@ -929,29 +727,36 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
+        $(document).ready(function(){
+  $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
+  $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
+  $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
 
-
-
-
-    $(document).ready(function(){
-  // $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
-  // $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
-  // $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
-
-  $(".nav-link.active").click(function(){
+  $(".nav-link.active1").click(function(){
     $("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
     $("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
     $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
   });
 });
+function confirmDelete(username) {
+  Swal.fire({
+    title: 'Apakah anda yakin ingin menghapus?',
+    text: "Data telah dihapus tidak bisa dipulihkan",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Iya, Hapus'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
+      window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
+    }
+  });
+}
 
 
   </script>

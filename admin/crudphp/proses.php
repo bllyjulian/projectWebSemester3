@@ -52,12 +52,23 @@
         $stmt->execute($data);
         // Cek apakah data berhasil disimpan
     if ($stmt->rowCount() > 0) {
-        echo "<script>alert('Data berhasil disimpan');</script>";
+        // echo "<script>
+        // document.getElementById('submit').addEventListener('click', function() {
+        //     Swal.fire(
+        //         'Good job!',
+        //         'You clicked the button!',
+        //         'success'
+        //     );
+        // });
+        
+        
+        
+        // </script>";
     } else {
         echo "<script>alert('Gagal menyimpan data');</script>";
     }
     
-        echo "<script>window.location='../pages/akunAdmin.php';</script>";
+        echo "<script>window.location='../pages/akunSemua.php';</script>";
     }
 //edit akun
     // if ($_GET['aksi'] == "editakun") {
