@@ -346,7 +346,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Daftar Akun</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Akun Mentor</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -472,7 +472,7 @@
 
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Daftar Akun</h6>
+                  <h6>Akun Mentor</h6>
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -534,7 +534,7 @@
           $start_index = ($current_page - 1) * $items_per_page;
 
           // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_akun LIMIT $start_index, $items_per_page";
+          $sql = "SELECT * FROM tb_akun WHERE id_lvl = 'MTR01' LIMIT $start_index, $items_per_page";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);

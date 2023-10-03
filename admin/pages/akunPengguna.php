@@ -344,7 +344,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Daftar Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun Pengguna</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
         </nav>
@@ -472,7 +472,7 @@
 
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Daftar Akun</h6>
+                  <h6>Akun Pengguna</h6>
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -534,7 +534,7 @@
           $start_index = ($current_page - 1) * $items_per_page;
 
           // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_akun LIMIT $start_index, $items_per_page";
+          $sql = "SELECT * FROM tb_akun WHERE id_lvl = 'USR01' LIMIT $start_index, $items_per_page";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
