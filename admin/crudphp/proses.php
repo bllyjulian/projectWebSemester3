@@ -50,43 +50,57 @@
     
         // Eksekusi query dengan menggunakan array $data
         $stmt->execute($data);
-        // Cek apakah data berhasil disimpan
+    // Cek apakah data berhasil disimpan
     if ($stmt->rowCount() > 0) {
-        // echo "<script>
-        // document.getElementById('submit').addEventListener('click', function() {
-        //     Swal.fire(
-        //         'Good job!',
-        //         'You clicked the button!',
-        //         'success'
-        //     );
-        // });
-        
-        
-        
-        // </script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Data berhasil disimpan!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>";
     } else {
         echo "<script>alert('Gagal menyimpan data');</script>";
     }
-    
-        echo "<script>window.location='../pages/akunSemua.php';</script>";
+
+    echo "<script>window.location='../pages/akunSemua.php';</script>";
+}
+
+if ($_GET['aksi'] == "editakun") {
+    $username = $_POST["username"];
+    $nama_lengkap = $_POST["nama_lengkap"];
+    $no_hp = $_POST["nomor_hp"];
+    $email = $_POST["email"];
+    $status = $_POST["status"];
+    $id_lvl = $_POST["hak_akses"];
+
+    $data = array(
+        $nama_lengkap,
+        $no_hp,
+        $email,
+        $status,
+        $id_lvl,
+        $username // Sisipkan username di sini untuk WHERE clause
+    );
+
+    $sql = "UPDATE tb_akun SET nama_lengkap=?, no_hp=?, email=?, status=?, id_lvl=? WHERE username=?";
+    $stmt = $koneksi->prepare($sql);
+
+    // Eksekusi query dengan menggunakan array $data
+    $stmt->execute($data);
+
+    // Cek apakah data berhasil disimpan
+    if ($stmt->rowCount() > 0) {
+        echo "<script>alert('berhasil edit menyimpan data');</script>";
+    } else {
+        echo "<script>alert('Gagal menyimpan data');</script>";
     }
-    if ($_GET['aksi'] == "editakun") {
-        $username = $_POST["username"];
-        $nama_lengkap = $_POST["nama_lengkap"];
-        // tambahkan field lain sesuai kebutuhan
-    
-        // Jalankan query UPDATE
-        $stmt = $koneksi->prepare("UPDATE tb_akun SET nama_lengkap = ? WHERE username = ?");
-        $stmt->execute([$nama_lengkap, $username]);
-    
-        if ($stmt->rowCount() > 0) {
-            echo "<script>alert('Data berhasil diubah');</script>";
-        } else {
-            echo "<script>alert('Gagal mengubah data');</script>";
-        }
-    
-        echo "<script>window.location='tambahakun.php';</script>";
-    }
+
+    echo "<script>window.location='../pages/akunSemua.php';</script>";
+}
+
     
     
     if ($_GET['aksi'] == "hapusakun") {
@@ -104,26 +118,4 @@
     
         // Redirect atau lakukan aksi lain setelah penghapusan
         echo "<script>window.location='../pages/akunMentor.php';</script>";
-    }
-    
-    if(!empty($_GET['aksi'] == "edit")) {
-        $id =  (int)$_GET["id"];
-        $data[] =  $_POST["kd_barang"];
-        $data[] =  $_POST["nama_barang"];
-        $data[] =  $_POST["satuan"];
-        $data[] =  $_POST["harga"];
-
-        $data[] = $id;
-        $sql = "UPDATE barang SET kd_barang = ?, nama_barang = ?, satuan = ?, harga = ?  WHERE id = ? ";
-        $row = $koneksi->prepare($sql);
-        $row->execute($data);
-
-        echo "<script>window.location='index.php';</script>";
-
-    }
-
-    if(!empty($_GET['aksi'] == 'logout'))
-    {
-        session_destroy();
-        echo "<script>window.location='login.php?signout=success';</script>";
     }

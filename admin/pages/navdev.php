@@ -59,7 +59,7 @@
     <div class="collapse navbar-collapse h-100 w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/dashboard.php">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'dashboard.php') ? 'active' : ''; ?>" href="dashboard.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>shop </title>
@@ -79,7 +79,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="../pages/akunSemua.php">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunSemua.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -181,7 +181,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/billing.html">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php') ? 'active' : ''; ?>" href="challenge.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -202,7 +202,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/virtual-reality.html">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'postingan.php') ? 'active' : ''; ?>" href="postingan.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -223,7 +223,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/rtl.html">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'peringkat.php') ? 'active' : ''; ?>" href="peringkat.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>settings</title>
@@ -244,7 +244,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/rtl.html">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'event.php') ? 'active' : ''; ?>" href="event.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>settings</title>
