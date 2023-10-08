@@ -70,44 +70,6 @@
     
         echo "<script>window.location='../pages/akunSemua.php';</script>";
     }
-//edit akun
-    // if ($_GET['aksi'] == "editakun") {
-    //     $username = $_POST["username"];
-    //     $nama_lengkap = $_POST["nama_lengkap"];
-    //     $password = $_POST["password"];
-    //     $foto_profil = file_get_contents($_FILES["foto_profil"]["tmp_name"]);
-    //     $no_hp = $_POST["nomor_hp"];
-    //     $email = $_POST["email"];
-    //     $status = $_POST["status"];
-    //     $id_lvl = $_POST["hak_akses"];
-    
-    //     $data = array(
-    //         $username,
-    //         $nama_lengkap,
-    //         $password,
-    //         $foto_profil,
-    //         $no_hp,
-    //         $email,
-    //         $status,
-    //         $id_lvl,
-    //         $id
-    //     );
-    
-    //     $sql = "UPDATE tb_akun SET username = ?, nama_lengkap = ?, password = ?, foto_profil = ?, no_hp = ?, email = ?, status = ?, id_lvl = ? WHERE username = ?";
-    //     $stmt = $koneksi->prepare($sql);
-    
-    //     // Eksekusi query dengan menggunakan array $data
-    //     $stmt->execute($data);
-    
-    //     // Cek apakah data berhasil diubah
-    //     if ($stmt->rowCount() > 0) {
-    //         echo "<script>alert('Data berhasil diubah');</script>";
-    //     } else {
-    //         echo "<script>alert('Gagal mengubah data');</script>";
-    //     }
-    
-    //     echo "<script>window.location='../pages/akunAdmin.php';</script>";
-    // }
     if ($_GET['aksi'] == "editakun") {
         $username = $_POST["username"];
         $nama_lengkap = $_POST["nama_lengkap"];
