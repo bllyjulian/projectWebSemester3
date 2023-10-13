@@ -117,5 +117,65 @@ if ($_GET['aksi'] == "editakun") {
         }
     
         // Redirect atau lakukan aksi lain setelah penghapusan
-        echo "<script>window.location='../pages/akunMentor.php';</script>";
+        echo "<script>window.location='../pages/akunSemua.php';</script>";
+    }
+
+    if ($_GET['aksi'] == "tambahevent") {
+        $judul = $_POST["judul_event"];
+        $keterangan = $_POST["keterangan"];
+        $lokasi = $_POST["lokasi"];
+        $poster = $_POST["gambar"];
+        $kuota = $_POST["kuota"];
+        $pelaksanaan = $_POST["pelaksanaan"];
+        $linkpendaftaran = $_POST["link_pendaftaran"];
+        $tanggal = $_POST["tanggal"];
+    
+        $data = array(
+            $judul,
+            $keterangan,
+            $lokasi,
+            $poster,
+            $kuota,
+            $pelaksanaan,
+            $linkpendaftaran,
+            $tanggal
+        );
+    
+        $sql = "INSERT INTO tb_event (judul_event, keterangan, lokasi, gambar, kuota, pelaksanaan, link_pendaftaran, tanggal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+    
+        // Eksekusi query dengan menggunakan array $data
+        $stmt->execute($data);
+    // Cek apakah data berhasil disimpan
+    if ($stmt->rowCount() > 0) {
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Data berhasil disimpan!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+    } else {
+        echo "<script>alert('Gagal menyimpan data');</script>";
+    }
+
+    echo "<script>window.location='../pages/event.php';</script>";
+}
+    if ($_GET['aksi'] == "hapusevent") {
+        $dini = $_GET["id_event"];
+    
+        // Jalankan query DELETE
+        $stmt = $koneksi->prepare("DELETE FROM tb_event WHERE id_event = ?");
+        $stmt->execute([$dini]);
+    
+        if ($stmt->rowCount() > 0) {
+
+        } else {
+            echo "<script>alert('Gagal menghapus data');</script>";
+        }
+    
+        // Redirect atau lakukan aksi lain setelah penghapusan
+        echo "<script>window.location='../pages/event.php';</script>";
     }

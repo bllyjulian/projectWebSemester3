@@ -1001,17 +1001,6 @@ echo '</div>';
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 
-    $(document).ready(function(){
-  $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
-  $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
-  $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
-
-  $(".nav-link.active1").click(function(){
-    $("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-    $("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-    $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-  });
-});
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

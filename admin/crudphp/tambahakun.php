@@ -265,32 +265,7 @@ include '../pages/navdev.php';
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-// document.getElementById('submit').addEventListener('click', function(event) {
-//     event.preventDefault(); // Mencegah formulir dikirim secara default
 
-//     // Mendapatkan nilai dari kolom username dan password
-//     var username = document.getElementById('username').value;
-//     var password = document.getElementById('password').value;
-
-//     // Memeriksa apakah kolom username dan password sudah diisi
-//     if (username.trim() !== '' && password.trim() !== '') {
-//         // Jika terisi, tampilkan SweetAlert sukses
-//         Swal.fire({
-//             title: 'Good job!',
-//             text: 'Data berhasil disimpan!',
-//             icon: 'success',
-//             confirmButtonText: 'OK'
-//         });
-//     } else {
-//         // Jika kolom username atau password kosong, tampilkan pesan kesalahan
-//         Swal.fire({
-//             title: 'Error!',
-//             text: 'Harap isi kolom username dan password.',
-//             icon: 'error',
-//             confirmButtonText: 'OK'
-//         });
-//     }
-// });
 
 
 
