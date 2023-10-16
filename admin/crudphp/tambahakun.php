@@ -200,10 +200,14 @@ include '../pages/navdev.php';
                 <option value="USR01">Pengguna</option>
             </select>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label class="text-lg font-weight-bold" for="foto_profil">Foto Profil</label>
             <input type="file" class="form-control" required name="foto_profil" id="foto_profil" placeholder="">
-        </div>
+        </div> -->
+        <div class="form-group">
+      <label class="text-lg font-weight-bold" for="foto_profil">Foto Profil</label>
+      <input type="file" class="form-control" required name="foto_profil" id="foto_profil" placeholder="">
+   </div>
     </div>
 
     <div class="form-group mt-2">
