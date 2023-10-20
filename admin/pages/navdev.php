@@ -52,7 +52,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
         <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <img src="https://raw.githubusercontent.com/bllyjulian/projectWebSemester3/master/api/foto_frofil/tes.jpg" class="navbar-brand-img h-100" alt="main_logo">
+        <!-- <img src="https://raw.githubusercontent.com/bllyjulian/projectWebSemester3/master/api/foto_frofil/tes.jpg" class="navbar-brand-img h-100" alt="main_logo"> -->
         <span class="ms-1 font-weight-bold">codingCamp</span>
       </a>
     </div>
@@ -266,7 +266,7 @@
           </a>
         </li>
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Menu Akun</h6>
         </li>
         <li class="nav-item">
           <a class="nav-link  " href="../pages/profile.html">
@@ -286,10 +286,10 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Profile</span>
+            <span class="nav-link-text ms-1">Profil</span>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link  " href="../pages/sign-in.html">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -308,9 +308,9 @@
             </div>
             <span class="nav-link-text ms-1">Sign In</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/sign-up.html">
+          <a class="nav-link  " href="../pages/login.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>
@@ -328,7 +328,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Sign Up</span>
+            <span class="nav-link-text ms-1">Keluar</span>
           </a>
         </li>
       </ul>

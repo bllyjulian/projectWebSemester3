@@ -245,17 +245,73 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
-  <script>
-        // notifikasi gagal di hide
-        <?php if(empty($_GET['get'])){?>
-            $("#notifikasi").hide();
-        <?php }?>
-            var logingagal = function(){
-                $("#logout").fadeOut('slow');
-                $("#notifikasi").fadeOut('slow');
-            };
-            setTimeout(logingagal, 4000);
-        </script> 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- <script>
+    document.getElementById('formlogin').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var loginSukses = true;
+        var logingagal = false;
+
+        if (loginSukses) {
+            Swal.fire(
+                'Login Berhasil',
+                'Selamat datang',
+                'success'
+            ).then(() => {
+                window.location.href = 'dashboard.php';
+            });
+        } else if (logingagal) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: '<a href="">Why do I have this issue?</a>'
+            });
+        }
+    });
+</script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#formlogin').submit(function(event) {
+            event.preventDefault();
+
+            var user = $('[name="user"]').val();
+            var pass = $('[name="pass"]').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '../crudphp/proses.php?aksi=login',
+                data: { user: user, pass: pass },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire(
+                            'Login Berhasil',
+                            'Selamat datang',
+                            'success'
+                        ).then(() => {
+                            window.location.href = 'dashboard.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Gagal',
+                            text: '' + response.message,
+                            footer: '<a href="">Perlu bantuan?</a>'
+                        });
+                    }
+                },
+                error: function() {
+
+                }
+            });
+        });
+    });
+</script>
+
+
 </body>
 
 </html>
