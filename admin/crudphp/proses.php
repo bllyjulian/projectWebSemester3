@@ -1,30 +1,6 @@
 <?php 
     session_start();
     require 'koneksi.php';
-
-    // proses login
-    // if(!empty($_GET['aksi'] == 'login'))
-    // {
-    //     // validasi text untuk filter karakter khusus dengan fungsi strip_tags()
-    //     $user = $_POST['user'];
-    //     $pass = $_POST['pass'];
-    //     $sql = "SELECT * FROM tb_akun WHERE username = ? AND password = ?";
-    //     $row = $koneksi->prepare($sql);
-    //     $row->execute(array($user,$pass));
-    //     $count = $row->rowCount();
-
-    //     if($count > 0)
-    //     {
-    //         $result = $row->fetch();
-    //         $_SESSION['ADMIN'] = $result;
-    //         echo "<script>window.location='../pages/dashboard.php';</script>";
-    //     }else{
-    //         echo "<script>alert('Username dan Password Salah!');</script>";
-    //         echo "<script>window.location='../pages/login.php';</script>";
-    //         // echo "<script>window.location='login.php?get=failed';</script>";
-    //     }
-
-    // }
     if (!empty($_GET['aksi']) && $_GET['aksi'] == 'login') {
         $user = $_POST['user'];
         $pass = $_POST['pass'];
@@ -56,31 +32,65 @@
         $status = $_POST["status"];
         $id_lvl = $_POST["hak_akses"];
     
-        $data = array(
-            $username,
-            $nama_lengkap,
-            $password,
-            $foto_profil,
-            $no_hp,
-            $email,
-            $status,
-            $id_lvl
-        );
+        // Periksa apakah username sudah ada
+        $check_username_sql = "SELECT COUNT(*) FROM tb_akun WHERE username = ?";
+        $check_username_stmt = $koneksi->prepare($check_username_sql);
+        $check_username_stmt->execute([$username]);
     
-        $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $koneksi->prepare($sql);
+        if ($check_username_stmt->fetchColumn() > 0) {
+            // Jika username sudah ada, kirim respons JSON dengan pesan kesalahan
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Username sudah digunakan. Silakan pilih username lain.',
+                'data' => [
+                    'username' => $username,
+                    'nama_lengkap' => $nama_lengkap,
+                    'password' => $password,
+                    'no_hp' => $no_hp,
+                    'email' => $email,
+                    'status' => $status,
+                    'id_lvl' => $id_lvl
+                ]
+            ];
+        } else {
+            // Jika username belum ada, lakukan operasi penyimpanan
+            $data = array(
+                $username,
+                $nama_lengkap,
+                $password,
+                $foto_profil,
+                $no_hp,
+                $email,
+                $status,
+                $id_lvl
+            );
     
-        // Eksekusi query dengan menggunakan array $data
-        $stmt->execute($data);
-    // Cek apakah data berhasil disimpan
-    if ($stmt->rowCount() > 0) {
-        echo "<script>alert('Berhasil menyimpan data');</script>";
-    } else {
-        echo "<script>alert('Gagal menyimpan data');</script>";
+            $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $koneksi->prepare($sql);
+    
+            // Eksekusi query dengan menggunakan array $data
+            $stmt->execute($data);
+    
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil menyimpan data'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal menyimpan data'
+                ];
+            }
+        }
+    
+        // Tutup statement
+        $check_username_stmt = null;
+    
+        echo json_encode($response);
     }
+    
 
-    echo "<script>window.location='../pages/akunSemua.php';</script>";
-}
 
 // if ($_GET['aksi'] == "tambahakun") {
 //     $username = $_POST["username"];
@@ -162,7 +172,6 @@
 
 
  
-
 if ($_GET['aksi'] == "editakun") {
     $username = $_POST["username"];
     $nama_lengkap = $_POST["nama_lengkap"];
@@ -188,15 +197,20 @@ if ($_GET['aksi'] == "editakun") {
 
     // Cek apakah data berhasil disimpan
     if ($stmt->rowCount() > 0) {
-        echo "<script>alert('berhasil edit menyimpan data');</script>";
+        $response = [
+            'sukses' => true,
+            'pesan' => 'Berhasil menyimpan data'
+        ];
     } else {
-        echo "<script>alert('Gagal menyimpan data');</script>";
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Gagal menyimpan data'
+        ];
     }
 
-    echo "<script>window.location='../pages/akunSemua.php';</script>";
+    echo json_encode($response);
 }
 
-    
     
     if ($_GET['aksi'] == "hapusakun") {
         $username = $_GET["username"];
@@ -241,29 +255,72 @@ if ($_GET['aksi'] == "editakun") {
     
         // Eksekusi query dengan menggunakan array $data
         $stmt->execute($data);
-    // Cek apakah data berhasil disimpan
-    if ($stmt->rowCount() > 0) {
-        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-        echo "<script>
-            Swal.fire({
-                title: 'Good job!',
-                text: 'Data berhasil disimpan!',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>";
-    } else {
-        echo "<script>alert('Gagal menyimpan data');</script>";
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
     }
-
-    echo "<script>window.location='../pages/event.php';</script>";
-}
+    
+    if ($_GET['aksi'] == "editevent") {
+        $id_event = $_POST["id_event"];
+        $judul = $_POST["judul_event"];
+        $keterangan = $_POST["keterangan"];
+        $lokasi = $_POST["lokasi"];
+        $poster = $_POST["gambar"];
+        $kuota = $_POST["kuota"];
+        $pelaksanaan = $_POST["pelaksanaan"];
+        $linkpendaftaran = $_POST["link_pendaftaran"];
+        $tanggal = $_POST["tanggal"];
+    
+        $data = array(
+            $judul,
+            $keterangan,
+            $lokasi,
+            $poster,
+            $kuota,
+            $pelaksanaan,
+            $linkpendaftaran,
+            $tanggal,
+            $id_event
+        );
+    
+        $sql = "UPDATE tb_event SET judul_event=?, keterangan=?, lokasi=?, gambar=?, kuota=?, pelaksanaan=?, link_pendaftaran=?, tanggal=? WHERE id_event=?";
+        $stmt = $koneksi->prepare($sql);
+    
+        // Eksekusi query dengan menggunakan array $data
+        $stmt->execute($data);
+    
+        // Cek apakah data berhasil disimpan
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
+    }
     if ($_GET['aksi'] == "hapusevent") {
-        $dini = $_GET["id_event"];
+        $id = $_GET["id_event"];
     
         // Jalankan query DELETE
         $stmt = $koneksi->prepare("DELETE FROM tb_event WHERE id_event = ?");
-        $stmt->execute([$dini]);
+        $stmt->execute([$id]);
     
         if ($stmt->rowCount() > 0) {
 
@@ -274,3 +331,4 @@ if ($_GET['aksi'] == "editakun") {
         // Redirect atau lakukan aksi lain setelah penghapusan
         echo "<script>window.location='../pages/event.php';</script>";
     }
+    

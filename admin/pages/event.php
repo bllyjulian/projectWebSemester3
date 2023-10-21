@@ -263,15 +263,15 @@
                 <a class="text-secondary text-xs font-weight-bold" href="<?= $r->link_pendaftaran;?>">Klik Disini!</a>
             </td>
             <td style="text-wrap: wrap;">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->tanggal;?></span>
-            </td>
-            <td>
-            <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+    <span class="text-secondary text-xs font-weight-bold"><?= $r->tanggal;?></span>
+</td>
+<td>
+    <a href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
         Edit |
     </a>
     <a href="#" class="text-secondary font-weight-bold text-xs" onclick="confirmDelete('<?= $r->id_event;?>')">Hapus</a>
-                                                                                       
 </td>
+
 
         </tr>
         

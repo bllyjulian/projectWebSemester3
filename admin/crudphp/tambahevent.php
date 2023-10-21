@@ -260,6 +260,58 @@ include '../pages/navdev.php';
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+$(document).ready(function() {
+    $('#myfrom').submit(function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: 'proses.php?aksi=tambahevent',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.sukses) {
+                    Swal.fire(
+                        'Berhasil!',
+                        response.pesan,
+                        'success'
+                    ).then(() => {
+                        window.location.href = '../pages/event.php';
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: response.pesan,
+                        footer: '<a href="">Perlu bantuan?</a>'
+                    }).then(() => {
+                        // Memasukkan kembali data ke dalam formulir
+                        $('#judul_event').val(formData.get('judul_event'));
+                        $('#keterangan').val(formData.get('keterangan'));
+                        $('#lokasi').val(formData.get('lokasi'));
+                        $('#gambar').val(formData.get('gambar'));
+                        $('#kuota').val(formData.get('kuota'));
+                        $('#pelaksanaan').val(formData.get('pelaksanaan'));
+                        $('#link_pendaftaran').val(formData.get('link_pendaftaran'));
+                        $('#tanggal').val(formData.get('tanggal'));
+                    });
+                }
+            },
+            error: function() {
+                // Tangani kesalahan
+            }
+        });
+    });
+});
+
+
+
+  </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

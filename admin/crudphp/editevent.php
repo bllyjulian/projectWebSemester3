@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Tambah Akun
+    edit event  
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -37,9 +37,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tambah Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Event</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tambah Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Edit Event</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -151,91 +151,92 @@
     <div class="container-fluid py-4">
     <main class="main-content  mt-0">
     <section class="min-vh-100 card mb-4">
-
     <div class="container p-3">
-      <div class="card-body w-100">
-      <?php
-require_once('koneksi.php');
+        <div class="card-body w-100">
+            <?php
+            require_once('koneksi.php');
 
-if (isset($_GET['username'])) {
-    $username = $_GET['username'];
+            if (isset($_GET['id_event'])) {
+                $id_event = $_GET['id_event'];
 
-    // Ambil data pengguna berdasarkan username
-    $stmt = $koneksi->prepare("SELECT * FROM tb_akun WHERE username = ?");
-    $stmt->execute([$username]);
-    $data_pengguna = $stmt->fetch(PDO::FETCH_ASSOC);
+                // Ambil data event berdasarkan id_event
+                $stmt = $koneksi->prepare("SELECT * FROM tb_event WHERE id_event = ?");
+                $stmt->execute([$id_event]);
+                $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($data_pengguna) {
-        // Data pengguna ditemukan, tampilkan form edit
-?>
-        <form method="post" action="proses.php?aksi=editakun" id="editForm">
-          <div class="row">
-          <div class="col-sm-6">
-          <div class="form-group">
-                <label class="text-lg font-weight-bold" for="username">Username</label>
-                <input type="text" class="form-control" required name="username" id="username" value="<?= $data_pengguna['username']; ?>" autocomplete="off" readonly>
-            </div>
-            <!-- Tambahkan elemen form untuk data pengguna lainnya -->
-            <div class="form-group">
-                <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
-                <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap" value="<?= $data_pengguna['nama_lengkap']; ?>" autocomplete="off">
-            </div>
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="email">Email</label>
-            <input type="email" class="form-control" required name="email" id="email" value="<?= $data_pengguna['email']; ?>" placeholder="" autocomplete="off">
+                if ($data_event) {
+                    // Data event ditemukan, tampilkan form edit
+                    ?>
+                    <form method="post" action="proses.php?aksi=editevent" id="editEvent">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="hidden" name="id_event" value="<?= $data_event['id_event']; ?>">
+
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="judul_event">Judul Event</label>
+                                    <input type="text" class="form-control" required name="judul_event" id="judul_event" value="<?= $data_event['judul_event']; ?>" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="keterangan">Keterangan</label>
+                                    <input type="text" class="form-control" required name="keterangan" id="keterangan" value="<?= $data_event['keterangan']; ?>" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="lokasi">Lokasi</label>
+                                    <input type="text" class="form-control" required name="lokasi" id="lokasi" value="<?= $data_event['lokasi']; ?>" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                <label class="text-lg font-weight-bold" for="gambar">Poster</label>
+                                <input type="text" class="form-control" required name="gambar" id="gambar"  value="<?= $data_event['gambar']; ?>" autocomplete="off">
+                            </div>
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="kuota">Kuota</label>
+                                    <input type="number" class="form-control" required name="kuota" id="kuota" value="<?= $data_event['kuota']; ?>" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="pelaksanaan">Pelaksanaan</label>
+                                    <select class="form-control" required name="pelaksanaan" id="pelaksanaan">
+                                        <option value="Daring" <?= ($data_event['pelaksanaan'] == 'Daring') ? 'selected' : ''; ?>>Daring</option>
+                                        <option value="Luring" <?= ($data_event['pelaksanaan'] == 'Luring') ? 'selected' : ''; ?>>Luring</option>
+                                        <option value="Hybrid" <?= ($data_event['pelaksanaan'] == 'Hybrid') ? 'selected' : ''; ?>>Hybrid</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="link_pendaftaran">Link Pendaftaran</label>
+                                    <input type="text" class="form-control" required name="link_pendaftaran" id="link_pendaftaran" value="<?= $data_event['link_pendaftaran']; ?>" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="tanggal">Tanggal</label>
+                                    <input type="date" class="form-control" required name="tanggal" id="tanggal" value="<?= $data_event['tanggal']; ?>" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
+                <?php
+                } else {
+                    echo "Data event tidak ditemukan.";
+                }
+            } else {
+                echo "ID event tidak ditemukan."; 
+            }
+            ?>
         </div>
-          </div>
-          <div class="col-sm-6">
-            
-                    <div class="form-group">
-            <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
-            <input type="number" class="form-control" required name="nomor_hp" id="nomor_hp" value="<?= $data_pengguna['no_hp']; ?>" placeholder="" autocomplete="off">
-        </div>
-        
-        <div class="form-group">
-        <label class="text-lg font-weight-bold" for="status">Status</label>
-        <select class="form-control" required name="status" id="status">
-            <option value="mahasiswa" <?= ($data_pengguna['status'] == 'mahasiswa') ? 'selected' : ''; ?>>Mahasiswa</option>
-            <option value="pelajar" <?= ($data_pengguna['status'] == 'pelajar') ? 'selected' : ''; ?>>Pelajar</option>
-            <option value="bekerja" <?= ($data_pengguna['status'] == 'bekerja') ? 'selected' : ''; ?>>Bekerja</option>
-        </select>
     </div>
-    
-    <div class="form-group">
-        <label class="text-lg font-weight-bold" for="hak_akses">Hak Akses</label>
-        <select class="form-control" required name="hak_akses" id="hak_akses">
-            <option value="ADM01" <?= ($data_pengguna['id_lvl'] == 'ADM01') ? 'selected' : ''; ?>>Admin</option>
-            <option value="MTR01" <?= ($data_pengguna['id_lvl'] == 'MTR01') ? 'selected' : ''; ?>>Mentor</option>
-            <option value="USR01" <?= ($data_pengguna['id_lvl'] == 'USR01') ? 'selected' : ''; ?>>Pengguna</option>
-        </select>
-    </div>
-
-          </div>
+</section>
 
 
-
-
-          <button type="submit" class="btn btn-primary">Simpan</button>
-    </div>
-    
-       
-
-        </form>
-<?php
-    } else {
-        echo "Data pengguna tidak ditemukan.";
-    }
-} else {
-    echo "Username tidak ditemukan.";
-}
-?>
-
-
-
-      </div>
-    </div>
-
-    </section>
 
         
   </main>
@@ -365,11 +366,10 @@ if (isset($_GET['username'])) {
   });
 });
   </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  <script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
 $(document).ready(function() {
-    $('#editForm').submit(function(event) {
+    $('#editEvent').submit(function(event) {
         event.preventDefault();
 
         Swal.fire({
@@ -386,7 +386,7 @@ $(document).ready(function() {
 
                 $.ajax({
                     type: 'POST',
-                    url: 'proses.php?aksi=editakun',
+                    url: 'proses.php?aksi=editevent',
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -398,7 +398,7 @@ $(document).ready(function() {
                                 text: response.pesan,
                                 icon: 'success'
                             }).then(() => {
-                                window.location.href = '../pages/akunSemua.php'; // Arahkan ke event.php di dalam folder pages
+                                window.location.href = '../pages/event.php'; // Arahkan ke event.php di dalam folder pages
                             });
                         } else {
                             Swal.fire({
@@ -418,7 +418,7 @@ $(document).ready(function() {
     });
 });
 
-  </script>
+</script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
