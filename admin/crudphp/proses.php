@@ -238,6 +238,12 @@ if ($_GET['aksi'] == "editakun") {
         $pelaksanaan = $_POST["pelaksanaan"];
         $linkpendaftaran = $_POST["link_pendaftaran"];
         $tanggal = $_POST["tanggal"];
+             // Unggahan Gambar
+        // $poster = $_FILES["gambar"]["name"];
+        // $folder_upload = $_SERVER['DOCUMENT_ROOT'] . "../api/poster_event/"; // Path lengkap untuk menyimpan gambar
+    
+        // $path_file_upload = $folder_upload . basename($_FILES["gambar"]["name"]);
+        // move_uploaded_file($_FILES["gambar"]["tmp_name"], $path_file_upload);
     
         $data = array(
             $judul,
@@ -270,6 +276,53 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response);
     }
+    // if ($_GET['aksi'] == "tambahevent") {
+    //     $judul = $_POST["judul_event"];
+    //     $keterangan = $_POST["keterangan"];
+    //     $lokasi = $_POST["lokasi"];
+    //     $kuota = $_POST["kuota"];
+    //     $pelaksanaan = $_POST["pelaksanaan"];
+    //     $linkpendaftaran = $_POST["link_pendaftaran"];
+    //     $tanggal = $_POST["tanggal"];
+    
+    //     // Unggahan Gambar
+    //     $poster = $_FILES["gambar"]["name"];
+    //     $folder_upload = $_SERVER['DOCUMENT_ROOT'] . "../api/poster_event/"; // Path lengkap untuk menyimpan gambar
+    
+    //     $path_file_upload = $folder_upload . basename($_FILES["gambar"]["name"]);
+    //     move_uploaded_file($_FILES["gambar"]["tmp_name"], $path_file_upload);
+    
+    //     $data = array(
+    //         $judul,
+    //         $keterangan,
+    //         $lokasi,
+    //         $poster,
+    //         $kuota,
+    //         $pelaksanaan,
+    //         $linkpendaftaran,
+    //         $tanggal
+    //     );
+    
+    //     $sql = "INSERT INTO tb_event (judul_event, keterangan, lokasi, gambar, kuota, pelaksanaan, link_pendaftaran, tanggal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    //     $stmt = $koneksi->prepare($sql);
+    
+    //     // Eksekusi query dengan menggunakan array $data
+    //     $stmt->execute($data);
+    
+    //     if ($stmt->rowCount() > 0) {
+    //         $response = [
+    //             'sukses' => true,
+    //             'pesan' => 'Berhasil menyimpan data'
+    //         ];
+    //     } else {
+    //         $response = [
+    //             'sukses' => false,
+    //             'pesan' => 'Gagal menyimpan data'
+    //         ];
+    //     }
+    
+    //     echo json_encode($response);
+    // }
     
     if ($_GET['aksi'] == "editevent") {
         $id_event = $_POST["id_event"];

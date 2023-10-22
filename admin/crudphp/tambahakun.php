@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
     Tambah Akun
   </title>
@@ -36,9 +36,9 @@ include '../pages/navdev.php';
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tambah Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tambah Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Tambah</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -154,7 +154,7 @@ include '../pages/navdev.php';
     <div class="container p-3">
       <div class="card-body w-100">
 
-        <form method="post" action="proses.php?aksi=tambahakun" enctype="multipart/form-data" id="myfrom"> 
+        <form method="post" action="proses.php?aksi=tambahakun" enctype="multipart/form-data" id="myform"> 
         <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
@@ -285,6 +285,60 @@ include '../pages/navdev.php';
   });
 });
   </script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#myform').submit(function(event) {
+            event.preventDefault();
+
+            // Serialkan data formulir
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                url: 'proses.php?aksi=tambahakun',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(response) {
+    if (response.sukses) {
+        Swal.fire(
+            'Berhasil!',
+            response.pesan,
+            'success'
+        ).then(() => {
+            window.location.href = '..pages/akunSemua.php'; // Ganti dengan halaman yang sesuai
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: response.pesan,
+            footer: '<a href="https://contoh.com/bantuan">Perlu Bantuan?</a>'
+        }).then(() => {
+            // Tidak ada pengalihan di sini karena tetap di halaman yang sama
+            $('#username').val(response.data.username);
+            $('#nama_lengkap').val(response.data.nama_lengkap);
+            $('#password').val(response.data.password);
+            $('#nomor_hp').val(response.data.no_hp);
+            $('#email').val(response.data.email);
+            $('#status').val(response.data.status);
+            $('#hak_akses').val(response.data.id_lvl);
+        });
+    }
+},
+
+                error: function() {
+                    // Tangani kesalahan
+                }
+            });
+        });
+    });
+</script>
+
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
     Dashboard
   </title>
@@ -182,24 +182,24 @@ include 'navdev.php';
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Users</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Akun terdaftar</p>
                     <h5 class="font-weight-bolder mb-0">
                       <!-- 2,300
                       <span class="text-success text-sm font-weight-bolder">+3%</span> -->
-                      <?php
-require_once('../crudphp/koneksi.php');
+                                              <?php
+                        require_once('../crudphp/koneksi.php');
 
-// Menghitung total data
-$sql =  "SELECT COUNT(*) FROM tb_akun WHERE id_lvl = 'USR01'";
-$row = $koneksi->prepare($sql);
-$row->execute();
-$total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                        // Menghitung total data
+                        $sql =  "SELECT COUNT(*) FROM tb_akun";
+                        $row = $koneksi->prepare($sql);
+                        $row->execute();
+                        $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
 
-// Menampilkan total akun terdaftar
-echo '<div class="numbers">';
-echo '<h5 class="font-weight-bolder mb-0">'.$total_data.'</h5>';
-echo '</div>';
-?>
+                        // Menampilkan total akun terdaftar
+                        echo '<div class="numbers">';
+                        echo '<h5 class="font-weight-bolder mb-0">'.$total_data.'</h5>';
+                        echo '</div>';
+                        ?>
 
                     </h5>
                   </div>
@@ -214,27 +214,40 @@ echo '</div>';
           </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
+    <div class="card">
+        <div class="card-body p-3">
+            <div class="row">
                 <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">New Clients</p>
-                    <h5 class="font-weight-bolder mb-0">
-                      +3,462
-                      <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                    </h5>
-                  </div>
+                    <div class="numbers">
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Event Terdaftar</p>
+                        <h5 class="font-weight-bolder mb-0">
+                            <?php
+                            require_once('../crudphp/koneksi.php');
+
+                            // Menghitung total data
+                            $sql =  "SELECT COUNT(*) FROM tb_event";
+                            $row = $koneksi->prepare($sql);
+                            $row->execute();
+                            $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+
+                            // Menampilkan total event terdaftar
+                            echo '<div class="numbers">';
+                            echo '<h5 class="font-weight-bolder mb-0">'.$total_data.'</h5>';
+                            echo '</div>';
+                            ?>
+                        </h5>
+                    </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
+                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                        <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
+</div>
+
         <div class="col-xl-3 col-sm-6">
           <div class="card">
             <div class="card-body p-3">
@@ -278,7 +291,7 @@ echo '</div>';
                   <div class="bg-gradient-primary border-radius-lg h-100">
                     <img src="../assets/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves">
                     <div class="position-relative d-flex align-items-center justify-content-center h-100">
-                      <img class="w-100 position-relative z-index-2 pt-4" src="../assets/img/illustrations/rocket-white.png" alt="rocket">
+                      <img class="w-100 position-relative z-index-2 pt-4" src="../assets/img/logoputih.png" alt="rocket">
                     </div>
                   </div>
                 </div>

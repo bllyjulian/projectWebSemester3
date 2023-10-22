@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
     Tambah Event
   </title>
@@ -36,9 +36,9 @@ include '../pages/navdev.php';
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tambah Event</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Event</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tambah Event</h6>
+          <h6 class="font-weight-bolder mb-0">Tambah</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -175,7 +175,10 @@ include '../pages/navdev.php';
             <label class="text-lg font-weight-bold" for="gambar">Poster</label>
             <input type="text" class="form-control" required name="gambar" id="gambar" placeholder="" autocomplete="off">
         </div>
-
+    <!-- <div class="form-group">
+        <label class="text-lg font-weight-bold" for="gambar">Poster</label>
+        <input type="file" class="form-control" required name="gambar" id="gambar" placeholder="" autocomplete="off">
+    </div> -->
     </div>
     
     <div class="col-sm-6">
