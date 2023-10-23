@@ -631,7 +631,7 @@ $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar
             response.pesan,
             'success'
         ).then(() => {
-            window.location.href = '..pages/akunSemua.php'; // Ganti dengan halaman yang sesuai
+            window.location.href = '../pages/akunSemua.php'; // Ganti dengan halaman yang sesuai
         });
     } else {
         Swal.fire({

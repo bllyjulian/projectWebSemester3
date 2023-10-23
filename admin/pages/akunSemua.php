@@ -534,17 +534,18 @@
     ?>
 
      <tr>
-            <td>
-                <div class="d-flex px-2 py-1">
-                    <div>
-                        <img src="data:image/jpeg;base64,<?= base64_encode($r->foto_profil); ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
-                    </div>
-                    <div class="d-flex flex-column justify-content-left">
-                        <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
-                        <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
-                    </div>
-                </div>
-            </td>
+     <td>
+    <div class="d-flex px-2 py-1">
+        <div>
+            <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
+        </div>
+        <div class="d-flex flex-column justify-content-left">
+            <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
+            <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+        </div>
+    </div>
+</td>
+
             <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
                 <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
@@ -674,13 +675,11 @@ $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar
 });
 </script>
 
-  <script>
-
-
+<script>
 function confirmDelete(username) {
   Swal.fire({
     title: 'Apakah anda yakin ingin menghapus?',
-    text: "Data telah dihapus tidak bisa dipulihkan",
+    text: "Data yang dihapus tidak bisa dipulihkan",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -688,14 +687,25 @@ function confirmDelete(username) {
     confirmButtonText: 'Iya, Hapus'
   }).then((result) => {
     if (result.isConfirmed) {
-      // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-      window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
+      Swal.fire(
+        'Sukses!',
+        'Data berhasil dihapus.',
+        'success'
+      ).then(() => {
+        // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
+        window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
+      });
+    } else {
+      Swal.fire(
+        'Batal Hapus',
+        'Data tidak dihapus.',
+        'info'
+      );
     }
   });
 }
+</script>
 
-
-  </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

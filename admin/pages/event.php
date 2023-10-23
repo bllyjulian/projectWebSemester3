@@ -535,19 +535,19 @@
     ?>
 
      <tr>
-            <td style="text-wrap: wrap;">
-                <div class="d-flex px-2 py-1">
-                    <div>
-                      <h6 style="display: none;"><?= $r->id_event; ?></h6>
-                        <img src="data:image/jpeg;base64,<?= base64_encode($r->gambar); ?>" class="avatar avatar-sm me-3" alt="<?= $r->id_event; ?>">
-                    </div>
-                    <div style="width: 250px;" class="d-flex flex-column justify-content-left">
-    <h6 class="mb-0 text-sm" style="word-wrap: break-word;"><?= $r->judul_event;?></h6>
-    <p class="text-xs text-secondary mb-0" ><?= $r->keterangan;?></p>
-</div>
+     <td style="text-wrap: wrap;">
+    <div class="d-flex px-2 py-1">
+        <div>
+            <h6 style="display: none;"><?= $r->id_event; ?></h6>
+            <img src="<?= $r->gambar; ?>" class="avatar avatar-sm me-3" alt="<?= $r->id_event; ?>">
+        </div>
+        <div style="width: 250px;" class="d-flex flex-column justify-content-left">
+            <h6 class="mb-0 text-sm" style="word-wrap: break-word;"><?= $r->judul_event;?></h6>
+            <p class="text-xs text-secondary mb-0"><?= $r->keterangan;?></p>
+        </div>
+    </div>
+</td>
 
-                </div>
-            </td>
             <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $r->lokasi;?></p>
                 <p class="text-xs text-secondary mb-0"><?= $r->kuota;?></p>
@@ -557,7 +557,7 @@
     <?php elseif ($r->pelaksanaan == "Luring"): ?>
         <span class="badge badge-sm bg-gradient-success">Luring</span>
     <?php elseif ($r->pelaksanaan == "Hybird"): ?>
-        <span class="badge badge-sm bg-gradient-info">Hybird</span>
+        <span class="badge badge-sm bg-gradient-info">Hybrid</span>
     <?php else: ?>
         <span class="badge badge-sm bg-gradient-primary"><?= $r->pelaksanaan;?></span>
     <?php endif; ?>
@@ -677,14 +677,11 @@ $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar
 });
 });
 </script>
-
   <script>
-
-
 function confirmDelete(id_event) {
   Swal.fire({
     title: 'Apakah anda yakin ingin menghapus?',
-    text: "Data telah dihapus tidak bisa dipulihkan",
+    text: "Data yang dihapus tidak bisa dipulihkan",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -692,14 +689,24 @@ function confirmDelete(id_event) {
     confirmButtonText: 'Iya, Hapus'
   }).then((result) => {
     if (result.isConfirmed) {
-      // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-      window.location.href = `../crudphp/proses.php?aksi=hapusevent&id_event=${id_event}`;
+      Swal.fire(
+        'Sukses!',
+        'Data berhasil dihapus.',
+        'success'
+      ).then(() => {
+        // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
+        window.location.href = `../crudphp/proses.php?aksi=hapusevent&id_event=${id_event}`;
+      });
+    } else {
+      Swal.fire(
+        'Batal Hapus',
+        'Data tidak dihapus.',
+        'info'
+      );
     }
   });
 }
-
-
-  </script>
+</script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

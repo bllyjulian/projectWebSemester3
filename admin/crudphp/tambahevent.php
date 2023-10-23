@@ -480,7 +480,7 @@
         </div>
         <div class="form-group">
             <label class="text-lg font-weight-bold" for="gambar">Poster</label>
-            <input type="text" class="form-control" required name="gambar" id="gambar" placeholder="" autocomplete="off">
+            <input type="file" class="form-control" required name="gambar" id="gambar" placeholder="" autocomplete="off">
         </div>
     <!-- <div class="form-group">
         <label class="text-lg font-weight-bold" for="gambar">Poster</label>

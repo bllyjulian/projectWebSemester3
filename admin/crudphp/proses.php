@@ -22,156 +22,123 @@
     }
     
     
+    // if ($_GET['aksi'] == "tambahakun") {
+    //     $username = $_POST["username"];
+    //     $nama_lengkap = $_POST["nama_lengkap"];
+    //     $password = $_POST["password"];
+    //     $foto_profil = file_get_contents($_FILES["foto_profil"]["tmp_name"]);
+    //     $no_hp = $_POST["nomor_hp"];
+    //     $email = $_POST["email"];
+    //     $status = $_POST["status"];
+    //     $id_lvl = $_POST["hak_akses"];
+    
+    //     // Periksa apakah username sudah ada
+    //     $check_username_sql = "SELECT COUNT(*) FROM tb_akun WHERE username = ?";
+    //     $check_username_stmt = $koneksi->prepare($check_username_sql);
+    //     $check_username_stmt->execute([$username]);
+    
+    //     if ($check_username_stmt->fetchColumn() > 0) {
+    //         // Jika username sudah ada, kirim respons JSON dengan pesan kesalahan
+    //         $response = [
+    //             'sukses' => false,
+    //             'pesan' => 'Username sudah digunakan. Silakan pilih username lain.',
+    //             'data' => [
+    //                 'username' => $username,
+    //                 'nama_lengkap' => $nama_lengkap,
+    //                 'password' => $password,
+    //                 'no_hp' => $no_hp,
+    //                 'email' => $email,
+    //                 'status' => $status,
+    //                 'id_lvl' => $id_lvl
+    //             ]
+    //         ];
+    //     } else {
+    //         // Jika username belum ada, lakukan operasi penyimpanan
+    //         $data = array(
+    //             $username,
+    //             $nama_lengkap,
+    //             $password,
+    //             $foto_profil,
+    //             $no_hp,
+    //             $email,
+    //             $status,
+    //             $id_lvl
+    //         );
+    
+    //         $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    //         $stmt = $koneksi->prepare($sql);
+    
+    //         // Eksekusi query dengan menggunakan array $data
+    //         $stmt->execute($data);
+    
+    //         if ($stmt->rowCount() > 0) {
+    //             $response = [
+    //                 'sukses' => true,
+    //                 'pesan' => 'Berhasil menyimpan data'
+    //             ];
+    //         } else {
+    //             $response = [
+    //                 'sukses' => false,
+    //                 'pesan' => 'Gagal menyimpan data'
+    //             ];
+    //         }
+    //     }
+    
+    //     // Tutup statement
+    //     $check_username_stmt = null;
+    
+    //     echo json_encode($response);
+    // }
+    
     if ($_GET['aksi'] == "tambahakun") {
         $username = $_POST["username"];
         $nama_lengkap = $_POST["nama_lengkap"];
         $password = $_POST["password"];
-        $foto_profil = file_get_contents($_FILES["foto_profil"]["tmp_name"]);
         $no_hp = $_POST["nomor_hp"];
         $email = $_POST["email"];
         $status = $_POST["status"];
         $id_lvl = $_POST["hak_akses"];
     
-        // Periksa apakah username sudah ada
-        $check_username_sql = "SELECT COUNT(*) FROM tb_akun WHERE username = ?";
-        $check_username_stmt = $koneksi->prepare($check_username_sql);
-        $check_username_stmt->execute([$username]);
+        // Handle gambar (profile picture)
+        $gambar = $_FILES['foto_profil']['name'];
+        $folder_tujuan = 'foto_profil/'; // Set your desired folder path
+        $path_gambar = $folder_tujuan . $gambar;
     
-        if ($check_username_stmt->fetchColumn() > 0) {
-            // Jika username sudah ada, kirim respons JSON dengan pesan kesalahan
+        move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
+    
+        $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . $folder_tujuan . urlencode($gambar);
+    
+        $data = array(
+            $username,
+            $nama_lengkap,
+            $password,
+            $url_gambar, // Store the URL of the profile picture
+            $no_hp,
+            $email,
+            $status,
+            $id_lvl
+        );
+    
+        $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+    
+        $stmt->execute($data);
+    
+        if ($stmt->rowCount() > 0) {
             $response = [
-                'sukses' => false,
-                'pesan' => 'Username sudah digunakan. Silakan pilih username lain.',
-                'data' => [
-                    'username' => $username,
-                    'nama_lengkap' => $nama_lengkap,
-                    'password' => $password,
-                    'no_hp' => $no_hp,
-                    'email' => $email,
-                    'status' => $status,
-                    'id_lvl' => $id_lvl
-                ]
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
             ];
         } else {
-            // Jika username belum ada, lakukan operasi penyimpanan
-            $data = array(
-                $username,
-                $nama_lengkap,
-                $password,
-                $foto_profil,
-                $no_hp,
-                $email,
-                $status,
-                $id_lvl
-            );
-    
-            $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $koneksi->prepare($sql);
-    
-            // Eksekusi query dengan menggunakan array $data
-            $stmt->execute($data);
-    
-            if ($stmt->rowCount() > 0) {
-                $response = [
-                    'sukses' => true,
-                    'pesan' => 'Berhasil menyimpan data'
-                ];
-            } else {
-                $response = [
-                    'sukses' => false,
-                    'pesan' => 'Gagal menyimpan data'
-                ];
-            }
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
         }
-    
-        // Tutup statement
-        $check_username_stmt = null;
     
         echo json_encode($response);
     }
     
-
-
-// if ($_GET['aksi'] == "tambahakun") {
-//     $username = $_POST["username"];
-//     $nama_lengkap = $_POST["nama_lengkap"];
-//     $password = $_POST["password"];
-//     $no_hp = $_POST["nomor_hp"];
-//     $email = $_POST["email"];
-//     $status = $_POST["status"];
-//     $id_lvl = $_POST["hak_akses"];
-
-//     $foto_profil_name = "api/foto_profil/" . $_FILES["foto_profil"]["name"];
-
-//     // Upload gambar ke repositori GitHub
-//     $github_username = "bllyjulian"; // Ganti dengan nama pengguna GitHub Anda
-//     $github_token = "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"; // Ganti dengan token akses pribadi GitHub Anda
-
-//     $file_path = $_FILES["foto_profil"]["tmp_name"];
-//     $commit_message = "Menambahkan foto profil";
-
-//     $url = "http://api.github.com/repos/$github_username/projectWebSemester3/api/foto_frofil/$foto_profil_name";
-
-//     $data = array(
-//         "message" => $commit_message,
-//         "content" => base64_encode(file_get_contents($file_path))
-//     );
-
-//     $options = array(
-//         "http" => array(
-//             "header" => "Content-type: application/json\r\n" .
-//                         "Authorization: token $github_token\r\n",
-//             "method" => "PUT",
-//             "content" => json_encode($data)
-//         )
-//     );
-
-//     $context = stream_context_create($options);
-//     $result = file_get_contents($url, false, $context);
-
-//     if ($result === false) {
-//         die("Gagal mengunggah gambar ke GitHub.");
-//     }
-
-//     // Simpan data ke database
-//     $foto_profil_path = "http://raw.githubusercontent.com/$github_username/projectWebSemester3/master/api/foto_frofil$foto_profil_name";
-
-//     $data = array(
-//         $username,
-//         $nama_lengkap,
-//         $password,
-//         $foto_profil_path,
-//         $no_hp,
-//         $email,
-//         $status,
-//         $id_lvl
-//     );
-
-//     $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-//     $stmt = $koneksi->prepare($sql);
-
-//     $stmt->execute($data);
-
-//     if ($stmt->rowCount() > 0) {
-//         echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-//         echo "<script>
-//             Swal.fire({
-//                 title: 'Good job!',
-//                 text: 'Data berhasil disimpan!',
-//                 icon: 'success',
-//                 confirmButtonText: 'OK'
-//             });
-//         </script>";
-//     } else {
-//         echo "<script>alert('Gagal menyimpan data');</script>";
-//     }
-
-//     echo "<script>window.location='../pages/akunSemua.php';</script>";
-// }
-
-
-
- 
 if ($_GET['aksi'] == "editakun") {
     $username = $_POST["username"];
     $nama_lengkap = $_POST["nama_lengkap"];
@@ -233,33 +200,36 @@ if ($_GET['aksi'] == "editakun") {
         $judul = $_POST["judul_event"];
         $keterangan = $_POST["keterangan"];
         $lokasi = $_POST["lokasi"];
-        $poster = $_POST["gambar"];
         $kuota = $_POST["kuota"];
         $pelaksanaan = $_POST["pelaksanaan"];
         $linkpendaftaran = $_POST["link_pendaftaran"];
         $tanggal = $_POST["tanggal"];
-             // Unggahan Gambar
-        // $poster = $_FILES["gambar"]["name"];
-        // $folder_upload = $_SERVER['DOCUMENT_ROOT'] . "../api/poster_event/"; // Path lengkap untuk menyimpan gambar
-    
-        // $path_file_upload = $folder_upload . basename($_FILES["gambar"]["name"]);
-        // move_uploaded_file($_FILES["gambar"]["tmp_name"], $path_file_upload);
     
         $data = array(
             $judul,
             $keterangan,
             $lokasi,
-            $poster,
             $kuota,
             $pelaksanaan,
             $linkpendaftaran,
             $tanggal
         );
     
-        $sql = "INSERT INTO tb_event (judul_event, keterangan, lokasi, gambar, kuota, pelaksanaan, link_pendaftaran, tanggal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        // Handle gambar
+        $gambar = $_FILES['gambar']['name'];
+        $folder_tujuan = 'poster/'; 
+        $path_gambar = $folder_tujuan . $gambar;
+    
+        move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+    
+        $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/poster/' . urlencode($gambar);
+    
+        $data[] = $url_gambar; 
+    
+        $sql = "INSERT INTO tb_event (judul_event, keterangan, lokasi, kuota, pelaksanaan, link_pendaftaran, tanggal, gambar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($sql);
     
-        // Eksekusi query dengan menggunakan array $data
+
         $stmt->execute($data);
     
         if ($stmt->rowCount() > 0) {
@@ -276,70 +246,30 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response);
     }
-    // if ($_GET['aksi'] == "tambahevent") {
-    //     $judul = $_POST["judul_event"];
-    //     $keterangan = $_POST["keterangan"];
-    //     $lokasi = $_POST["lokasi"];
-    //     $kuota = $_POST["kuota"];
-    //     $pelaksanaan = $_POST["pelaksanaan"];
-    //     $linkpendaftaran = $_POST["link_pendaftaran"];
-    //     $tanggal = $_POST["tanggal"];
-    
-    //     // Unggahan Gambar
-    //     $poster = $_FILES["gambar"]["name"];
-    //     $folder_upload = $_SERVER['DOCUMENT_ROOT'] . "../api/poster_event/"; // Path lengkap untuk menyimpan gambar
-    
-    //     $path_file_upload = $folder_upload . basename($_FILES["gambar"]["name"]);
-    //     move_uploaded_file($_FILES["gambar"]["tmp_name"], $path_file_upload);
-    
-    //     $data = array(
-    //         $judul,
-    //         $keterangan,
-    //         $lokasi,
-    //         $poster,
-    //         $kuota,
-    //         $pelaksanaan,
-    //         $linkpendaftaran,
-    //         $tanggal
-    //     );
-    
-    //     $sql = "INSERT INTO tb_event (judul_event, keterangan, lokasi, gambar, kuota, pelaksanaan, link_pendaftaran, tanggal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    //     $stmt = $koneksi->prepare($sql);
-    
-    //     // Eksekusi query dengan menggunakan array $data
-    //     $stmt->execute($data);
-    
-    //     if ($stmt->rowCount() > 0) {
-    //         $response = [
-    //             'sukses' => true,
-    //             'pesan' => 'Berhasil menyimpan data'
-    //         ];
-    //     } else {
-    //         $response = [
-    //             'sukses' => false,
-    //             'pesan' => 'Gagal menyimpan data'
-    //         ];
-    //     }
-    
-    //     echo json_encode($response);
-    // }
-    
     if ($_GET['aksi'] == "editevent") {
         $id_event = $_POST["id_event"];
         $judul = $_POST["judul_event"];
         $keterangan = $_POST["keterangan"];
         $lokasi = $_POST["lokasi"];
-        $poster = $_POST["gambar"];
         $kuota = $_POST["kuota"];
         $pelaksanaan = $_POST["pelaksanaan"];
         $linkpendaftaran = $_POST["link_pendaftaran"];
         $tanggal = $_POST["tanggal"];
     
+        // Handle gambar
+        $gambar = $_FILES['gambar']['name'];
+        $folder_tujuan = 'poster/'; 
+        $path_gambar = $folder_tujuan . $gambar;
+    
+        move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+    
+        $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/poster/' . urlencode($gambar);
+    
         $data = array(
             $judul,
             $keterangan,
             $lokasi,
-            $poster,
+            $url_gambar, 
             $kuota,
             $pelaksanaan,
             $linkpendaftaran,
@@ -350,10 +280,8 @@ if ($_GET['aksi'] == "editakun") {
         $sql = "UPDATE tb_event SET judul_event=?, keterangan=?, lokasi=?, gambar=?, kuota=?, pelaksanaan=?, link_pendaftaran=?, tanggal=? WHERE id_event=?";
         $stmt = $koneksi->prepare($sql);
     
-        // Eksekusi query dengan menggunakan array $data
         $stmt->execute($data);
     
-        // Cek apakah data berhasil disimpan
         if ($stmt->rowCount() > 0) {
             $response = [
                 'sukses' => true,
@@ -368,6 +296,7 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response);
     }
+    
     if ($_GET['aksi'] == "hapusevent") {
         $id = $_GET["id_event"];
     
