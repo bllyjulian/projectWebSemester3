@@ -10,14 +10,14 @@
         'username' => $row['username'],
         'nama_lengkap' => $row['nama_lengkap'],
         'password' => $row['password'],
-        'foto_profil' => base64_encode($row['foto_profil']),
+        'foto_profil' => $row['foto_profil'],
         'no_hp' => $row['no_hp'],
         'email' => $row['email'],
         'status' => $row['status'],
         'id_lvl' => $row['id_lvl']
       );
     }
-    echo json_encode(array('result' => $result));
+    echo json_encode($result);
   } else {
     // Note: Always use prepared statements for security.
     $username = mysqli_real_escape_string($connection, $_GET['username']);
@@ -29,7 +29,7 @@
         'username' => $row['username'],
         'nama_lengkap' => $row['nama_lengkap'],
         'password' => $row['password'],
-        'foto_profil' => base64_encode($row['foto_profil']),
+        'foto_profil' => $row['foto_profil'],
         'no_hp' => $row['no_hp'],
         'email' => $row['email'],
         'status' => $row['status'],

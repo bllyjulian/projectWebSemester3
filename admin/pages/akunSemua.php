@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Akun
+    Daftar Akun
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -25,29 +25,6 @@
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-  @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-
-  }
-
-
-}
-#navAkunAdmin, #navAkunMentor, #navAkunPengguna {
-  margin-left: 10px;
-}
-
-.nav-item.slide-down {
-  animation: slideDown 0.5s ease;
-}
-
-</style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -104,7 +81,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active1" href="#">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/course.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -121,68 +98,6 @@
               </svg>
             </div>
             <span class="nav-link-text ms-1">Course</span>
-          </a>
-        </li>
-        <li class="nav-item" id="navAkunAdmin">
-          <a class="nav-link " href="#">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>credit-card</title>
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                    <g transform="translate(1716.000000, 291.000000)">
-                      <g transform="translate(453.000000, 454.000000)">
-                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
-                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-            
-            <span class="nav-link-text ms-1">Akun Admin</span>
-          </a>
-        </li>
-        <li class="nav-item" id="navAkunMentor">
-          <a class="nav-link  " href="../pages/akunMentor.php">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>credit-card</title>
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                    <g transform="translate(1716.000000, 291.000000)">
-                      <g transform="translate(453.000000, 454.000000)">
-                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
-                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-            
-            <span class="nav-link-text ms-1">Daftar Akun</span>
-          </a>
-        </li>
-        <li class="nav-item" id="navAkunPengguna">
-          <a class="nav-link  " href="../pages/akunPengguna.php">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>credit-card</title>
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                    <g transform="translate(1716.000000, 291.000000)">
-                      <g transform="translate(453.000000, 454.000000)">
-                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
-                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-            <span class="nav-link-text ms-1">Akun pengguna</span>
           </a>
         </li>
         <li class="nav-item">
@@ -477,12 +392,7 @@
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                  
-                  <div class="dropdown float-lg-end pe-4">
-
-                  
-
-                  </div>
+                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
 
                 </div>
 
@@ -496,9 +406,11 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hak Akses</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"><button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button></th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hak Akses</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        AKsi
+                    </th>
 
                     </tr>
                   </thead>
@@ -549,7 +461,7 @@
             <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
                 <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
-                <td class="text-center align-middle text-sm">
+                <td class="align-middle text-lg-start text-sm">
     <?php if ($r->id_lvl == "SPA01"): ?>
         <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
     <?php elseif ($r->id_lvl == "ADM01"): ?>
@@ -565,15 +477,14 @@
 
 
 
-            <td class="align-middle text-center">
+            <td class="align-middle text-lg-start">
                 <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
             </td>
-            <td class="align-middle text-center">
-            <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-        Edit |
-    </a>
-    <a href="#" class="text-secondary font-weight-bold text-xs" onclick="confirmDelete('<?= $r->username;?>')">Hapus</a>
-
+            <td class="align-middle text-lg-start">
+            <div class=" text-start m-0">
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                  </div>
 </td>
 
         </tr>
@@ -604,12 +515,25 @@ echo '</p>';
                   </tbody>
                 </table>
               </div>
-              <div style="margin-right: 80px;" class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
+              <div class="card-header pb-0">
+
+<div class="row">
+  <div class="col-lg-6 col-7">
+<!-- filter rencananya -->
+  </div>
+  <div class="col-lg-6 col-5 my-auto text-end">
+  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
         <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
     <?php endif; ?>
 
     <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm">Next &gt;</a>
+</div>
+
+  </div>
+
+</div>
+
 </div>
 
             </div>
@@ -625,23 +549,23 @@ echo '</p>';
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
+                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Coding Camp</a>
+                
               </div>
             </div>
             <div class="col-lg-6">
               <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+                  <a href="#" class="nav-link text-muted">Creative Tim</a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+                  <a href="#" class="nav-link text-muted">About Us</a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+                  <a href="#" class="nav-link text-muted" >Blog</a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+                  <a href="#" class="nav-link pe-0 text-muted">License</a>
                 </li>
               </ul>
             </div>
@@ -659,21 +583,6 @@ echo '</p>';
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-
-
-$(document).ready(function(){
-$("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
-$("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
-$("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
-
-$(".nav-link.active1").click(function(){
-$("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-$("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-$("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-});
-});
-</script>
 
 <script>
 function confirmDelete(username) {

@@ -3,7 +3,7 @@
   
   if(empty($_GET)){
     $query = mysqli_query($connection, "SELECT * FROM tb_event");
-  
+    
     $result = array();
     while($row = mysqli_fetch_assoc($query)){
       $result[] = array(
@@ -18,6 +18,7 @@
         'tanggal' => $row['tanggal']
       );
     }
+    header ('Content-Type: application/json;charset=utf8');
     echo json_encode($result);
   } else {
     // Note: Always use prepared statements for security.
