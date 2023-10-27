@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Akun
+    Daftar Modul
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -95,7 +95,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Course</span>
+            <span class="nav-link-text ms-1">Modul</span>
           </a>
         </li>
         <li class="nav-item">
@@ -258,9 +258,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Modul</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Daftar Modul</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -384,13 +384,21 @@
 
             <div class="card-header pb-0">
 
-              <div class="row">
+             
+            <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Daftar Akun</h6>
+                  <h6>Daftar Event</h6>
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
+                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button>
+                <button class="btn bg-gradient-dark btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Detail</a></button>
+                <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Jenis</a></button>
+                  <div class="dropdown float-lg-end pe-4">
+
+                  
+
+                  </div>
 
                 </div>
 
@@ -402,10 +410,10 @@
                 <table class="table align-items-center mb-0" id="tabelakun">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hak Akses</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul<br>Harga</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keterangan</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                         AKsi
                     </th>
@@ -421,7 +429,7 @@
           $items_per_page = 7;
 
           // Menghitung total data
-          $sql = "SELECT * FROM tb_akun";
+          $sql = "SELECT * FROM tb_modul";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -434,7 +442,7 @@
           $start_index = ($current_page - 1) * $items_per_page;
 
           // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_akun LIMIT $start_index, $items_per_page";
+          $sql = "SELECT * FROM tb_modul LIMIT $start_index, $items_per_page";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -444,24 +452,26 @@
     ?>
 
      <tr>
-     <td>
+     <td style="text-wrap: wrap;">
     <div class="d-flex px-2 py-1">
         <div>
-            <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
+        <h6  style="display: none;"><?= $r->id_modul;?></h6>
+            <img src="<?= $r->gambar; ?>" class="avatar avatar-sm me-3" alt="<?= $r->judul; ?>">
         </div>
-        <div class="d-flex flex-column justify-content-left">
-            <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
-            <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+        <div style="width: 250px;" class="d-flex flex-column justify-content-left">
+            <h6 class="mb-0 text-sm" style="word-wrap: break-word;"><?= $r->judul;?></h6>
+            <p class="text-xs text-secondary mb-0">Rp. <?= $r->harga;?></p>
         </div>
     </div>
 </td>
 
-            <td>
-                <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
-                <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
+            <td style="text-wrap: wrap;">
+            <p class="text-xs text-secondary mb-0"><?= $r->keterangan;?></p>
+            </td>
+                
                 <td class="align-middle text-lg-start text-sm">
-    <?php if ($r->id_lvl == "SPA01"): ?>
-        <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
+    <?php if ($r->id_jenismodul == "js01"): ?>
+        <span class="badge badge-sm bg-gradient-primary">javascript</span>
     <?php elseif ($r->id_lvl == "ADM01"): ?>
         <span class="badge badge-sm bg-gradient-success">Admin</span>
     <?php elseif ($r->id_lvl == "MTR01"): ?>
@@ -476,7 +486,7 @@
 
 
             <td class="align-middle text-lg-start">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
+                <span class="text-secondary text-xs font-weight-bold"><?= $r->harga;?></span>
             </td>
             <td class="align-middle text-lg-start">
             <div class=" text-start m-0">
@@ -499,7 +509,7 @@ if ($total_data > ($current_page * $items_per_page)):
 require_once('../crudphp/koneksi.php');
 
 // Menghitung total data
-$sql = "SELECT COUNT(*) FROM tb_akun"; // Menghitung jumlah data tanpa memuatnya
+$sql = "SELECT COUNT(*) FROM tb_modul"; // Menghitung jumlah data tanpa memuatnya
 $row = $koneksi->prepare($sql);
 $row->execute();
 $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
@@ -507,7 +517,7 @@ $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
 // Menampilkan total akun terdaftar
 echo '<p style="margin-left: 23px;" class="text-sm">';
 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-echo '<span class="font-weight-bold ms-1">'.$total_data.' Akun terdaftar</span>';
+echo '<span class="font-weight-bold ms-1">'.$total_data.' Modul terdaftar</span>';
 echo '</p>';
 ?>
                   </tbody>

@@ -390,7 +390,9 @@
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                  
+                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button>
+                <button class="btn bg-gradient-dark btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Detail</a></button>
+                <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Jenis</a></button>
                   <div class="dropdown float-lg-end pe-4">
 
                   
@@ -412,7 +414,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Metode pelaksanaan</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link<br>pendaftaran</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal<br>pelaksanaan</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"><button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button></th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Aksi</th>
 
                     </tr>
                   </thead>
@@ -485,11 +487,12 @@
     <span class="text-secondary text-xs font-weight-bold"><?= $r->tanggal;?></span>
 </td>
 <td>
-    <a href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-        Edit |
-    </a>
-    <a href="#" class="text-secondary font-weight-bold text-xs" onclick="confirmDelete('<?= $r->id_event;?>')">Hapus</a>
-</td>
+<div class=" text-start m-0">
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_event;?>')" href="#"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                  </div>
+
+  </td>
 
 
         </tr>
@@ -519,8 +522,14 @@ echo '</p>';
 ?>
                   </tbody>
                 </table>
-              </div>
-              <div style="margin-right: 41px;" class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
+                <div class="card-header pb-0">
+
+<div class="row">
+  <div class="col-lg-6 col-7">
+<!-- filter rencananya -->
+  </div>
+  <div class="col-lg-6 col-5 my-auto text-end">
+  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
         <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
     <?php endif; ?>
@@ -528,9 +537,11 @@ echo '</p>';
     <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm">Next &gt;</a>
 </div>
 
-            </div>
-          </div>
-        </div>
+  </div>
+
+</div>
+
+</div>
       </div>
       <footer class="footer pt-3  ">
         <div class="container-fluid">
