@@ -90,6 +90,54 @@
     //     echo json_encode($response);
     // }
     
+    // if ($_GET['aksi'] == "tambahakun") {
+    //     $username = $_POST["username"];
+    //     $nama_lengkap = $_POST["nama_lengkap"];
+    //     $password = $_POST["password"];
+    //     $no_hp = $_POST["nomor_hp"];
+    //     $email = $_POST["email"];
+    //     $status = $_POST["status"];
+    //     $id_lvl = $_POST["hak_akses"];
+    
+    //     // Handle gambar (profile picture)
+    //     $gambar = $_FILES['foto_profil']['name'];
+    //     $folder_tujuan = 'foto_profil/'; // Set your desired folder path
+    //     $path_gambar = $folder_tujuan . $gambar;
+    
+    //     move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
+    
+    //     $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . $folder_tujuan . urlencode($gambar);
+    
+    //     $data = array(
+    //         $username,
+    //         $nama_lengkap,
+    //         $password,
+    //         $url_gambar, // Store the URL of the profile picture
+    //         $no_hp,
+    //         $email,
+    //         $status,
+    //         $id_lvl
+    //     );
+    
+    //     $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    //     $stmt = $koneksi->prepare($sql);
+    
+    //     $stmt->execute($data);
+    
+    //     if ($stmt->rowCount() > 0) {
+    //         $response = [
+    //             'sukses' => true,
+    //             'pesan' => 'Berhasil menyimpan data'
+    //         ];
+    //     } else {
+    //         $response = [
+    //             'sukses' => false,
+    //             'pesan' => 'Gagal menyimpan data'
+    //         ];
+    //     }
+    
+    //     echo json_encode($response);
+    // }
     if ($_GET['aksi'] == "tambahakun") {
         $username = $_POST["username"];
         $nama_lengkap = $_POST["nama_lengkap"];
@@ -100,13 +148,18 @@
         $id_lvl = $_POST["hak_akses"];
     
         // Handle gambar (profile picture)
-        $gambar = $_FILES['foto_profil']['name'];
-        $folder_tujuan = 'foto_profil/'; // Set your desired folder path
-        $path_gambar = $folder_tujuan . $gambar;
+        if ($_FILES['foto_profil']['name'] != '') {
+            $gambar = $_FILES['foto_profil']['name'];
+            $folder_tujuan = 'foto_profil/'; // Set your desired folder path
+            $path_gambar = $folder_tujuan . $gambar;
     
-        move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
+            move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . $folder_tujuan . urlencode($gambar);
+            $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . urlencode($gambar);
+        } else {
+            // Set default URL if no image uploaded
+            $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/ppkosong.jpg';
+        }
     
         $data = array(
             $username,
@@ -138,6 +191,7 @@
     
         echo json_encode($response);
     }
+    
     
 if ($_GET['aksi'] == "editakun") {
     $username = $_POST["username"];

@@ -17,6 +17,8 @@
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" rel="stylesheet">
+
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
@@ -389,10 +391,23 @@
             <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap" placeholder="" autocomplete="off">
         </div>
         
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="password">Password</label>
+        <!-- <div class="form-group">
+            <label class="text-lg font-weightc-bold" for="password">Password</label>
             <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">
+        </div> -->
+        <div class="form-group">
+    <label class="text-lg font-weight-bold" for="password">Password</label>
+    <div class="input-group">
+        <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">
+        <div class="input-group-append">
+            <span class="input-group-text" style="border: none; background: none;">
+                <i class="fas fa-eye" id="togglePassword"></i>
+            </span>
         </div>
+    </div>
+</div>
+
+
         <div class="form-group">
             <label class="text-lg font-weight-bold" for="email">Email</label>
             <input type="email" class="form-control" required name="email" id="email" placeholder="" autocomplete="off">
@@ -401,10 +416,22 @@
     </div>
     
     <div class="col-sm-6">
-        <div class="form-group">
-            <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
-            <input type="number" class="form-control" required name="nomor_hp" id="nomor_hp" placeholder="" autocomplete="off">
+    <div class="form-group">
+    <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
+    <!-- <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">+62</span>
         </div>
+        <input type="text" class="form-control" required name="nomor_hp" id="nomor_hp" placeholder="8xx xxxx xxxx" autocomplete="off">
+    </div> -->
+    <div class="input-group">
+              <span class="input-group-text text-body">+62</span>
+              <input type="number" class="form-control" required name="nomor_hp" id="nomor_hp" placeholder="8xx xxxx xxxx" autocomplete="off">
+            </div>
+</div>
+
+
+
         
         <div class="form-group">
             <label class="text-lg font-weight-bold" for="status">Status</label>
@@ -427,9 +454,10 @@
             <input type="file" class="form-control" required name="foto_profil" id="foto_profil" placeholder="">
         </div> -->
         <div class="form-group">
-      <label class="text-lg font-weight-bold" for="foto_profil">Foto Profil</label>
-      <input type="file" class="form-control" required name="foto_profil" id="foto_profil" placeholder="">
-   </div>
+  <label class="text-lg font-weight-bold" for="foto_profil">Foto Profil</label>
+  <input type="file" class="form-control" name="foto_profil" id="foto_profil" placeholder="">
+</div>
+
     </div>
 
     <div class="form-group mt-2">
@@ -540,6 +568,14 @@
                 }
             });
         });
+    });
+</script>
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        const passwordInput = document.getElementById("password");
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
     });
 </script>
 

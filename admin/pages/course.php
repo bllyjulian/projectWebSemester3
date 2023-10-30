@@ -391,7 +391,7 @@
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button>
+                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambahz</a></button>
                 <button class="btn bg-gradient-dark btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Detail</a></button>
                 <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Jenis</a></button>
                   <div class="dropdown float-lg-end pe-4">
