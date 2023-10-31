@@ -1,6 +1,6 @@
 <?php
   require_once('connection.php');
-  
+  header ('Content-Type: application/json;charset=utf8');
   if(empty($_GET)){
     $query = mysqli_query($connection, "SELECT * FROM tb_akun");
   

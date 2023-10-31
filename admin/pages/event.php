@@ -412,7 +412,7 @@
                       <th style="width: 250px;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Event<br>Keterangan</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lokasi<br>Kuota</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Metode pelaksanaan</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link<br>pendaftaran</th>
+                      <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link<br>pendaftaran</th> -->
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal<br>pelaksanaan</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Aksi</th>
 
@@ -480,9 +480,9 @@
 
 
 
-            <td style="text-wrap: wrap;">
+            <!-- <td style="text-wrap: wrap;">
                 <a class="text-secondary text-xs font-weight-bold" href="<?= $r->link_pendaftaran;?>">Klik Disini!</a>
-            </td>
+            </td> -->
             <td style="text-wrap: wrap;">
     <span class="text-secondary text-xs font-weight-bold"><?= $r->tanggal;?></span>
 </td>

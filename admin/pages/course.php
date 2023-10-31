@@ -387,12 +387,11 @@
              
             <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Daftar Event</h6>
+                  <h6>Daftar Modul</h6>
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambahz</a></button>
-                <button class="btn bg-gradient-dark btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Detail</a></button>
+                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button>
                 <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Jenis</a></button>
                   <div class="dropdown float-lg-end pe-4">
 
@@ -411,7 +410,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul<br>Harga</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keterangan</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jumlah bab</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
