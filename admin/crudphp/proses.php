@@ -143,6 +143,10 @@
         $nama_lengkap = $_POST["nama_lengkap"];
         $password = $_POST["password"];
         $no_hp = $_POST["nomor_hp"];
+        if (substr($no_hp, 0, 1) != '+') {
+            $no_hp = '+62-' . $no_hp;
+        }
+        
         $email = $_POST["email"];
         $status = $_POST["status"];
         $id_lvl = $_POST["hak_akses"];
@@ -155,7 +159,9 @@
     
             move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
     
+    
             $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . urlencode($gambar);
+            // $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . urlencode($gambar);
         } else {
             // Set default URL if no image uploaded
             $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/ppkosong.jpg';
