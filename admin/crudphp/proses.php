@@ -142,13 +142,13 @@
         $username = $_POST["username"];
         $nama_lengkap = $_POST["nama_lengkap"];
         $password = $_POST["password"];
-        $no_hp = $_POST["nomor_hp"];
+        $no_hp = $_POST["no_hp"];
         if (substr($no_hp, 0, 1) != '+') {
             $no_hp = '+62-' . $no_hp;
         }
         
         $email = $_POST["email"];
-        $status = $_POST["status"];
+        $jeniskelamin = $_POST["jenis_kelamin"];
         $id_lvl = $_POST["hak_akses"];
     
         // Handle gambar (profile picture)
@@ -174,11 +174,11 @@
             $url_gambar, // Store the URL of the profile picture
             $no_hp,
             $email,
-            $status,
+            $jeniskelamin,
             $id_lvl
         );
     
-        $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($sql);
     
         $stmt->execute($data);
@@ -202,21 +202,21 @@
 if ($_GET['aksi'] == "editakun") {
     $username = $_POST["username"];
     $nama_lengkap = $_POST["nama_lengkap"];
-    $no_hp = $_POST["nomor_hp"];
+    $no_hp = $_POST["no_hp"];
     $email = $_POST["email"];
-    $status = $_POST["status"];
+    $jeniskelamin = $_POST["jenis_kelamin"];
     $id_lvl = $_POST["hak_akses"];
 
     $data = array(
         $nama_lengkap,
         $no_hp,
         $email,
-        $status,
+        $jeniskelamin,
         $id_lvl,
         $username // Sisipkan username di sini untuk WHERE clause
     );
 
-    $sql = "UPDATE tb_akun SET nama_lengkap=?, no_hp=?, email=?, status=?, id_lvl=? WHERE username=?";
+    $sql = "UPDATE tb_akun SET nama_lengkap=?, no_hp=?, email=?, jenis_kelamin=?, id_lvl=? WHERE username=?";
     $stmt = $koneksi->prepare($sql);
 
     // Eksekusi query dengan menggunakan array $data

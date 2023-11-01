@@ -411,13 +411,13 @@
                                 <label class="text-lg font-weight-bold" for="gambar">Poster</label>
                                 <input type="file" class="form-control" required name="gambar" id="gambar"  value="<?= $data_event['gambar']; ?>" autocomplete="off">
                             </div>
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="kuota">Kuota</label>
-                                    <input type="number" class="form-control" required name="kuota" id="kuota" value="<?= $data_event['kuota']; ?>" autocomplete="off">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
+                          </div>
+                          
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label class="text-lg font-weight-bold" for="kuota">Kuota</label>
+                                  <input type="number" class="form-control" required name="kuota" id="kuota" value="<?= $data_event['kuota']; ?>" autocomplete="off">
+                              </div>
                                 <div class="form-group">
                                     <label class="text-lg font-weight-bold" for="pelaksanaan">Pelaksanaan</label>
                                     <select class="form-control" required name="pelaksanaan" id="pelaksanaan">

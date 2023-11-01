@@ -8,12 +8,12 @@
     while($row = mysqli_fetch_assoc($query)){
       $result[] = array(
         'username' => $row['username'],
-        'nama_lengkap' => $row['nama_lengkap'],
         'password' => $row['password'],
+        'nama_lengkap' => $row['nama_lengkap'],
         'foto_profil' => $row['foto_profil'],
         'no_hp' => $row['no_hp'],
         'email' => $row['email'],
-        'status' => $row['status'],
+        'jenis_kelamin' => $row['jenis_kelamin'],
         'id_lvl' => $row['id_lvl']
       );
     }
@@ -27,12 +27,12 @@
     while($row = mysqli_fetch_assoc($query)){
       $result[] = array(
         'username' => $row['username'],
-        'nama_lengkap' => $row['nama_lengkap'],
         'password' => $row['password'],
+        'nama_lengkap' => $row['nama_lengkap'],
         'foto_profil' => $row['foto_profil'],
         'no_hp' => $row['no_hp'],
         'email' => $row['email'],
-        'status' => $row['status'],
+        'jenis_kelamin' => $row['jenis_kelamin'],
         'id_lvl' => $row['id_lvl']
       );
     }

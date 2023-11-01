@@ -409,16 +409,15 @@ if (isset($_GET['username'])) {
           <div class="col-sm-6">
             
                     <div class="form-group">
-            <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
-            <input type="number" class="form-control" required name="nomor_hp" id="nomor_hp" value="<?= $data_pengguna['no_hp']; ?>" placeholder="" autocomplete="off">
+            <label class="text-lg font-weight-bold" for="no_hp">Nomor Hp</label>
+            <input type="tel" class="form-control" required name="no_hp" id="no_hp" value="<?= $data_pengguna['no_hp']; ?>" placeholder="" autocomplete="off">
         </div>
         
         <div class="form-group">
-        <label class="text-lg font-weight-bold" for="status">Status</label>
-        <select class="form-control" required name="status" id="status">
-            <option value="mahasiswa" <?= ($data_pengguna['status'] == 'mahasiswa') ? 'selected' : ''; ?>>Mahasiswa</option>
-            <option value="pelajar" <?= ($data_pengguna['status'] == 'pelajar') ? 'selected' : ''; ?>>Pelajar</option>
-            <option value="bekerja" <?= ($data_pengguna['status'] == 'bekerja') ? 'selected' : ''; ?>>Bekerja</option>
+        <label class="text-lg font-weight-bold" for="jenis_kelamin">Jenis Kelamin</label>
+        <select class="form-control" required name="jenis_kelamin" id="jenis_kelamin">
+            <option value="Laki Laki" <?= ($data_pengguna['jenis_kelamin'] == 'Laki Laki') ? 'selected' : ''; ?>>Laki Laki</option>
+            <option value="Perempuan" <?= ($data_pengguna['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
         </select>
     </div>
     

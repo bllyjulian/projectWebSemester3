@@ -263,12 +263,12 @@
           <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Cari disini...">
-            </div>
-          </div>
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+  <div class="input-group">
+    <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+    <input type="text" class="form-control" id="searchInput" placeholder="Cari disini...">
+  </div>
+</div>
           <ul class="navbar-nav  justify-content-end">
             </li>
             <li class="nav-item d-flex align-items-center">
@@ -405,7 +405,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hak Akses</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis Kelamin</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                         AKsi
                     </th>
@@ -476,13 +476,14 @@
 
 
             <td class="align-middle text-lg-start">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
+                <span class="text-secondary text-xs font-weight-bold"><?= $r->jenis_kelamin;?></span>
             </td>
             <td class="align-middle text-lg-start">
             <div class=" text-start m-0">
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  </div>
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#"><i class="far fa-trash-alt me-2"></i></a>
+              
+            </div>
 </td>
 
         </tr>
@@ -611,6 +612,24 @@ function confirmDelete(username) {
     }
   });
 }
+
+document.getElementById('searchInput').addEventListener('input', function() {
+    var searchValue = this.value.toLowerCase();
+    var rows = document.querySelectorAll('#tabelakun tbody tr');
+
+    rows.forEach(function(row) {
+      var cells = row.getElementsByTagName('td');
+      var found = false;
+      for (var i = 0; i < cells.length; i++) {
+        var cellText = cells[i].innerText.toLowerCase();
+        if (cellText.includes(searchValue)) {
+          found = true;
+          break;
+        }
+      }
+      row.style.display = found ? '' : 'none';
+    });
+  });
 </script>
 
   <!-- Github buttons -->

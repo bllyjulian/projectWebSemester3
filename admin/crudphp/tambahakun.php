@@ -417,10 +417,10 @@
     
     <div class="col-sm-6">
     <div class="form-group">
-    <label class="text-lg font-weight-bold" for="nomor_hp">Nomor Hp</label>
+    <label class="text-lg font-weight-bold" for="no_hp">Nomor Hp</label>
     <div class="input-group">
         <span class="input-group-text text-body">+62</span>
-        <input type="tel" class="form-control" required name="nomor_hp" id="nomor_hp" placeholder="8xx xxxx xxxx" autocomplete="off" oninput="formatNomorHp(this) ">
+        <input type="tel" class="form-control" required name="no_hp" id="no_hp" placeholder="8xx xxxx xxxx" autocomplete="off" oninput="formatNomorHp(this) ">
     </div>
 </div>
 
@@ -428,11 +428,10 @@
 
         
         <div class="form-group">
-            <label class="text-lg font-weight-bold" for="status">Status</label>
-            <select class="form-control" required name="status" id="status">
-                <option value="mahasiswa">Mahasiswa</option>
-                <option value="pelajar">Pelajar</option>
-                <option value="bekerja">Bekerja</option>
+            <label class="text-lg font-weight-bold" for="jenis_kelamin">Jenis Kelamin</label>
+            <select class="form-control" required name="jenis_kelamin" id="jenis_kelamin">
+                <option value="Laki Laki">Laki Laki</option>
+                <option value="Perempuan">Perempuan</option>
             </select>
         </div>
         <div class="form-group">
@@ -551,7 +550,7 @@
             $('#password').val(response.data.password);
             $('#nomor_hp').val(response.data.no_hp);
             $('#email').val(response.data.email);
-            $('#status').val(response.data.status);
+            $('#jenis_kelamin').val(response.data.status);
             $('#hak_akses').val(response.data.id_lvl);
         });
     }

@@ -457,7 +457,7 @@
         <h6  style="display: none;"><?= $r->id_modul;?></h6>
             <img src="<?= $r->gambar; ?>" class="avatar avatar-sm me-3" alt="<?= $r->judul; ?>">
         </div>
-        <div style="width: 250px;" class="d-flex flex-column justify-content-left">
+        <div class="d-flex flex-column justify-content-left">
             <h6 class="mb-0 text-sm" style="word-wrap: break-word;"><?= $r->judul;?></h6>
             <p class="text-xs text-secondary mb-0">Rp. <?= $r->harga;?></p>
         </div>
@@ -465,20 +465,20 @@
 </td>
 
             <td style="text-wrap: wrap;">
-            <p class="text-xs text-secondary mb-0"><?= $r->keterangan;?></p>
+            <p class="text-xs text-secondary mb-0"><?= $r->id_jenismodul;?></p>
             </td>
                 
                 <td class="align-middle text-lg-start text-sm">
-    <?php if ($r->id_jenismodul == "js01"): ?>
-        <span class="badge badge-sm bg-gradient-primary">javascript</span>
-    <?php elseif ($r->id_lvl == "ADM01"): ?>
-        <span class="badge badge-sm bg-gradient-success">Admin</span>
-    <?php elseif ($r->id_lvl == "MTR01"): ?>
+    <?php if ($r->id_jenismodul == "and01"): ?>
+        <span class="badge badge-sm bg-gradient-primary">Android Developer</span>
+    <?php elseif ($r->id_jenismodul == "web1"): ?>
+        <span class="badge badge-sm bg-gradient-success">Website Developer</span>
+    <?php elseif ($r->id_jenismodul == "MTR01"): ?>
         <span class="badge badge-sm bg-gradient-info">Mentor</span>
-    <?php elseif ($r->id_lvl == "USR01"): ?>
+    <?php elseif ($r->id_jenismodul == "USR01"): ?>
         <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
     <?php else: ?>
-        <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
+        <span class="badge badge-sm bg-gradient-primary"><?= $r->id_jenismodul;?></span>
     <?php endif; ?>
 </td>
 
@@ -489,8 +489,9 @@
             </td>
             <td class="align-middle text-lg-start">
             <div class=" text-start m-0">
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#"><i class="far fa-trash-alt me-2"></i>Delete</a>
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
+              <a style="margin-right: 10px;" class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#"><i class="far fa-trash-alt me-2"></i></a>
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fa fa-info-circle text-dark me-2" aria-hidden="true"></i></a>
                   </div>
 </td>
 

@@ -1,26 +1,39 @@
 <?php
 require_once('connection.php');
 
+header ('Content-Type: application/json;charset=utf8');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari request
-    $username = mysqli_real_escape_string($connection, $_POST['username']);
-    $nama_lengkap = mysqli_real_escape_string($connection, $_POST['nama_lengkap']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password for security
-    $foto_profil = base64_encode($_POST['foto_profil']);
-    $no_hp = mysqli_real_escape_string($connection, $_POST['no_hp']);
-    $email = mysqli_real_escape_string($connection, $_POST['email']);
-    $status = mysqli_real_escape_string($connection, $_POST['status']);
-    $id_lvl = mysqli_real_escape_string($connection, $_POST['id_lvl']);
 
-    // Insert data ke database
-    $query = mysqli_query($connection, "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) 
-                                        VALUES ('$username', '$nama_lengkap', '$password', '$foto_profil', '$no_hp', '$email', '$status', '$id_lvl')");
+    $inputJSON = file_get_contents('php://input');
+    $input = json_decode($inputJSON, TRUE);
 
-    if ($query) {
-        $response = array('message' => 'Registrasi berhasil');
-        echo json_encode($response);
+    if (
+        isset($input['username']) &&
+        isset($input['nama_lengkap']) &&
+        isset($input['password']) &&
+        isset($input['no_hp']) &&
+        isset($input['email'])
+    ) {
+        $username = mysqli_real_escape_string($connection, $input['username']);
+        $nama_lengkap = mysqli_real_escape_string($connection, $input['nama_lengkap']);
+        $password = mysqli_real_escape_string($connection, $input['password']);
+        $no_hp = mysqli_real_escape_string($connection, $input['no_hp']);
+        $email = mysqli_real_escape_string($connection, $input['email']);
+
+
+        $query = mysqli_query($connection, "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) 
+                                            VALUES ('$username', '$nama_lengkap', '$password', 'coba', '$no_hp', '$email', 'coba', 'USR01')");
+
+        if ($query) {
+            $response = array('message' => 'Registrasi berhasil');
+            echo json_encode($response);
+        } else {
+            $response = array('message' => 'Registrasi gagal');
+            echo json_encode($response);
+        }
     } else {
-        $response = array('message' => 'Registrasi gagal');
+        $response = array('message' => 'Data tidak lengkap');
         echo json_encode($response);
     }
 } else {
@@ -29,4 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 mysqli_close($connection);
+
+
 ?>
