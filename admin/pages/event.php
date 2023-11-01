@@ -422,8 +422,6 @@
                   <?php 
                  require_once('../crudphp/koneksi.php');
 
-
-          // Menentukan jumlah item per halaman
           $items_per_page = 7;
 
           // Menghitung total data
