@@ -159,12 +159,12 @@
     
             move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
     
-    
-            $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . urlencode($gambar);
+
+            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/' . urlencode($gambar);
             // $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . urlencode($gambar);
         } else {
             // Set default URL if no image uploaded
-            $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/ppkosong.jpg';
+            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg';
         }
     
         $data = array(
@@ -282,7 +282,7 @@ if ($_GET['aksi'] == "editakun") {
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/poster/' . urlencode($gambar);
+        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($gambar);
     
         $data[] = $url_gambar; 
     
@@ -323,7 +323,7 @@ if ($_GET['aksi'] == "editakun") {
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/poster/' . urlencode($gambar);
+        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($gambar);
     
         $data = array(
             $judul,

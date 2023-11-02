@@ -34,6 +34,7 @@ header ('Content-Type: application/json;charset=utf8');
         'id_jenismodul' => $row['id_jenismodul']
       );
     }
+    header ('Content-Type: application/json;charset=utf8');
     echo json_encode($result);
   }
   

@@ -474,15 +474,21 @@
 </td>
 
 
-
             <td class="align-middle text-lg-start">
                 <span class="text-secondary text-xs font-weight-bold"><?= $r->jenis_kelamin;?></span>
             </td>
             <td class="align-middle text-lg-start">
             <div class=" text-start m-0">
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i></a>
-              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#"><i class="far fa-trash-alt me-2"></i></a>
+
+
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user">
+              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i></a>
               
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#">
+              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+            </a>
+              
+
             </div>
 </td>
 

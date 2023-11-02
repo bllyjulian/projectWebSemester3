@@ -411,6 +411,10 @@
                                 <label class="text-lg font-weight-bold" for="gambar">Poster</label>
                                 <input type="file" class="form-control" required name="gambar" id="gambar"  value="<?= $data_event['gambar']; ?>" autocomplete="off">
                             </div>
+                            <div class="form-group">
+                                    <label class="text-lg font-weight-bold" for="lokasi">Link gambar</label>
+                                    <input type="text" class="form-control" required name="gambar" id="gambar" value="<?= $data_event['gambar']; ?>" autocomplete="off">
+                                </div>
                           </div>
                           
                           <div class="col-sm-6">

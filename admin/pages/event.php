@@ -391,8 +391,7 @@
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
                 <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button>
-                <button class="btn bg-gradient-dark btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Detail</a></button>
-                <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Jenis</a></button>
+                
                   <div class="dropdown float-lg-end pe-4">
 
                   
@@ -486,8 +485,13 @@
 </td>
 <td>
 <div class=" text-start m-0">
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_event;?>')" href="#"><i class="far fa-trash-alt me-2"></i>Delete</a>
+
+              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user">
+              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"></i></a>
+
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_event;?>')" href="#">
+              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Event"></i>
+            </a>
                   </div>
 
   </td>

@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = mysqli_real_escape_string($connection, $input['email']);
 
 
-        $query = mysqli_query($connection, "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) 
-                                            VALUES ('$username', '$nama_lengkap', '$password', 'coba', '$no_hp', '$email', 'coba', 'USR01')");
+        $query = mysqli_query($connection, "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) 
+                                            VALUES ('$username', '$nama_lengkap', '$password', 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg', '$no_hp', '$email', 'Laki Laki', 'USR01')");
 
         if ($query) {
             $response = array('message' => 'Registrasi berhasil');
