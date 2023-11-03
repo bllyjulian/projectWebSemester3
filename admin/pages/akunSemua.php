@@ -39,7 +39,7 @@
     <div class="collapse navbar-collapse h-100 w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'dashboard.php') ? 'active' : ''; ?>" href="../pages/dashboard.php">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'dashboard.php') ? 'active' : ''; ?>" href="../pages/dashboard">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>shop </title>
@@ -455,23 +455,22 @@
         </div>
     </div>
 </td>
-
-            <td>
+ <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
                 <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
                 <td class="align-middle text-lg-start text-sm">
-    <?php if ($r->id_lvl == "SPA01"): ?>
-        <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-    <?php elseif ($r->id_lvl == "ADM01"): ?>
-        <span class="badge badge-sm bg-gradient-success">Admin</span>
-    <?php elseif ($r->id_lvl == "MTR01"): ?>
-        <span class="badge badge-sm bg-gradient-info">Mentor</span>
-    <?php elseif ($r->id_lvl == "USR01"): ?>
-        <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
-    <?php else: ?>
-        <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
-    <?php endif; ?>
-</td>
+                <?php if ($r->id_lvl == "SPA01"): ?>
+                    <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
+                <?php elseif ($r->id_lvl == "ADM01"): ?>
+                    <span class="badge badge-sm bg-gradient-success">Admin</span>
+                <?php elseif ($r->id_lvl == "MTR01"): ?>
+                    <span class="badge badge-sm bg-gradient-info">Mentor</span>
+                <?php elseif ($r->id_lvl == "USR01"): ?>
+                    <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
+                <?php else: ?>
+                    <span class="badge badge-sm bg-gradient-primary"><?= $r->id_l;?></span>
+                <?php endif; ?>
+          </td>
 
 
             <td class="align-middle text-lg-start">

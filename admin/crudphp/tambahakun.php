@@ -419,9 +419,9 @@
     <div class="form-group">
     <label class="text-lg font-weight-bold" for="no_hp">Nomor Hp</label>
     <div class="input-group">
-        <span class="input-group-text text-body">+62</span>
-        <input type="tel" class="form-control" required name="no_hp" id="no_hp" placeholder="8xx xxxx xxxx" autocomplete="off" oninput="formatNomorHp(this) ">
-    </div>
+    <span class="input-group-text text-body">+62</span>
+    <input type="tel" class="form-control" required name="no_hp" id="no_hp" placeholder="8xx xxxx xxxx" autocomplete="off" oninput="formatNomorHp(this)" maxlength="12">
+</div>
 </div>
 
 
@@ -571,11 +571,10 @@
         this.classList.toggle("fa-eye-slash");
     });
     function formatNomorHp(input) {
-    let value = input.value.replace(/\D/g, '');
-    if (value.length > 4) {
-        value = value.substring(0, 3) + '-' + value.substring(3, 7) + '-' + value.substring(7, 11);
+    input.value = input.value.replace(/\D/g, ''); // Hapus karakter selain angka
+    if (input.value.length > 12) {
+        input.value = input.value.slice(0, 12);
     }
-    input.value = value;
 }
 </script>
 

@@ -20,7 +20,8 @@ header ('Content-Type: application/json;charset=utf8');
   } else {
     // Note: Always use prepared statements for security.
     $idmodul = mysqli_real_escape_string($connection, $_GET['id_modul']);
-    $query = mysqli_query($connection, "SELECT * FROM tb_modul WHERE id_modul='$idmodul'");
+    $idjenismodul = mysqli_real_escape_string($connection, $_GET['id_jenismodul']);
+    $query = mysqli_query($connection, "SELECT * FROM tb_modul WHERE id_modul='$idmodul' OR id_jenismodul= '$idjenismodul'");
     
     $result = array();
     while($row = mysqli_fetch_assoc($query)){

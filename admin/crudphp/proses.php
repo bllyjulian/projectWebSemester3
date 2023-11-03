@@ -90,61 +90,13 @@
     //     echo json_encode($response);
     // }
     
-    // if ($_GET['aksi'] == "tambahakun") {
-    //     $username = $_POST["username"];
-    //     $nama_lengkap = $_POST["nama_lengkap"];
-    //     $password = $_POST["password"];
-    //     $no_hp = $_POST["nomor_hp"];
-    //     $email = $_POST["email"];
-    //     $status = $_POST["status"];
-    //     $id_lvl = $_POST["hak_akses"];
-    
-    //     // Handle gambar (profile picture)
-    //     $gambar = $_FILES['foto_profil']['name'];
-    //     $folder_tujuan = 'foto_profil/'; // Set your desired folder path
-    //     $path_gambar = $folder_tujuan . $gambar;
-    
-    //     move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
-    
-    //     $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . $folder_tujuan . urlencode($gambar);
-    
-    //     $data = array(
-    //         $username,
-    //         $nama_lengkap,
-    //         $password,
-    //         $url_gambar, // Store the URL of the profile picture
-    //         $no_hp,
-    //         $email,
-    //         $status,
-    //         $id_lvl
-    //     );
-    
-    //     $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    //     $stmt = $koneksi->prepare($sql);
-    
-    //     $stmt->execute($data);
-    
-    //     if ($stmt->rowCount() > 0) {
-    //         $response = [
-    //             'sukses' => true,
-    //             'pesan' => 'Berhasil menyimpan data'
-    //         ];
-    //     } else {
-    //         $response = [
-    //             'sukses' => false,
-    //             'pesan' => 'Gagal menyimpan data'
-    //         ];
-    //     }
-    
-    //     echo json_encode($response);
-    // }
     if ($_GET['aksi'] == "tambahakun") {
         $username = $_POST["username"];
         $nama_lengkap = $_POST["nama_lengkap"];
         $password = $_POST["password"];
         $no_hp = $_POST["no_hp"];
         if (substr($no_hp, 0, 1) != '+') {
-            $no_hp = '+62-' . $no_hp;
+            $no_hp = '+62' . $no_hp;
         }
         
         $email = $_POST["email"];
@@ -154,50 +106,53 @@
         // Handle gambar (profile picture)
         if ($_FILES['foto_profil']['name'] != '') {
             $gambar = $_FILES['foto_profil']['name'];
-            $folder_tujuan = 'foto_profil/'; // Set your desired folder path
+            $gambar = str_replace(' ', '_', $gambar);
+            $folder_tujuan = 'foto_profil/'; // Tentukan path folder yang diinginkan
             $path_gambar = $folder_tujuan . $gambar;
     
             move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
     
-
             $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/' . urlencode($gambar);
-            // $url_gambar = 'https://billy30.000webhostapp.com/projectWebS3/admin/crudphp/foto_profil/' . urlencode($gambar);
         } else {
-            // Set default URL if no image uploaded
-            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg';
+            // Jika gambar tidak diupload
+            if ($jeniskelamin == "Laki Laki") {
+                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg';
+            } elseif ($jeniskelamin == "Perempuan") {
+                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosongcwe.jpeg';
+            }
         }
-    
-        $data = array(
-            $username,
-            $nama_lengkap,
-            $password,
-            $url_gambar, // Store the URL of the profile picture
-            $no_hp,
-            $email,
-            $jeniskelamin,
-            $id_lvl
-        );
-    
-        $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $koneksi->prepare($sql);
-    
-        $stmt->execute($data);
-    
-        if ($stmt->rowCount() > 0) {
-            $response = [
-                'sukses' => true,
-                'pesan' => 'Berhasil menyimpan data'
-            ];
-        } else {
-            $response = [
-                'sukses' => false,
-                'pesan' => 'Gagal menyimpan data'
-            ];
-        }
-    
+            $data = array(
+                $username,
+                $nama_lengkap,
+                $password,
+                $url_gambar, // Simpan URL foto profil
+                $no_hp,
+                $email,
+                $jeniskelamin,
+                $id_lvl
+            );
+        
+            $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $koneksi->prepare($sql);
+        
+            $stmt->execute($data);
+        
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil menyimpan data'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal menyimpan data'
+                ];
+            }
+
         echo json_encode($response);
     }
-    
+
+  
     
 if ($_GET['aksi'] == "editakun") {
     $username = $_POST["username"];
@@ -277,6 +232,7 @@ if ($_GET['aksi'] == "editakun") {
     
         // Handle gambar
         $gambar = $_FILES['gambar']['name'];
+        $gambar = str_replace(' ', '_', $gambar);
         $folder_tujuan = 'poster/'; 
         $path_gambar = $folder_tujuan . $gambar;
     
@@ -373,4 +329,100 @@ if ($_GET['aksi'] == "editakun") {
         // Redirect atau lakukan aksi lain setelah penghapusan
         echo "<script>window.location='../pages/event.php';</script>";
     }
+
+    //crud modul
+    if ($_GET['aksi'] == "tambahmodul") {
+        $id_jenismodul = $_POST["id_jenismodul"];
+
+        // Retrieve the latest count of modul for the selected id_jenismodul
+        $stmt = $koneksi->prepare("SELECT COUNT(*) FROM tb_modul WHERE id_jenismodul = ?");
+        $stmt->execute([$id_jenismodul]);
+        $count_modul = $stmt->fetchColumn();
     
+        // Determine the prefix based on id_jenismodul
+        $prefix = "";
+        switch ($id_jenismodul) {
+            case 3:
+                $prefix = "WEB";
+                break;
+            case 4:
+                $prefix = "ML";
+                break;
+            case 5:
+                $prefix = "MBL";
+                break;
+            case 6:
+                $prefix = "DB";
+                break;
+            case 7:
+                $prefix = "NS";
+                break;
+            
+
+        }
+    
+        $id_modul = $prefix . str_pad($count_modul + 1, 2, "0", STR_PAD_LEFT);
+    
+    
+        $judul = $_POST["judul"];
+        $keterangan = $_POST["keterangan"];
+        $tujuan = $_POST["tujuan"];
+        $harga = $_POST["harga"];
+        $id_jenismodul = $_POST["id_jenismodul"];
+    
+       
+        // Handle gambar
+        $gambar = $_FILES['gambar']['name'];
+        
+        $folder_tujuan = 'gambarmodul/'; 
+        $path_gambar = $folder_tujuan . $gambar;
+    
+        move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+    
+        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($gambar);
+    
+        $data = array(
+            $id_modul,
+            $judul,
+            $keterangan,
+            $url_gambar, // Simpan url gambar
+            $tujuan,
+            $harga,
+            $id_jenismodul
+        );
+    
+        $sql = "INSERT INTO tb_modul (id_modul, judul, keterangan, gambar, tujuan, harga, id_jenismodul) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+    
+        $stmt->execute($data);
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+    if ($_GET['aksi'] == "hapusmodul") {
+        $id = $_GET["id_modul"];
+    
+        // Jalankan query DELETE
+        $stmt = $koneksi->prepare("DELETE FROM tb_modul WHERE id_modul = ?");
+        $stmt->execute([$id]);
+    
+        if ($stmt->rowCount() > 0) {
+
+        } else {
+            echo "<script>alert('Gagal menghapus data');</script>";
+        }
+    
+        // Redirect atau lakukan aksi lain setelah penghapusan
+        echo "<script>window.location='../pages/course';</script>";
+    }
