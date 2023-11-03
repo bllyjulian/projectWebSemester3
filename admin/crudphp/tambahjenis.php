@@ -114,7 +114,6 @@
                 </g>
               </svg>
             </div>
-            
             <span class="nav-link-text ms-1">Tantangan</span>
           </a>
         </li>

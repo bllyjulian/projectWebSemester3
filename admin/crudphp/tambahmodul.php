@@ -383,7 +383,6 @@
   <input type="file" class="form-control" name="gambar" id="gambar" placeholder="">
 </div>
     </div>
-    
     <div class="col-sm-6">
     <div class="form-group">
             <label class="text-lg font-weight-bold" for="tujuan">Tujuan Pembelajaran</label>
