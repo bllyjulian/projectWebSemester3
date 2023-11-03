@@ -357,8 +357,6 @@ if ($_GET['aksi'] == "editakun") {
             case 7:
                 $prefix = "NS";
                 break;
-            
-
         }
     
         $id_modul = $prefix . str_pad($count_modul + 1, 2, "0", STR_PAD_LEFT);
