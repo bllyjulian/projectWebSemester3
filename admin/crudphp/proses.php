@@ -208,7 +208,7 @@ if ($_GET['aksi'] == "editakun") {
         }
     
         // Redirect atau lakukan aksi lain setelah penghapusan
-        echo "<script>window.location='../pages/akunSemua.php';</script>";
+        echo "<script>window.location='../pages/akun';</script>";
     }
 
     if ($_GET['aksi'] == "tambahevent") {
@@ -333,12 +333,12 @@ if ($_GET['aksi'] == "editakun") {
     //crud modul
     if ($_GET['aksi'] == "tambahmodul") {
         $id_jenismodul = $_POST["id_jenismodul"];
-
+        
         // Retrieve the latest count of modul for the selected id_jenismodul
         $stmt = $koneksi->prepare("SELECT COUNT(*) FROM tb_modul WHERE id_jenismodul = ?");
         $stmt->execute([$id_jenismodul]);
-        $count_modul = $stmt->fetchColumn();
-    
+        $count_modul = $stmt->fetchColumn() + 1;
+        
         // Determine the prefix based on id_jenismodul
         $prefix = "";
         switch ($id_jenismodul) {
@@ -358,27 +358,34 @@ if ($_GET['aksi'] == "editakun") {
                 $prefix = "NS";
                 break;
         }
+        
+        do {
+            $id_modul = $prefix . str_pad($count_modul, 2, "0", STR_PAD_LEFT);
     
-        $id_modul = $prefix . str_pad($count_modul + 1, 2, "0", STR_PAD_LEFT);
+            // Check if the generated ID_modul already exists in the table
+            $stmt_check_id = $koneksi->prepare("SELECT COUNT(*) FROM tb_modul WHERE id_modul = ?");
+            $stmt_check_id->execute([$id_modul]);
+            $count_existing_id = $stmt_check_id->fetchColumn();
     
-    
+            if ($count_existing_id > 0) {
+                $count_modul++; // Tambahkan 1 ke count_modul
+            } else {
+                break; // Keluar dari loop jika ID unik ditemukan
+            }
+        } while (true);
+        
         $judul = $_POST["judul"];
         $keterangan = $_POST["keterangan"];
         $tujuan = $_POST["tujuan"];
         $harga = $_POST["harga"];
-        $id_jenismodul = $_POST["id_jenismodul"];
-    
-       
+        
         // Handle gambar
         $gambar = $_FILES['gambar']['name'];
-        
         $folder_tujuan = 'gambarmodul/'; 
         $path_gambar = $folder_tujuan . $gambar;
-    
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
-    
         $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($gambar);
-    
+        
         $data = array(
             $id_modul,
             $judul,
@@ -388,12 +395,12 @@ if ($_GET['aksi'] == "editakun") {
             $harga,
             $id_jenismodul
         );
-    
+        
         $sql = "INSERT INTO tb_modul (id_modul, judul, keterangan, gambar, tujuan, harga, id_jenismodul) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($sql);
-    
+        
         $stmt->execute($data);
-    
+        
         if ($stmt->rowCount() > 0) {
             $response = [
                 'sukses' => true,
@@ -405,9 +412,10 @@ if ($_GET['aksi'] == "editakun") {
                 'pesan' => 'Gagal menyimpan data'
             ];
         }
-    
+        
         echo json_encode($response);
     }
+    
     if ($_GET['aksi'] == "hapusmodul") {
         $id = $_GET["id_modul"];
     
@@ -423,4 +431,45 @@ if ($_GET['aksi'] == "editakun") {
     
         // Redirect atau lakukan aksi lain setelah penghapusan
         echo "<script>window.location='../pages/course';</script>";
+    }
+
+    if ($_GET['aksi'] == "tambahjenismodul") {
+        $judul = $_POST["nama_jenis"];
+    
+        $data = array(
+            $judul,
+
+        );
+    
+        // Handle gambar
+        $gambar = $_FILES['gambar']['name'];
+        $gambar = str_replace(' ', '_', $gambar);
+        $folder_tujuan = 'iconjenismodul/'; 
+        $path_gambar = $folder_tujuan . $gambar;
+    
+        move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+    
+        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/iconjenismodul/' . urlencode($gambar);
+    
+        $data[] = $url_gambar; 
+    
+        $sql = "INSERT INTO tb_jenismodul (id_jenismodul, nama_jenis, gambar) VALUES (?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+    
+
+        $stmt->execute($data);
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true, 
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
     }

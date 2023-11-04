@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Tambah Event
+    Tambah Jenis Modul
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunSemua.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -236,7 +236,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Event</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Modul</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Tambah</h6>
         </nav>
@@ -354,20 +354,24 @@
     <div class="container p-3">
       <div class="card-body w-100">
 
-        <form method="post" action="proses.php?aksi=tambahjenis" enctype="multipart/form-data" id="myfrom"> 
+        <form method="post" action="proses.php?aksi=tambahjenismodul" enctype="multipart/form-data" id="myfrom"> 
         <div class="row">
 
         <div class="form-group">
-            <label class="text-lg font-weight-bold" for="judul_event">Judul Event</label>
-            <input type="text" class="form-control" required name="judul_event" id="judul_event" placeholder="" autocomplete="off">
+            <label class="text-lg font-weight-bold" for="nama_jenis">Jenis Modul</label>
+            <input type="text" class="form-control" required name="nama_jenis" id="nama_jenis" placeholder="" autocomplete="off">
         </div>
-      
+        <div class="form-group">
+            <label class="text-lg font-weight-bold" for="gambar">Icon</label>
+            <input type="file" class="form-control" required name="gambar" id="gambar" placeholder="" autocomplete="off">
+        </div>
 
     <div class="form-group mt-2">
 
 <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
     Simpan
 </button>
+    </div>
 </div>
 
     
@@ -430,7 +434,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: 'proses.php?aksi=tambahjenis',
+            url: 'proses.php?aksi=tambahjenismodul',
             data: formData,
             processData: false,
             contentType: false,
@@ -450,17 +454,7 @@ $(document).ready(function() {
                         title: 'Gagal!',
                         text: response.pesan,
                         footer: '<a href="">Perlu bantuan?</a>'
-                    }).then(() => {
-                        // Memasukkan kembali data ke dalam formulir
-                        $('#judul_event').val(formData.get('judul_event'));
-                        $('#keterangan').val(formData.get('keterangan'));
-                        $('#lokasi').val(formData.get('lokasi'));
-                        $('#gambar').val(formData.get('gambar'));
-                        $('#kuota').val(formData.get('kuota'));
-                        $('#pelaksanaan').val(formData.get('pelaksanaan'));
-                        $('#link_pendaftaran').val(formData.get('link_pendaftaran'));
-                        $('#tanggal').val(formData.get('tanggal'));
-                    });
+                    })
                 }
             },
             error: function() {

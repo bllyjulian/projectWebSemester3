@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunSemua.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -576,7 +576,7 @@ $(document).ready(function() {
                                 text: response.pesan,
                                 icon: 'success'
                             }).then(() => {
-                                window.location.href = '../pages/akunSemua.php'; // Arahkan ke event.php di dalam folder pages
+                                window.location.href = '../pages/akun.php'; // Arahkan ke event.php di dalam folder pages
                             });
                         } else {
                             Swal.fire({

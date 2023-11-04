@@ -60,7 +60,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunSemua.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -365,45 +365,35 @@
 
             <div class="card-header pb-0">
 
-              <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Akun Admin</h6>
+            <div class="card-header pb-0">
 
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  
-                  <div class="dropdown float-lg-end pe-4">
+<div class="row">
+  <div class="col-lg-6 col-7">
+    <h6>Daftar Akun</h6>
 
-                    
-                    <a class="cursor-pointer p-3" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
+  </div>
+  <div class="col-lg-6 col-5 my-auto text-end">
+  <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
 
+  </div>
 
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="../pages/akunAdmin.php">Akun Admin</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="../pages/akunMentor.php">Akun Mentor</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="../pages/akunPengguna.php">Akun Pengguna</a></li>
-                    </ul>
-                  </div>
+</div>
 
-                </div>
-
-              </div>
+</div>
 
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
-                  <thead>
+                <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hak Akses</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center  text-uppercase text-secondary text-xxs font-weight-bolder">
-                      <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
-                      </th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hak Akses</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis Kelamin</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        AKsi
+                    </th>
 
                     </tr>
                   </thead>
@@ -440,15 +430,15 @@
 
      <tr>
             <td>
-                <div class="d-flex px-2 py-1">
-                    <div>
-                        <img src="data:image/jpeg;base64,<?= base64_encode($r->foto_profil); ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
-                    </div>
-                    <div class="d-flex flex-column justify-content-left">
-                        <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
-                        <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
-                    </div>
-                </div>
+            <div class="d-flex px-2 py-1">
+        <div>
+            <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
+        </div>
+        <div class="d-flex flex-column justify-content-left">
+            <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
+            <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+        </div>
+    </div>
             </td>
             <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
@@ -469,15 +459,25 @@
 </td>
 
 
-            <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
+<td class="align-middle text-lg-start">
+                <span class="text-secondary text-xs font-weight-bold"><?= $r->jenis_kelamin;?></span>
             </td>
-            <td class="align-middle text-center">
-            <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-        Edit
-    </a>
-    <a href="#" class="text-secondary font-weight-bold text-xs" onclick="confirmDelete('<?= $r->username;?>')">Hapus</a>
+            <td class="align-middle text-lg-start">
+            <div class=" text-start ">
 
+
+              <!-- <a class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>" data-toggle="tooltip" data-original-title="Edit user">
+              <i class="fas fa-pencil-alt text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i></a>
+               -->
+              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
+              <i class="fas fa-pencil-alt text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
+            </a>
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#">
+              <i class="far fa-trash-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+            </a>
+              
+
+            </div>
 </td>
 
         </tr>
@@ -502,12 +502,25 @@ if ($total_data > ($current_page * $items_per_page)):
                   </tbody>
                 </table>
               </div>
-              <div style="margin-right: 80px;" class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
+              <div class="card-header pb-0">
+
+<div class="row">
+  <div class="col-lg-6 col-7">
+<!-- filter rencananya -->
+  </div>
+  <div class="col-lg-6 col-5 my-auto text-end">
+  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
         <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
     <?php endif; ?>
 
     <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm">Next &gt;</a>
+</div>
+
+  </div>
+
+</div>
+
 </div>
 
             </div>

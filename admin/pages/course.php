@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunSemua.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun\.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -370,8 +370,8 @@
 
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahmodul.php">Tambah</a></button>
-                <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahjenismodul.php">Jenis</a></button>
+                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahmodul">Tambah</a></button>
+                <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahjenismodul">Jenis</a></button>
                   <div class="dropdown float-lg-end pe-4">
 
                   
@@ -471,25 +471,26 @@
 
 
             <td class="align-middle text-lg-start">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->harga;?></span>
+                <span class="text-secondary text-xs font-weight-bold">Rp. <?= $r->harga;?></span>
             </td>
-            <td class="align-middle text-lg-start">
+<td class="align-middle text-lg-start">
             <div class=" text-start m-0">
-
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user">
-              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Modul"></i></a>
               
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" onclick="confirmDelete('<?= $r->id_event;?>')" href="#">
-              <i class="fa fa-info-circle text-dark me-2 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Modul"></i>
+              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
+              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
             </a>
 
-              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_modul;?>')" href="#">
+            <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
+            <i class="fa fa-info-circle text-dark me-2 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Modul"></i>
+            </a>
+            
+            <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_modul;?>')" href="#">
               <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Modul"></i>
             </a>
-                  </div>
-            
-</td>
+              
 
+            </div>
+</td>
         </tr>
         
         <?php $no++; 

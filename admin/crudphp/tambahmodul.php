@@ -66,7 +66,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunSemua.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akunSemua">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -86,7 +86,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'tambahmodul.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -365,11 +365,6 @@
         <form method="post" action="proses.php?aksi=tambahmodul" enctype="multipart/form-data" id="myform"> 
         <div class="row">
     <div class="col-sm-6">
-        <!-- <div class="form-group1">
-            <label class="text-lg font-weight-bold" for="id_modul">Id Modul</label>
-            <input type="text" class="form-control" required name="id_modul" id="id_modul" placeholder="" autocomplete="off">
-        </div> -->
-        
         <div class="form-group">
             <label class="text-lg font-weight-bold" for="judul">Nama Modul</label>
             <input type="text" class="form-control" required name="judul" id="judul" placeholder="" autocomplete="off">
@@ -487,6 +482,8 @@
             'Berhasil!',
             response.pesan,
             'success'
+            console.log("AJAX request berhasil");
+            console.log(response);
         ).then(() => {
             window.location.href = '../pages/course'; // Ganti dengan halaman yang sesuai
         });
