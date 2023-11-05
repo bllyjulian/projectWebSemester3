@@ -348,160 +348,37 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
+    <div class="container-fluid">
       <div class="row">
 
 
-      <!-- </div> -->
-        <div class="col-12">
+      <?php 
+require_once('../crudphp/koneksi.php');
 
-          <div class="card mb-4">
-            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Tabel Akun</h6>
-              
-            </div> -->
+$items_per_page = 7;
+$sql = "SELECT * FROM tb_modul ORDER BY id_modul DESC";
+$row = $koneksi->prepare($sql);
+$row->execute();
+$hasil = $row->fetchAll(PDO::FETCH_OBJ);
+$total_data = count($hasil);
 
-            <div class="card-header pb-0">
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start_index = ($current_page - 1) * $items_per_page;
+$total_pages = ceil($total_data / $items_per_page);
 
-             
-            <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Daftar Modul</h6>
+$show_all = isset($_GET['show_all']);
 
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahmodul">Tambah</a></button>
-                <button class="btn bg-gradient-secondary btn-sm"><a style="color: white;" href="../crudphp/tambahjenismodul">Jenis</a></button>
-                  <div class="dropdown float-lg-end pe-4">
+$show_count = $show_all ? $total_data : min(3, $total_data);
 
-                  
+$data_to_display = array_slice($hasil, 0, $show_count);
+?>
 
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0" id="tabelakun">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jumlah bab</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
-                    </th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <?php 
-                 require_once('../crudphp/koneksi.php');
-
-
-          // Menentukan jumlah item per halaman
-          $items_per_page = 7;
-
-          // Menghitung total data
-          $sql = "SELECT * FROM tb_modul";
-          $row = $koneksi->prepare($sql);
-          $row->execute();
-          $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-          $total_data = count($hasil);
-
-          // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
-          $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-          // Menghitung indeks data untuk query
-          $start_index = ($current_page - 1) * $items_per_page;
-
-          // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_modul LIMIT $start_index, $items_per_page";
-          $row = $koneksi->prepare($sql);
-          $row->execute();
-          $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-          $no = $start_index + 1; // Inisialisasi nomor
-                  foreach($hasil as $r) {
-                    $total_pages = ceil($total_data / $items_per_page);
-
-                    
-    ?>
-
-     <tr>
-     <td style="text-wrap: wrap;">
-    <div class="d-flex px-2 py-1">
-        <div>
-        <h6  style="display: none;"><?= $r->id_modul;?></h6>
-            <img src="<?= $r->gambar; ?>" class="avatar avatar-sm me-3" alt="<?= $r->gambar; ?>">
-        </div>
-        <div class="d-flex flex-column justify-content-left">
-            <h6 class="mb-0 text-sm" style="word-wrap: break-word;"><?= $r->judul;?></h6>
-            <!-- <p class="text-xs text-secondary mb-0">Rp. <?= $r->harga;?></p> -->
-        </div>
-    </div>
-</td>
-<td style="text-wrap: wrap;">
-  <p class="text-xs text-secondary mb-0"><?= $r->id_jenismodul;?></p>
-  
-</td>
-<td class="align-middle text-lg-start text-sm">
-                <?php if ($r->id_jenismodul == "3"): ?>
-                    <span class="badge badge-sm bg-gradient-primary">Website Development</span>
-                <?php elseif ($r->id_jenismodul == "4"): ?>
-                    <span class="badge badge-sm bg-gradient-warning">Machine Learning</span>
-                <?php elseif ($r->id_jenismodul == "5"): ?>
-                    <span class="badge badge-sm bg-gradient-warning">Mobile Development</span>
-                <?php elseif ($r->id_jenismodul == "6"): ?>
-                    <span class="badge badge-sm bg-gradient-warning">Database</span>
-                <?php elseif ($r->id_jenismodul == "7"): ?>
-                    <span class="badge badge-sm bg-gradient-warning">Network Security</span>
-                <?php elseif ($r->id_jenismodul == "8"): ?>
-                    <span class="badge badge-sm bg-gradient-warning">Game Development</span>
-
-                <?php else: ?>
-                    <span class="badge badge-sm bg-gradient-primary"><?= $r->id_jenismodul;?></span>
-                <?php endif; ?>
-          </td>
-     
-
-
-
-            <td class="align-middle text-lg-start">
-                <span class="text-secondary text-xs font-weight-bold">Rp. <?= $r->harga;?></span>
-            </td>
-<td class="align-middle text-lg-start">
-            <div class=" text-start m-0">
-              
-              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
-              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
-            </a>
-
-            <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
-            <i class="fa fa-info-circle text-dark me-2 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Modul"></i>
-            </a>
-            
-            <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_modul;?>')" href="#">
-              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Modul"></i>
-            </a>
-              
-
-            </div>
-</td>
-        </tr>
-        
-        <?php $no++; 
-      }
-      // Menampilkan navigasi "Next" jika ada data berikutnya
-if ($total_data > ($current_page * $items_per_page)): 
-      
-      
-      ?>
-<?php endif; ?>
-<?php 
+<div class="col-12 mt-4">
+  <div class="card mb-4">
+    <div class="card-header pb-0 p-3 d-flex justify-content-between align-items-center">
+      <div>
+        <h6 class="mb-1">Daftar Modul</h6>
+        <?php 
 require_once('../crudphp/koneksi.php');
 
 // Menghitung total data
@@ -511,51 +388,77 @@ $row->execute();
 $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
 
 // Menampilkan total akun terdaftar
-echo '<p style="margin-left: 23px;" class="text-sm">';
+echo '<p class="text-sm">';
 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
 echo '<span class="font-weight-bold ms-1">'.$total_data.' Modul terdaftar</span>';
 echo '</p>';
 ?>
-                  </tbody>
-                </table>
+
+      </div>
+      <div class="ms-auto">
+        <?php if ($show_all) : ?>
+          <button class="btn btn-primary" onclick="window.location.href='?page=<?= $current_page ?>'">Lebih Sedikit</button>
+        <?php else : ?>
+          <button class="btn btn-primary" onclick="window.location.href='?show_all'">Lihat Semua</button>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <div class="card-body p-3">
+      <div class="row">
+        <?php foreach ($data_to_display as $r) : ?>
+          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 p-3">
+            <div class="card card-blog card-plain">
+              <div class="position-relative">
+                <a class="d-block shadow-xl border-radius-xl">
+                  <img src="<?= $r->gambar; ?>" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                </a>
               </div>
-              <div class="card-header pb-0">
+              <div class="card-body px-1 pb-0">
+                <h5 style="display: none;"><?= $r->id_modul;?></h5>
+                <h5><?= $r->judul;?></h5>
+                <a href="javascript:;">
+                  <p class="text-gradient text-dark mb-2 text-sm">Rp. <?= $r->harga;?></p>
+                </a>
+                <p class="mb-4 text-sm"><?= $r->keterangan;?></p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
+                  <div class=" text-start m-0">
+              
+              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
+              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
+            </a>
 
-<div class="row">
-  <div class="col-lg-6 col-7">
-<!-- filter rencananya -->
-  </div>
-  <div class="col-lg-6 col-5 my-auto text-end">
-  <!-- <div class="text-end p-0 border-1">
-    <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
-    <?php endif; ?>
+            
+            <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_modul;?>')" href="#">
+              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Modul"></i>
+            </a>
+              
 
-    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-        <a href="?page=<?= $i ?>" class="btn btn-outline-dark btn-sm"><?= $i ?></a>
-    <?php endfor; ?>
+            </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
 
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm text-sm">Next &gt;</a>
-</div> -->
-
-<div class="text-end p-0 border-1"> 
-    <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt;</a>
-    <?php endif; ?>
-
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm text-sm">&gt;</a>
-</div>
-
-  </div>
-
-</div>
-
-</div>
-
+        <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 p-3">
+          <div class="card h-100 card-plain border">
+            <div class="card-body d-flex flex-column justify-content-center text-center">
+              <a href="../crudphp/tambahmodul">
+                <i class="fa fa-plus text-secondary mb-3"></i>
+                <h5 class=" text-secondary"> Tambah Modul </h5>
+              </a>
             </div>
           </div>
         </div>
+
       </div>
+    </div>
+  </div>
+</div>
+      </div>
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

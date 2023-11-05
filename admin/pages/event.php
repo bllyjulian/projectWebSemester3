@@ -366,7 +366,21 @@
               <div class="row">
                 <div class="col-lg-6 col-7">
                   <h6>Daftar Event</h6>
+                  <?php 
+require_once('../crudphp/koneksi.php');
 
+// Menghitung total data
+$sql = "SELECT COUNT(*) FROM tb_event"; // Menghitung jumlah data tanpa memuatnya
+$row = $koneksi->prepare($sql);
+$row->execute();
+$total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+
+// Menampilkan total akun terdaftar
+echo '<p class="text-sm">';
+echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+echo '<span class="font-weight-bold ms-1">'.$total_data.' Event terdaftar</span>';
+echo '</p>';
+?>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
                 <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahevent.php">Tambah</a></button>
@@ -486,21 +500,6 @@ if ($total_data > ($current_page * $items_per_page)):
       
       ?>
 <?php endif; ?>
-<?php 
-require_once('../crudphp/koneksi.php');
-
-// Menghitung total data
-$sql = "SELECT COUNT(*) FROM tb_event"; // Menghitung jumlah data tanpa memuatnya
-$row = $koneksi->prepare($sql);
-$row->execute();
-$total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
-
-// Menampilkan total akun terdaftar
-echo '<p style="margin-left: 23px;" class="text-sm">';
-echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-echo '<span class="font-weight-bold ms-1">'.$total_data.' Event terdaftar</span>';
-echo '</p>';
-?>
                   </tbody>
                 </table>
                 <div class="card-header pb-0">
