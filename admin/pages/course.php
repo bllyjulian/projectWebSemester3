@@ -419,11 +419,23 @@ echo '</p>';
               </div>
               <div class="card-body px-1 pb-0 ps-3">
                 <h5 style="display: none;"><?= $r->id_modul;?></h5>
-                <h5><?= $r->judul;?></h5>
+                <h5>
+    <?php
+    $judul = $r->judul;
+    echo strlen($judul) > 35 ? substr($judul, 0, 35) . '...' : $judul;
+    ?>
+</h5>
+
                 <a href="javascript:;">
                   <p class="text-gradient text-dark mb-2 text-sm">Rp. <?= $r->harga;?></p>
                 </a>
-                <p class="mb-4 text-sm"><?= $r->keterangan;?></p>
+                <p id="keterangan" class="mb-4 text-sm">
+    <?php
+        $keterangan = $r->keterangan;
+        echo strlen($keterangan) > 40 ? substr($keterangan, 0, 50) . '...' : $keterangan;
+    ?>
+</p>
+
                 <div class="d-flex align-items-center justify-content-between pb-3">
                   <button type="button" class="btn btn-outline-primary btn-sm mb-0">Detail Modul</button>
                   <div class=" text-start m-0">
@@ -535,6 +547,10 @@ function confirmDelete(id_modul) {
     }
   });
 }
+document.getElementById('keterangan').addEventListener('click', function() {
+        var keterangan = "<?php echo $r->keterangan; ?>";
+        alert(keterangan); // Ganti dengan cara tampilan yang Anda inginkan saat di klik
+    });
 </script>
 
   <!-- Github buttons -->
