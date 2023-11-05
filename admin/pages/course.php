@@ -408,25 +408,28 @@ echo '</p>';
       <div class="row">
         <?php foreach ($data_to_display as $r) : ?>
           <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 p-3">
-            <div class="card card-blog card-plain">
+            <div class="card card-blog card-plain border-radius-xl">
               <div class="position-relative">
-                <a class="d-block shadow-xl border-radius-xl">
-                  <img src="<?= $r->gambar; ?>" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                </a>
+              <a class="d-block border-radius-xl" style="width: 100%; height: 150px;">
+  <img src="<?= $r->gambar; ?>" alt="img-blur-shadow" class="img-fluid border-radius-xl" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; object-fit: cover; width: 100%; height: 100%;">
+</a>
+
+
+
               </div>
-              <div class="card-body px-1 pb-0">
+              <div class="card-body px-1 pb-0 ps-3">
                 <h5 style="display: none;"><?= $r->id_modul;?></h5>
                 <h5><?= $r->judul;?></h5>
                 <a href="javascript:;">
                   <p class="text-gradient text-dark mb-2 text-sm">Rp. <?= $r->harga;?></p>
                 </a>
                 <p class="mb-4 text-sm"><?= $r->keterangan;?></p>
-                <div class="d-flex align-items-center justify-content-between">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
+                <div class="d-flex align-items-center justify-content-between pb-3">
+                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">Detail Modul</button>
                   <div class=" text-start m-0">
               
               <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
-              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
+              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Modul"></i>
             </a>
 
             
