@@ -385,13 +385,13 @@
                                     <label class="text-lg font-weight-bold" for="lokasi">Lokasi</label>
                                     <input type="text" class="form-control" required name="lokasi" id="lokasi" value="<?= $data_event['lokasi']; ?>" autocomplete="off">
                                 </div>
-                                <div class="form-group">
-                                <label class="text-lg font-weight-bold" for="gambar">Poster</label>
-                                <input type="file" class="form-control" required name="gambar" id="gambar"  value="<?= $data_event['gambar']; ?>" autocomplete="off">
-                            </div>
+                              <div class="form-group">
+                                  <label class="text-lg font-weight-bold" for="gambar">Poster</label>
+                                  <input type="file" class="form-control" name="gambar" id="gambar" autocomplete="off">
+                              </div>
                             <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="lokasi">Link gambar</label>
-                                    <input type="text" class="form-control" required name="gambar" id="gambar" value="<?= $data_event['gambar']; ?>" autocomplete="off">
+                                    <label class="text-lg font-weight-bold" for="gambarawal">Link gambar</label>
+                                    <input type="text" class="form-control" required name="gambarawal" id="gambarawal" value="<?= $data_event['gambar']; ?>" autocomplete="off">
                                 </div>
                           </div>
                           
@@ -601,7 +601,7 @@ $(document).ready(function() {
                                 text: response.pesan,
                                 icon: 'success'
                             }).then(() => {
-                                window.location.href = '../pages/event.php'; // Arahkan ke event.php di dalam folder pages
+                                window.location.href = '../pages/event'; // Arahkan ke event.php di dalam folder pages
                             });
                         } else {
                             Swal.fire({

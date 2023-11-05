@@ -492,17 +492,7 @@ $(document).ready(function() {
                         title: 'Gagal!',
                         text: response.pesan,
                         footer: '<a href="">Perlu bantuan?</a>'
-                    }).then(() => {
-                        // Memasukkan kembali data ke dalam formulir
-                        $('#judul_event').val(formData.get('judul_event'));
-                        $('#keterangan').val(formData.get('keterangan'));
-                        $('#lokasi').val(formData.get('lokasi'));
-                        $('#gambar').val(formData.get('gambar'));
-                        $('#kuota').val(formData.get('kuota'));
-                        $('#pelaksanaan').val(formData.get('pelaksanaan'));
-                        $('#link_pendaftaran').val(formData.get('link_pendaftaran'));
-                        $('#tanggal').val(formData.get('tanggal'));
-                    });
+                    })
                 }
             },
             error: function() {

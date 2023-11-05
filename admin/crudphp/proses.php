@@ -41,16 +41,7 @@
     //         // Jika username sudah ada, kirim respons JSON dengan pesan kesalahan
     //         $response = [
     //             'sukses' => false,
-    //             'pesan' => 'Username sudah digunakan. Silakan pilih username lain.',
-    //             'data' => [
-    //                 'username' => $username,
-    //                 'nama_lengkap' => $nama_lengkap,
-    //                 'password' => $password,
-    //                 'no_hp' => $no_hp,
-    //                 'email' => $email,
-    //                 'status' => $status,
-    //                 'id_lvl' => $id_lvl
-    //             ]
+    //             'pesan' => 'Username sudah digunakan. Silakan pilih username lain.'
     //         ];
     //     } else {
     //         // Jika username belum ada, lakukan operasi penyimpanan
@@ -89,6 +80,7 @@
     
     //     echo json_encode($response);
     // }
+    
     
     if ($_GET['aksi'] == "tambahakun") {
         $username = $_POST["username"];
@@ -272,15 +264,17 @@ if ($_GET['aksi'] == "editakun") {
         $linkpendaftaran = $_POST["link_pendaftaran"];
         $tanggal = $_POST["tanggal"];
     
-        // Handle gambar
-        $gambar = $_FILES['gambar']['name'];
-        $folder_tujuan = 'poster/'; 
-        $path_gambar = $folder_tujuan . $gambar;
-    
-        move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
-    
-        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($gambar);
-    
+        if (!empty($_FILES['gambar']['name'])) {
+            $gambar = $_FILES['gambar']['name'];
+            $folder_tujuan = 'poster/'; 
+            $path_gambar = $folder_tujuan . $gambar;
+        
+            move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+        
+            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($gambar);
+        } else {
+            $url_gambar = $_POST['gambarawal']; // Use the value from the form if no file is uploaded
+        }
         $data = array(
             $judul,
             $keterangan,
@@ -400,7 +394,7 @@ if ($_GET['aksi'] == "editakun") {
         $stmt = $koneksi->prepare($sql);
         
         $stmt->execute($data);
-        
+    
         if ($stmt->rowCount() > 0) {
             $response = [
                 'sukses' => true,
@@ -412,7 +406,7 @@ if ($_GET['aksi'] == "editakun") {
                 'pesan' => 'Gagal menyimpan data'
             ];
         }
-        
+    
         echo json_encode($response);
     }
     

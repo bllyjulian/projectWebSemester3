@@ -490,7 +490,6 @@
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function() {
         $('#myform').submit(function(event) {
@@ -528,7 +527,7 @@
             $('#password').val(response.data.password);
             $('#nomor_hp').val(response.data.no_hp);
             $('#email').val(response.data.email);
-            $('#jenis_kelamin').val(response.data.status);
+            $('#jenis_kelamin').val(response.data.jenis_kelamin);
             $('#hak_akses').val(response.data.id_lvl);
         });
     }

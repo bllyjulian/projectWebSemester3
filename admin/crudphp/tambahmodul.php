@@ -86,7 +86,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'tambahmodul.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'tambahmodul.php' || basename($_SERVER['PHP_SELF']) == 'editmodul') ? 'active' : ''; ?>" href="../pages/course">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -461,6 +461,7 @@
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#myform').submit(function(event) {
@@ -471,7 +472,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'proses.php?aksi=tambahmodul';
+                url: 'proses.php?aksi=tambahmodul',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -482,8 +483,6 @@
             'Berhasil!',
             response.pesan,
             'success'
-            console.log("AJAX request berhasil");
-            console.log(response);
         ).then(() => {
             window.location.href = '../pages/course'; // Ganti dengan halaman yang sesuai
         });
@@ -492,7 +491,7 @@
             icon: 'error',
             title: 'Gagal!',
             text: response.pesan,
-            footer: '<a href="#">Perlu Bantuan?</a>'
+            footer: '<a href="https://contoh.com/bantuan">Perlu Bantuan?</a>'
         })
     }
 },
