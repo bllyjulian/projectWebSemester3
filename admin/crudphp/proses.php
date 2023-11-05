@@ -21,67 +21,6 @@
         }
     }
     
-    
-    // if ($_GET['aksi'] == "tambahakun") {
-    //     $username = $_POST["username"];
-    //     $nama_lengkap = $_POST["nama_lengkap"];
-    //     $password = $_POST["password"];
-    //     $foto_profil = file_get_contents($_FILES["foto_profil"]["tmp_name"]);
-    //     $no_hp = $_POST["nomor_hp"];
-    //     $email = $_POST["email"];
-    //     $status = $_POST["status"];
-    //     $id_lvl = $_POST["hak_akses"];
-    
-    //     // Periksa apakah username sudah ada
-    //     $check_username_sql = "SELECT COUNT(*) FROM tb_akun WHERE username = ?";
-    //     $check_username_stmt = $koneksi->prepare($check_username_sql);
-    //     $check_username_stmt->execute([$username]);
-    
-    //     if ($check_username_stmt->fetchColumn() > 0) {
-    //         // Jika username sudah ada, kirim respons JSON dengan pesan kesalahan
-    //         $response = [
-    //             'sukses' => false,
-    //             'pesan' => 'Username sudah digunakan. Silakan pilih username lain.'
-    //         ];
-    //     } else {
-    //         // Jika username belum ada, lakukan operasi penyimpanan
-    //         $data = array(
-    //             $username,
-    //             $nama_lengkap,
-    //             $password,
-    //             $foto_profil,
-    //             $no_hp,
-    //             $email,
-    //             $status,
-    //             $id_lvl
-    //         );
-    
-    //         $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, status, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    //         $stmt = $koneksi->prepare($sql);
-    
-    //         // Eksekusi query dengan menggunakan array $data
-    //         $stmt->execute($data);
-    
-    //         if ($stmt->rowCount() > 0) {
-    //             $response = [
-    //                 'sukses' => true,
-    //                 'pesan' => 'Berhasil menyimpan data'
-    //             ];
-    //         } else {
-    //             $response = [
-    //                 'sukses' => false,
-    //                 'pesan' => 'Gagal menyimpan data'
-    //             ];
-    //         }
-    //     }
-    
-    //     // Tutup statement
-    //     $check_username_stmt = null;
-    
-    //     echo json_encode($response);
-    // }
-    
-    
     if ($_GET['aksi'] == "tambahakun") {
         $username = $_POST["username"];
         $nama_lengkap = $_POST["nama_lengkap"];
@@ -95,16 +34,32 @@
         $jeniskelamin = $_POST["jenis_kelamin"];
         $id_lvl = $_POST["hak_akses"];
     
+            // Check apakah username sudah ada
+    $check_username = $koneksi->prepare("SELECT * FROM tb_akun WHERE username = ?");
+    $check_username->execute([$username]);
+
+    if ($check_username->rowCount() > 0) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Username sudah digunakan. Silakan pilih username lain.'
+        ];
+        echo json_encode($response);
+        exit(); // Keluar dari skrip
+    }
         // Handle gambar (profile picture)
         if ($_FILES['foto_profil']['name'] != '') {
             $gambar = $_FILES['foto_profil']['name'];
-            $gambar = str_replace(' ', '_', $gambar);
-            $folder_tujuan = 'foto_profil/'; // Tentukan path folder yang diinginkan
-            $path_gambar = $folder_tujuan . $gambar;
+            $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Dapatkan ekstensi file
+            $nama_baru = md5($gambar . time()) . '.' . $ext; // Menghasilkan nama unik
+    
+            $gambar = str_replace(' ', '_', $nama_baru); 
+    
+            $folder_tujuan = 'foto_profil/'; 
+            $path_gambar = $folder_tujuan . $nama_baru;
     
             move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/' . urlencode($gambar);
+            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/' . urlencode($nama_baru);
         } else {
             // Jika gambar tidak diupload
             if ($jeniskelamin == "Laki Laki") {
@@ -224,13 +179,17 @@ if ($_GET['aksi'] == "editakun") {
     
         // Handle gambar
         $gambar = $_FILES['gambar']['name'];
-        $gambar = str_replace(' ', '_', $gambar);
+        $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+        $nama_baru = md5($gambar . time()) . '.' . $ext; // Menghasilkan nama unik
+    
+        $gambar = str_replace(' ', '_', $nama_baru); // Mengganti spasi dengan _
+    
         $folder_tujuan = 'poster/'; 
-        $path_gambar = $folder_tujuan . $gambar;
+        $path_gambar = $folder_tujuan . $nama_baru;
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($gambar);
+        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($nama_baru);
     
         $data[] = $url_gambar; 
     
@@ -266,14 +225,19 @@ if ($_GET['aksi'] == "editakun") {
     
         if (!empty($_FILES['gambar']['name'])) {
             $gambar = $_FILES['gambar']['name'];
+            $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+            $nama_baru = md5($gambar . time()) . '.' . $ext; // Menghasilkan nama unik
+    
+            $gambar = str_replace(' ', '_', $nama_baru); // Mengganti spasi dengan _
+    
             $folder_tujuan = 'poster/'; 
-            $path_gambar = $folder_tujuan . $gambar;
-        
+            $path_gambar = $folder_tujuan . $nama_baru;
+    
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
-        
-            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($gambar);
+    
+            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($nama_baru);
         } else {
-            $url_gambar = $_POST['gambarawal']; // Use the value from the form if no file is uploaded
+            $url_gambar = $_POST['gambarawal']; 
         }
         $data = array(
             $judul,
@@ -373,13 +337,15 @@ if ($_GET['aksi'] == "editakun") {
         $tujuan = $_POST["tujuan"];
         $harga = $_POST["harga"];
         
-        // Handle gambar
         $gambar = $_FILES['gambar']['name'];
+        $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+        $nama_baru = md5($gambar . time()) . '.' . $ext; // Menghasilkan nama unik
+
         $folder_tujuan = 'gambarmodul/'; 
-        $path_gambar = $folder_tujuan . $gambar;
+        $path_gambar = $folder_tujuan . $nama_baru;
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
-        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($gambar);
-        
+
+$url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         $data = array(
             $id_modul,
             $judul,

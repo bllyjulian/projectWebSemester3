@@ -25,6 +25,16 @@
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  .input-group1 {
+    position: relative;
+  }
+  .bb {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+  }
+</style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -375,14 +385,14 @@
         </div> -->
         <div class="form-group">
     <label class="text-lg font-weight-bold" for="password">Password</label>
-    <div class="input-group">
-        <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">
-        <div class="input-group-append">
-            <span class="input-group-text" style="border: none; background: none;">
-                <i class="fas fa-eye" id="togglePassword"></i>
-            </span>
-        </div>
-    </div>
+    <div class="input-group1">
+    <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">             
+    <span class="bb" style="cursor: pointer;">
+        <i class="fas fa-eye" id="togglePassword"></i>
+    </span>
+</div>
+
+
 </div>
 
 
