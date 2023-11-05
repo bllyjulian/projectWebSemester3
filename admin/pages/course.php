@@ -417,7 +417,7 @@ echo '</p>';
 
 
               </div>
-              <div class="card-body px-1 pb-0 ps-1">
+              <div class="card-body px-1 pb-0">
                 <h5 style="display: none;"><?= $r->id_modul;?></h5>
                 <h5>
     <?php

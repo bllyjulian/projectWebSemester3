@@ -381,10 +381,9 @@ if ($_GET['aksi'] == "editakun") {
         $judul = $_POST["judul"];
         $keterangan = $_POST["keterangan"];
         $tujuan = $_POST["tujuan"];
-        $harga = $_POST["harga"];
-        $id_jenismodul = $_POST["id_jenismodul"];
-    
-        // Handle gambar (jika diperlukan)
+        $harga = $_POST['harga'];
+
+
         if (!empty($_FILES['gambar']['name'])) {
             $gambar = $_FILES['gambar']['name'];
             $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
@@ -394,25 +393,24 @@ if ($_GET['aksi'] == "editakun") {
     
             $folder_tujuan = 'gambarmodul/'; 
             $path_gambar = $folder_tujuan . $nama_baru;
+    
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
             $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         } else {
-            // Jika gambar tidak diupload, gunakan gambar yang sudah ada
             $url_gambar = $_POST['gambarawal']; 
         }
-    
+
         $data = array(
             $judul,
             $keterangan,
-            $url_gambar, // Simpan URL gambar
+            $url_gambar,
             $tujuan,
             $harga,
-            $id_jenismodul,
             $id_modul // Sisipkan ID_modul untuk kondisi WHERE pada UPDATE
         );
     
-        $sql = "UPDATE tb_modul SET judul=?, keterangan=?, gambar=?, tujuan=?, harga=?, id_jenismodul=? WHERE id_modul=?";
+        $sql = "UPDATE tb_modul SET judul=?, keterangan=?, gambar=?, tujuan=?, harga=? WHERE id_modul=?";
         $stmt = $koneksi->prepare($sql);
     
         $stmt->execute($data);
