@@ -22,7 +22,7 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -78,7 +78,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'editmodul.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -355,84 +355,74 @@
             <?php
             require_once('koneksi.php');
 
-            if (isset($_GET['id_event'])) {
-                $id_event = $_GET['id_event'];
+            if (isset($_GET['id_modul'])) {
+                $id_modul = $_GET['id_modul'];
 
                 // Ambil data event berdasarkan id_event
-                $stmt = $koneksi->prepare("SELECT * FROM tb_event WHERE id_event = ?");
-                $stmt->execute([$id_event]);
-                $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt = $koneksi->prepare("SELECT * FROM tb_modul WHERE id_modul = ?");
+                $stmt->execute([$id_modul]);
+                $data_modul = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($data_event) {
+                if ($data_modul) {
                     // Data event ditemukan, tampilkan form edit
                     ?>
-                    <form method="post" action="proses.php?aksi=editevent" id="editEvent">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input type="hidden" name="id_event" value="<?= $data_event['id_event']; ?>">
-
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="judul_event">Judul Event</label>
-                                    <input type="text" class="form-control" required name="judul_event" id="judul_event" value="<?= $data_event['judul_event']; ?>" autocomplete="off">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="keterangan">Keterangan</label>
-                                    <input type="text" class="form-control" required name="keterangan" id="keterangan" value="<?= $data_event['keterangan']; ?>" autocomplete="off">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="lokasi">Lokasi</label>
-                                    <input type="text" class="form-control" required name="lokasi" id="lokasi" value="<?= $data_event['lokasi']; ?>" autocomplete="off">
-                                </div>
-                              <div class="form-group">
-                                  <label class="text-lg font-weight-bold" for="gambar">Poster</label>
-                                  <input type="file" class="form-control" name="gambar" id="gambar" autocomplete="off">
-                              </div>
-                            <div style="display: none;" class="form-group">
+<form method="post" action="proses.php?aksi=editmodul" enctype="multipart/form-data" id="editEvent">
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="hidden" name="id_modul" value="<?= $data_modul['id_modul']; ?>">
+            <div class="form-group">
+                <label class="text-lg font-weight-bold" for="judul">Nama Modul</label>
+                <input type="text" class="form-control" required name="judul" id="judul" placeholder="" autocomplete="off" value="<?= $data_modul['judul']; ?>">
+            </div>
+            <div class="form-group">
+                <label class="text-lg font-weight-bold" for="keterangan">Keterangan</label>
+                <input type="text" class="form-control" required name="keterangan" id="keterangan" placeholder="" autocomplete="off" value="<?= $data_modul['keterangan']; ?>">
+            </div>
+            
+            <div class="form-group">
+                <label class="text-lg font-weight-bold" for="tujuan">Tujuan Pembelajaran</label>
+                <input type="text" class="form-control" required name="tujuan" id="tujuan" placeholder="" autocomplete="off" value="<?= $data_modul['tujuan']; ?>">
+            </div>
+        </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="text-lg font-weight-bold" for="harga">Harga</label>
+                    <input type="number" class="form-control" required name="harga" id="harga" placeholder="" autocomplete="off" value="<?= $data_modul['harga']; ?>">
+                </div>
+                <div class="form-group">
+                    <label class="text-lg font-weight-bold" for="id_jenismodul">Jenis</label>
+                    <select class="form-control" required name="id_jenismodul" id="id_jenismodul">
+                        <option value="3" <?= ($data_modul['id_jenismodul'] == 3) ? 'selected' : ''; ?>>Website Development</option>
+                        <option value="4" <?= ($data_modul['id_jenismodul'] == 4) ? 'selected' : ''; ?>>Machine Learning</option>
+                        <option value="5" <?= ($data_modul['id_jenismodul'] == 5) ? 'selected' : ''; ?>>Mobile Development</option>
+                        <option value="6" <?= ($data_modul['id_jenismodul'] == 6) ? 'selected' : ''; ?>>Database</option>
+                        <option value="7" <?= ($data_modul['id_jenismodul'] == 7) ? 'selected' : ''; ?>>Network Security</option>
+                        <option value="8" <?= ($data_modul['id_jenismodul'] == 8) ? 'selected' : ''; ?>>Game Development</option>
+                    </select>
+                </div>
+            <div class="form-group">
+                <label class="text-lg font-weight-bold" for="gambar">Gambar</label>
+                <input type="file" class="form-control" name="gambar" id="gambar">
+            </div>
+        </div>
+            <div style="display: none;" class="form-group">
                                     <label class="text-lg font-weight-bold" for="gambarawal">Link gambar</label>
-                                    <input type="text" class="form-control" required name="gambarawal" id="gambarawal" value="<?= $data_event['gambar']; ?>" autocomplete="off">
+                                    <input type="text" class="form-control" required name="gambarawal" id="gambarawal" value="<?= $data_modul['gambar']; ?>" autocomplete="off">
                                 </div>
-                          </div>
-                          
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                  <label class="text-lg font-weight-bold" for="kuota">Kuota</label>
-                                  <input type="number" class="form-control" required name="kuota" id="kuota" value="<?= $data_event['kuota']; ?>" autocomplete="off">
-                              </div>
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="pelaksanaan">Pelaksanaan</label>
-                                    <select class="form-control" required name="pelaksanaan" id="pelaksanaan">
-                                        <option value="Daring" <?= ($data_event['pelaksanaan'] == 'Daring') ? 'selected' : ''; ?>>Daring</option>
-                                        <option value="Luring" <?= ($data_event['pelaksanaan'] == 'Luring') ? 'selected' : ''; ?>>Luring</option>
-                                        <option value="Hybrid" <?= ($data_event['pelaksanaan'] == 'Hybrid') ? 'selected' : ''; ?>>Hybrid</option>
-                                    </select>
-                                </div>
+  
+    </div>
 
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="link_pendaftaran">Link Pendaftaran</label>
-                                    <input type="text" class="form-control" required name="link_pendaftaran" id="link_pendaftaran" value="<?= $data_event['link_pendaftaran']; ?>" autocomplete="off">
-                                </div>
+    <div class="form-group mt-2">
+        <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">Simpan</button>
+    </div>
+</form>
 
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="tanggal">Tanggal</label>
-                                    <input type="date" class="form-control" required name="tanggal" id="tanggal" value="<?= $data_event['tanggal']; ?>" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-2">
-                            <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
-                                Simpan
-                            </button>
-                        </div>
-                    </form>
                 <?php
                 } else {
-                    echo "Data event tidak ditemukan.";
+                    echo "Data modul tidak ditemukan.";
                 }
             } else {
-                echo "ID event tidak ditemukan."; 
+                echo "ID modul tidak ditemukan."; 
             }
             ?>
         </div>
@@ -557,19 +547,8 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-    $(document).ready(function(){
-  // $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
-  // $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
-  // $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
-
-  $(".nav-link.active").click(function(){
-    $("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-    $("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-    $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-  });
-});
-  </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 $(document).ready(function() {
@@ -622,7 +601,6 @@ $(document).ready(function() {
     });
 });
 
-</script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

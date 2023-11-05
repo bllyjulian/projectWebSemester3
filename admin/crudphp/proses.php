@@ -345,7 +345,7 @@ if ($_GET['aksi'] == "editakun") {
         $path_gambar = $folder_tujuan . $nama_baru;
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
 
-$url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
+        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         $data = array(
             $id_modul,
             $judul,
@@ -376,6 +376,79 @@ $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlenc
         echo json_encode($response);
     }
     
+    if ($_GET['aksi'] == "editmodul") {
+        $id_modul = $_POST["id_modul"];
+        $judul = $_POST["judul"];
+        $keterangan = $_POST["keterangan"];
+        $tujuan = $_POST["tujuan"];
+        $harga = $_POST["harga"];
+        $id_jenismodul = $_POST["id_jenismodul"];
+    
+        // Handle gambar (jika diperlukan)
+        if (!empty($_FILES['gambar']['name'])) {
+            $gambar = $_FILES['gambar']['name'];
+            $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+            $nama_baru = md5($gambar . time()) . '.' . $ext; // Menghasilkan nama unik
+    
+            $gambar = str_replace(' ', '_', $nama_baru); // Mengganti spasi dengan _
+    
+            $folder_tujuan = 'gambarmodul/'; 
+            $path_gambar = $folder_tujuan . $nama_baru;
+            move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+    
+            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
+        } else {
+            // Jika gambar tidak diupload, gunakan gambar yang sudah ada
+            $url_gambar = $_POST['gambarawal']; 
+        }
+    
+        $data = array(
+            $judul,
+            $keterangan,
+            $url_gambar, // Simpan URL gambar
+            $tujuan,
+            $harga,
+            $id_jenismodul,
+            $id_modul // Sisipkan ID_modul untuk kondisi WHERE pada UPDATE
+        );
+    
+        $sql = "UPDATE tb_modul SET judul=?, keterangan=?, gambar=?, tujuan=?, harga=?, id_jenismodul=? WHERE id_modul=?";
+        $stmt = $koneksi->prepare($sql);
+    
+        $stmt->execute($data);
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+
+    if ($_GET['aksi'] == "hapusevent") {
+        $id = $_GET["id_event"];
+    
+        // Jalankan query DELETE
+        $stmt = $koneksi->prepare("DELETE FROM tb_event WHERE id_event = ?");
+        $stmt->execute([$id]);
+    
+        if ($stmt->rowCount() > 0) {
+
+        } else {
+            echo "<script>alert('Gagal menghapus data');</script>";
+        }
+    
+        // Redirect atau lakukan aksi lain setelah penghapusan
+        echo "<script>window.location='../pages/event.php';</script>";
+    }
+       
     if ($_GET['aksi'] == "hapusmodul") {
         $id = $_GET["id_modul"];
     

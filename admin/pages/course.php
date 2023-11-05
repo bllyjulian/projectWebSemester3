@@ -411,13 +411,13 @@ echo '</p>';
             <div class="card card-blog card-plain border-radius-xl">
               <div class="position-relative">
               <a class="d-block border-radius-xl" style="width: 100%; height: 150px;">
-  <img src="<?= $r->gambar; ?>" alt="img-blur-shadow" class="img-fluid border-radius-xl" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; object-fit: cover; width: 100%; height: 100%;">
+  <img src="<?= $r->gambar; ?>" alt="gambar modul" class="img-fluid border-radius-xl" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; object-fit: cover; width: 100%; height: 100%;">
 </a>
 
 
 
               </div>
-              <div class="card-body px-1 pb-0 ps-3">
+              <div class="card-body px-1 pb-0 ps-1">
                 <h5 style="display: none;"><?= $r->id_modul;?></h5>
                 <h5>
     <?php
@@ -440,7 +440,7 @@ echo '</p>';
                   <button type="button" class="btn btn-outline-primary btn-sm mb-0">Detail Modul</button>
                   <div class=" text-start m-0">
               
-              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
+              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editmodul.php?id_modul=".$r->id_modul;?>">
               <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Modul"></i>
             </a>
 
