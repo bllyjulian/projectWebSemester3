@@ -479,8 +479,12 @@ echo '</p>';
 <td>
 <div class=" text-start m-0">
 
-              <a style="margin-right: 10px;" class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user">
-              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"></i></a>
+              <!-- <a class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user">
+              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"></i></a> -->
+
+              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>">
+              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"></i>
+            </a>
 
               <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->id_event;?>')" href="#">
               <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Event"></i>
