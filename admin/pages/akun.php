@@ -497,14 +497,14 @@ if ($total_data > ($current_page * $items_per_page)):
 
                   </tbody>
                 </table>
-              </div>
+                </div>
               <div class="card-header pb-0">
 
 <div class="row">
   <div class="col-lg-6 col-7">
 <!-- filter rencananya -->
   </div>
-  <div class="col-lg-6 col-5 my-auto text-end">
+  <div class="col-lg-6 my-auto text-end">
   <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
         <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
@@ -532,25 +532,9 @@ if ($total_data > ($current_page * $items_per_page)):
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart"></i> by
-                <a href="#" class="font-weight-bold" target="_blank">Coding Camp</a>
+                <a href="#" class="font-weight-bold">Coding Camp</a>
                 
               </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="#" class="nav-link text-muted">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link text-muted">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link text-muted" >Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link pe-0 text-muted">License</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

@@ -479,9 +479,6 @@ echo '</p>';
 <td>
 <div class=" text-start m-0">
 
-              <!-- <a class="btn-link text-dark mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>" data-toggle="tooltip" data-original-title="Edit user">
-              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"></i></a> -->
-
               <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editevent.php?id_event=".$r->id_event;?>">
               <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"></i>
             </a>
@@ -506,13 +503,14 @@ if ($total_data > ($current_page * $items_per_page)):
 <?php endif; ?>
                   </tbody>
                 </table>
-                <div class="card-header pb-0">
+                </div>
+              <div class="card-header pb-0">
 
 <div class="row">
   <div class="col-lg-6 col-7">
 <!-- filter rencananya -->
   </div>
-  <div class="col-lg-6 col-5 my-auto text-end">
+  <div class="col-lg-6 my-auto text-end">
   <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
         <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
@@ -526,6 +524,10 @@ if ($total_data > ($current_page * $items_per_page)):
 </div>
 
 </div>
+
+            </div>
+          </div>
+        </div>
       </div>
       <footer class="footer pt-3  ">
         <div class="container-fluid">
