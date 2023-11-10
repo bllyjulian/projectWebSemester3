@@ -2,7 +2,7 @@
   require_once('connection.php');
   header ('Content-Type: application/json;charset=utf8');
   if(empty($_GET)){
-    $query = mysqli_query($connection, "SELECT * FROM tb_akun");
+    $query = mysqli_query($connection, "SELECT * FROM tb_user");
   
     $result = array();
     while($row = mysqli_fetch_assoc($query)){
@@ -21,7 +21,7 @@
   } else {
     // Note: Always use prepared statements for security.
     $username = mysqli_real_escape_string($connection, $_GET['username']);
-    $query = mysqli_query($connection, "SELECT * FROM tb_akun WHERE username='$username'");
+    $query = mysqli_query($connection, "SELECT * FROM tb_user WHERE username='$username'");
     
     $result = array();
     while($row = mysqli_fetch_assoc($query)){

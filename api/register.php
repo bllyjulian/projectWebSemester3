@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password = mysqli_real_escape_string($connection, $input['password']);
         $no_hp = mysqli_real_escape_string($connection, $input['no_hp']);
         $email = mysqli_real_escape_string($connection, $input['email']);
+        $tgllahir = mysqli_real_escape_string($connection, $input['tanggal_lahir']);
 
-
-        $query = mysqli_query($connection, "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) 
-                                            VALUES ('$username', '$nama_lengkap', '$password', 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg', '$no_hp', '$email', 'Laki Laki', 'USR01')");
+        $query = mysqli_query($connection, "INSERT INTO tb_user (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, tanggal_lahir, id_lvl) 
+                                            VALUES ('$username', '$nama_lengkap', '$password', 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg', '$no_hp', '$email', 'Laki Laki', '$tgllahir', 'USR01')");
 
         if ($query) {
             $response = array('message' => 'Registrasi berhasil');
