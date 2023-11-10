@@ -14,7 +14,8 @@
         'no_hp' => $row['no_hp'],
         'email' => $row['email'],
         'jenis_kelamin' => $row['jenis_kelamin'],
-        'id_lvl' => $row['id_lvl']
+        'id_lvl' => $row['id_lvl'],
+        'waktu ditambahkan' => $row['timestamp']
       );
     }
     echo json_encode($result);
@@ -33,7 +34,8 @@
         'no_hp' => $row['no_hp'],
         'email' => $row['email'],
         'jenis_kelamin' => $row['jenis_kelamin'],
-        'id_lvl' => $row['id_lvl']
+        'id_lvl' => $row['id_lvl'],
+        'waktu ditambahkan' => $row['timestamp']
       );
     }
     echo json_encode($result);

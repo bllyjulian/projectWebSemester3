@@ -63,9 +63,9 @@
         } else {
             // Jika gambar tidak diupload
             if ($jeniskelamin == "Laki Laki") {
-                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosong.jpg';
+                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosongv1.jpg';
             } elseif ($jeniskelamin == "Perempuan") {
-                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosongcwe.jpeg';
+                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosongv2.jpg';
             }
         }
             $data = array(
