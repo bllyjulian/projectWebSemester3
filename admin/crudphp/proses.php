@@ -5,7 +5,7 @@
         $user = $_POST['user'];
         $pass = $_POST['pass'];
     
-        $sql = "SELECT * FROM tb_akun WHERE username = ? AND password = ?";
+        $sql = "SELECT * FROM tb_admin WHERE username = ? AND password = ?";
         $row = $koneksi->prepare($sql);
         $row->execute(array($user, $pass));
         $count = $row->rowCount();
@@ -35,7 +35,7 @@
         $id_lvl = $_POST["hak_akses"];
     
             // Check apakah username sudah ada
-    $check_username = $koneksi->prepare("SELECT * FROM tb_akun WHERE username = ?");
+    $check_username = $koneksi->prepare("SELECT * FROM tb_admin WHERE username = ?");
     $check_username->execute([$username]);
 
     if ($check_username->rowCount() > 0) {
@@ -79,7 +79,7 @@
                 $id_lvl
             );
         
-            $sql = "INSERT INTO tb_akun (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO tb_admin (username, nama_lengkap, password, foto_profil, no_hp, email, jenis_kelamin, id_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $koneksi->prepare($sql);
         
             $stmt->execute($data);
@@ -118,7 +118,7 @@ if ($_GET['aksi'] == "editakun") {
         $username // Sisipkan username di sini untuk WHERE clause
     );
 
-    $sql = "UPDATE tb_akun SET nama_lengkap=?, no_hp=?, email=?, jenis_kelamin=?, id_lvl=? WHERE username=?";
+    $sql = "UPDATE tb_admin SET nama_lengkap=?, no_hp=?, email=?, jenis_kelamin=?, id_lvl=? WHERE username=?";
     $stmt = $koneksi->prepare($sql);
 
     // Eksekusi query dengan menggunakan array $data
@@ -145,7 +145,7 @@ if ($_GET['aksi'] == "editakun") {
         $username = $_GET["username"];
     
         // Jalankan query DELETE
-        $stmt = $koneksi->prepare("DELETE FROM tb_akun WHERE username = ?");
+        $stmt = $koneksi->prepare("DELETE FROM tb_admin WHERE username = ?");
         $stmt->execute([$username]);
     
         if ($stmt->rowCount() > 0) {

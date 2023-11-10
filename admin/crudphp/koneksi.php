@@ -11,7 +11,7 @@ try {
         $host = 'localhost';
         $user = 'root';
         $pass = '';
-        $db   = 'codingcamp1';
+        $db   = 'codingcamp';
     }
 
     $koneksi = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -21,7 +21,7 @@ try {
     $host = 'localhost';
     $user = 'root';
     $pass = '';
-    $db   = 'codingcamp1';
+    $db   = 'codingcamp';
 
     $koneksi = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $koneksi->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

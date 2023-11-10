@@ -356,7 +356,7 @@
 require_once('../crudphp/koneksi.php');
 
 $items_per_page = 7;
-$sql = "SELECT * FROM tb_modul ORDER BY id_modul DESC";
+$sql = "SELECT * FROM tb_modul ORDER BY timestamp DESC";
 $row = $koneksi->prepare($sql);
 $row->execute();
 $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -422,7 +422,7 @@ echo '</p>';
                 <h5>
     <?php
     $judul = $r->judul;
-    echo strlen($judul) > 35 ? substr($judul, 0, 50) . '...' : $judul;
+    echo strlen($judul) > 35 ? substr($judul, 0, 45) . '...' : $judul;
     ?>
 </h5>
 
@@ -437,7 +437,9 @@ echo '</p>';
 </p>
 
                 <div class="d-flex align-items-center justify-content-between pb-3">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">Detail Modul</button>
+                  <button type="button" class="btn btn-outline-primary btn-sm mb-0"><a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/detailmodul.php?id_modul=".$r->id_modul;?>">
+             
+                  Detail Modul</a></button>
                   <div class=" text-start m-0">
               
               <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editmodul.php?id_modul=".$r->id_modul;?>">

@@ -393,7 +393,7 @@
                         require_once('../crudphp/koneksi.php');
 
                         // Menghitung total data
-                        $sql =  "SELECT COUNT(*) FROM tb_akun";
+                        $sql =  "SELECT COUNT(*) FROM tb_admin";
                         $row = $koneksi->prepare($sql);
                         $row->execute();
                         $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan

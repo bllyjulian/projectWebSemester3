@@ -12,7 +12,7 @@ try {
       $host = 'localhost';
       $user = 'root';
       $pass = '';
-      $db   = 'codingcamp1';
+      $db   = 'codingcamp';
     }
 
     $connection = mysqli_connect($host, $user, $pass, $db);
@@ -25,7 +25,7 @@ try {
     $host = 'localhost';
     $user = 'root';
     $pass = '';
-    $db   = 'codingcamp1';
+    $db   = 'codingcamp';
 
     $connection = mysqli_connect($host, $user, $pass, $db);
 

@@ -360,7 +360,7 @@ if (isset($_GET['username'])) {
     $username = $_GET['username'];
 
     // Ambil data pengguna berdasarkan username
-    $stmt = $koneksi->prepare("SELECT * FROM tb_akun WHERE username = ?");
+    $stmt = $koneksi->prepare("SELECT * FROM tb_admin WHERE username = ?");
     $stmt->execute([$username]);
     $data_pengguna = $stmt->fetch(PDO::FETCH_ASSOC);
 
