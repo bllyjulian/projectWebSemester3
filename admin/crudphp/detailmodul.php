@@ -641,29 +641,21 @@ function deleteBab(babId) {
               window.location.href = 'detailmodul.php?id_modul=' + idModul;
             });
           } else {
-            // Swal.fire(
-            //   'Gagal Hapus',
-            //   'Data tidak dihapus.',
-            //   'error'
-            // );
-            let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
             Swal.fire(
-              'Sukses!',
-              'Data berhasil dihapus.',
-              'success'
-            ).then(() => {
-              window.location.href = 'detailmodul.php?id_modul=' + idModul;
-            });
+              'Gagal Hapus',
+              'Data tidak dihapus.',
+              'error'
+            );
           }
         })
-        .catch(error => {
-          console.error('Error during fetch:', error);
-          Swal.fire(
-            'Gagal Hapus',
-            'Terjadi kesalahan saat menghapus data.',
-            'error'
-          );
-        });
+        // .catch(error => {
+        //   console.error('Error during fetch:', error);
+        //   Swal.fire(
+        //     'Gagal Hapus',
+        //     'Terjadi kesalahan saat menghapus data.',
+        //     'error'
+        //   );
+        // });
     } else {
       Swal.fire(
         'Batal Hapus',
