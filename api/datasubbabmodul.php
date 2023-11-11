@@ -16,7 +16,6 @@ if (empty($_GET)) {
     }
     echo json_encode($result);
 } else {
-    // Note: Always use prepared statements for security.
     $idbabmodul = mysqli_real_escape_string($connection, $_GET['id_bab']);
     $query = mysqli_query($connection, "SELECT * FROM tb_subbab WHERE id_bab='$idbabmodul'");
 

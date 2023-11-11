@@ -437,7 +437,7 @@ echo '</p>';
 </p>
 
                 <div class="d-flex align-items-center justify-content-between pb-3">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0"><a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/detailmodul.php?id_modul=".$r->id_modul;?>">
+                  <button type="button" class="btn btn-outline-primary btn-sm mb-0"><a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/detailmodul?id_modul=".$r->id_modul;?>">
              
                   Detail Modul</a></button>
                   <div class=" text-start m-0">

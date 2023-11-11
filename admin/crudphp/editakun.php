@@ -576,7 +576,7 @@ $(document).ready(function() {
                                 text: response.pesan,
                                 icon: 'success'
                             }).then(() => {
-                                window.location.href = '../pages/akun.php'; // Arahkan ke event.php di dalam folder pages
+                                window.location.href = '../pages/akun'; // Arahkan ke event.php di dalam folder pages
                             });
                         } else {
                             Swal.fire({

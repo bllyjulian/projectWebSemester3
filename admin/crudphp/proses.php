@@ -504,3 +504,40 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response);
     }
+
+    
+    if ($_GET['aksi'] == "tambah_bab") {
+        $nama_bab = $_POST["judul_bab"];
+        $id_modul = $_POST["id_modul"];
+    
+        $data = array($nama_bab, $id_modul);
+    
+        try {
+            $sql = "INSERT INTO tb_bab (nama_bab, id_modul) VALUES (?, ?)";
+            $stmt = $koneksi->prepare($sql);
+    
+            $stmt->execute($data);
+    
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil menambahkan bab'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal menambahkan bab'
+                ];
+            }
+        } catch (PDOException $e) {
+            // Tangani kesalahan PDO jika terjadi
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+
+        echo json_encode($response);
+    }
+    
+    

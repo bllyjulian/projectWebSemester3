@@ -78,7 +78,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'editmodul.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'editmodul.php' || basename($_SERVER['PHP_SELF']) == 'detailmodul.php') ? 'active' : ''; ?>" href="../pages/course">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -238,7 +238,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Modul</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Edit</h6>
+          <h6 class="font-weight-bolder mb-0">Detail</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -350,11 +350,9 @@
     <div class="container-fluid py-4">
     <main class="main-content  mt-0">
     <section class="min-vh-100 card mb-4">
-    <div class="container p-3">
+    <div class="container p-0">
         <div class="card-body w-100">
-        <div class="col-lg-6 col-7">
-                  <h6>Daftar Akun</h6>
-                </div>
+
             <?php
             require_once('koneksi.php');
 
@@ -373,8 +371,11 @@
 
             <div class="row">
               <div class="col-sm-6">
+              <div class="col-lg-6 col-7">
+                  <h6>Detail Modul</h6>
+                </div>
                       <!-- Gambar Modul -->
-                      <div class="position-relative">
+                      <div class="position-relative mb-3">
               <a class="d-block border-radius-xl" style=" height: 250px;">
   <img src="<?= $data_modul['gambar'];?>" alt="gambar modul" class="img-fluid border-radius-xl" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; object-fit: cover; width: 100%; height: 100%;">
 </a>
@@ -382,90 +383,103 @@
 
 
               </div>
+              <div class=" card-body p-0">
+                  <h5 style="display: none;"><?= $data_modul['id_modul']; ?></h5>
+                  <h5>
+                      <?php
+                      $judul = $data_modul['judul'];
+                      echo $judul;
+                      ?>
+                  </h5>
+  
+                  <a href="javascript:;">
+                      <p class="text-gradient text-dark mb-2 text-sm">Rp. <?= $data_modul['harga']; ?></p>
+                  </a>
+                  <p id="keterangan" class="mb-4 text-sm">
+                      <?php
+                      $keterangan = $data_modul['keterangan'];
+                      echo $keterangan; // Hapus pembatas karakter
+                      ?>
+                  </p>
+              </div>
                       </div>
-      
       
                       <div class="col-sm-6">
-                      <!-- Informasi Modul -->
-                      <div class="card-body">
-                          <h5 style="display: none;"><?= $data_modul['id_modul']; ?></h5>
-                          <h5>
-                              <?php
-                              $judul = $data_modul['judul'];
-                              echo $judul;
-                              ?>
-                          </h5>
-          
-                          <a href="javascript:;">
-                              <p class="text-gradient text-dark mb-2 text-sm">Rp. <?= $data_modul['harga']; ?></p>
-                          </a>
-                          <p id="keterangan" class="mb-4 text-sm">
-                              <?php
-                              $keterangan = $data_modul['keterangan'];
-                              echo $keterangan; // Hapus pembatas karakter
-                              ?>
-                          </p>
-                      </div>
-                      </div>
-      
-            </div>
+                      <div class="col-lg-6 col-7">
+        <h6>Pengantar</h6>
+        
+      </div>
+      <span class="text-sm">
+          <?php
+          $tujuan_pembelajaran = $data_modul['tujuan'];
+          echo $tujuan_pembelajaran;
+          ?>
+      </span>
+</div>
+    <div class="card-header pb-0 p-3 d-flex justify-content-between align-items-center">
+      <div>
+        <h6>Daftar Bab</h6>
+        <?php
+require_once('../crudphp/koneksi.php');
+
+if (isset($_GET['id_modul'])) {
+    $id_modul = $_GET['id_modul'];
+
+    $stmt = $koneksi->prepare("SELECT COUNT(*) FROM tb_bab WHERE id_modul = ?");
+    $stmt->execute([$id_modul]);
+    $total_data = $stmt->fetchColumn();
+
+    echo '<p class="text-sm">';
+    echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+    echo '<span class="font-weight-bold ms-1">' . $total_data . ' Bab dimiliki</span>';
+    echo '</p>';
+}
+?>
 
 
-                    <!-- <form method="post" action="proses.php?aksi=editmodul" id="editModul">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input type="hidden" name="id_modul" value="<?= $data_modul['id_modul']; ?>">
 
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="judul">Judul</label>
-                                    <input type="text" class="form-control" required name="judul" id="judul" value="<?= $data_modul['judul']; ?>" autocomplete="off">
-                                </div>
-                                <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="keterangan">Keterangan</label>
-                                    <input type="text" class="form-control" required name="keterangan" id="keterangan" value="<?= $data_modul['keterangan']; ?>" autocomplete="off">
-                                </div>
-                                <div class="form-group">
-                                  <label class="text-lg font-weight-bold" for="gambar">Gambar</label>
-                                  <input type="file" class="form-control" name="gambar" id="gambar" autocomplete="off">
-                              </div>
-                            <div style="display: none;" class="form-group">
-                                    <label class="text-lg font-weight-bold" for="gambarawal">Link gambar</label>
-                                    <input type="text" class="form-control" required name="gambarawal" id="gambarawal" value="<?= $data_modul['gambar']; ?>" autocomplete="off">
-                                </div>
-                          </div>
-                         
-                          
-                          <div class="col-sm-6">
-                          <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="tujuan">Tujuan Pembelajaran</label>
-                                    <input type="text" class="form-control" required name="tujuan" id="tujuan" value="<?= $data_modul['tujuan']; ?>" autocomplete="off">
-                                </div>
-                          <div class="form-group">
-                                    <label class="text-lg font-weight-bold" for="harga">Harga</label>
-                                    <input type="number" class="form-control" required name="harga" id="harga" value="<?= $data_modul['harga']; ?>" autocomplete="off">
-                                </div>
-                                <div class="form-group">
-                                <label class="text-lg font-weight-bold" for="id_jenismodul">Jenis</label>
-                                <select class="form-control" required name="id_jenismodul" id="id_jenismodul" disabled>
-                                    <option value="3" <?= ($data_modul['id_jenismodul'] == 3) ? 'selected' : ''; ?>>Website Development</option>
-                                    <option value="4" <?= ($data_modul['id_jenismodul'] == 4) ? 'selected' : ''; ?>>Machine Learning</option>
-                                    <option value="5" <?= ($data_modul['id_jenismodul'] == 5) ? 'selected' : ''; ?>>Mobile Development</option>
-                                    <option value="6" <?= ($data_modul['id_jenismodul'] == 6) ? 'selected' : ''; ?>>Database</option>
-                                    <option value="7" <?= ($data_modul['id_jenismodul'] == 7) ? 'selected' : ''; ?>>Network Security</option>
-                                    <option value="8" <?= ($data_modul['id_jenismodul'] == 8) ? 'selected' : ''; ?>>Game Development</option>
-                                </select>
-                            </div>
+      </div>
+        <div class="col-lg-6 col-5 my-auto text-end">
+                <button id="tombolTambah" class="btn bg-gradient-success btn-sm"><a style="color: white;" href="#">Tambah</a></button>
 
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-2">
-                            <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100" id="submit">
-                                Simpan
-                            </button>
-                        </div>
                 </div>
-                    </form> -->
+    </div>
+    <?php
+    $stmt_chapters = $koneksi->prepare("SELECT * FROM tb_bab WHERE id_modul = ?");
+    $stmt_chapters->execute([$id_modul]);
+    $data_bab = $stmt_chapters->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($data_bab) {
+        foreach ($data_bab as $bab) {
+          echo '<div class="position-relative mb-1">
+          <div class="d-flex justify-content-between align-items-center">
+              <span class="text-sm text-wrap cursor-pointer w-100 p-3 mb-2 text-start badge badge-sm bg-gradient-primary bab-toggle" data-bab-id="' . $bab['id_bab'] . '" style="line-height: 1.5; text-transform: none;">' . $bab['nama_bab'] . '</span>
+          </div>';
+
+
+  
+  
+    
+            $stmt_subbabs = $koneksi->prepare("SELECT * FROM tb_subbab WHERE id_bab = ?");
+            $stmt_subbabs->execute([$bab['id_bab']]);
+            $data_subbabs = $stmt_subbabs->fetchAll(PDO::FETCH_ASSOC);
+    
+            if ($data_subbabs) {
+                echo '<div class="ms-2 me-2 text-start subbab-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out;" data-bab-id="' . $bab['id_bab'] . '">';
+                foreach ($data_subbabs as $subbab) {
+                  echo '<div class="mb-2">
+                  <span class="text-sm text-start w-100 badge badge-sm bg-gradient-secondary text-white text-wrap" style="text-transform: none;">' . $subbab['nama_subbab'] . '</span>
+                </div>';
+          
+                }
+                echo '</div>';
+            }
+            echo '</div>';
+        }
+    } else {
+        echo '<p>Belum ada bab untuk modul ini.</p>';
+    }
+    ?>          
                 <?php
                 } else {
                     echo "Data Modul tidak ditemukan.";
@@ -483,7 +497,7 @@
         
   </main>
     </div>
-      <footer class="footer pt-3  ">
+    <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
@@ -492,25 +506,9 @@
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
+                <a href="#" class="font-weight-bold">Coding Camp</a>
+                
               </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -524,6 +522,17 @@
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const babToggles = document.querySelectorAll('.bab-toggle');
+        babToggles.forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                const babId = toggle.getAttribute('data-bab-id');
+                const subbabContainer = document.querySelector('.subbab-container[data-bab-id="' + babId + '"]');
+                subbabContainer.style.maxHeight = (subbabContainer.style.maxHeight === '0px' || subbabContainer.style.maxHeight === '') ? subbabContainer.scrollHeight + 'px' : '0';
+            });
+        });
+    });
+    
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -546,6 +555,55 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
+
+document.getElementById('tombolTambah').addEventListener('click', function () {
+    let idModul; // Deklarasikan variabel di luar blok preConfirm
+
+    Swal.fire({
+        title: "Tambah Bab",
+        html:
+            '<input type="text" id="judulBab" class="swal2-input" />' +
+            '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+        showCancelButton: true,
+        confirmButtonText: "Tambah",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            const judulBab = Swal.getPopup().querySelector('#judulBab').value;
+            idModul = Swal.getPopup().querySelector('#idModul').value;
+
+            return fetch('proses.php?aksi=tambah_bab', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'judul_bab=' + encodeURIComponent(judulBab) + '&id_modul=' + encodeURIComponent(idModul),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error('Error during fetch:', error);
+                    Swal.showValidationMessage(`Request failed: ${error}`);
+                });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: `Berhasil Menambahkan Bab`,
+                icon: 'success'
+            }).then(() => {
+                window.location.href = 'detailmodul.php?id_modul=' + idModul;
+            });
+        }
+    });
+});
+
+
+
 $(document).ready(function() {
     $('#editModul').submit(function(event) {
         event.preventDefault();
