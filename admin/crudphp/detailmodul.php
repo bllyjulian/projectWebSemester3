@@ -628,7 +628,6 @@ function deleteBab(babId) {
     confirmButtonText: 'Hapus'
   }).then((result) => {
     if (result.isConfirmed) {
-      // Hapus bab menggunakan fetch API
       fetch(`../crudphp/proses.php?aksi=hapusbab&id_bab=${babId}`)
         .then(response => response.json())
         .then(data => {
