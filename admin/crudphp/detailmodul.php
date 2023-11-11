@@ -454,10 +454,9 @@ if (isset($_GET['id_modul'])) {
           echo '<div class="position-relative mb-1">
           <div class="d-flex justify-content-between align-items-center bg-gradient-primary badge badge-sm mb-2">
           <span class="text-sm text-center cursor-pointer ms-1">
-          <a class="btn-link text-center text-danger text-sm" href="#">
-          <i id="info-circle" data-bab-id="' . $bab['id_bab'] . '" class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus" style="font-size: 1.5em;"></i>
-
-          </a> </span>
+          <a class="btn-link text-center text-danger text-sm edit-hapus" href="#" data-bab-id="' . $bab['id_bab'] . '">
+          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus" style="font-size: 1.5em;"></i>
+        </a> </span>
               <span class="text-sm text-wrap cursor-pointer w-100 p-3 text-start badge badge-sm  bab-toggle" data-bab-id="' . $bab['id_bab'] . '" style="line-height: 1.5; text-transform: none;">' . $bab['nama_bab'] . '</span>
           </div>';
 
@@ -545,30 +544,31 @@ if (isset($_GET['id_modul'])) {
     }
 
 //edit hapus bab
-document.querySelectorAll('[data-bab-id]').forEach(function (icon) {
-  icon.addEventListener('click', function () {
-    const babId = this.dataset.babId;
+document.querySelectorAll('.edit-hapus').forEach(function (button) {
+  button.addEventListener('click', function () {
+    const babId = this.getAttribute('data-bab-id');
     const namaBab = this.closest('.position-relative').querySelector('.bab-toggle').innerText;
 
     Swal.fire({
-  title: "Silahkan pilih aksi",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Edit",
-  cancelButtonText: "Hapus"
-}).then((result) => {
-  if (result.isConfirmed) {
-    editBab(babId, namaBab);
-  } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
-    return;
-  } else {
-    deleteBab(babId);
-  }
-});
+      title: "Silahkan pilih aksi",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Edit",
+      cancelButtonText: "Hapus"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        editBab(babId, namaBab);
+      } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
+        return;
+      } else {
+        deleteBab(babId);
+      }
+    });
   });
 });
+
 
 function editBab(babId, namaBab) {
   Swal.fire({
