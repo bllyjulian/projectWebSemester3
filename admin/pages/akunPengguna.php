@@ -437,7 +437,7 @@
           $items_per_page = 7;
 
           // Menghitung total data
-          $sql = "SELECT * FROM tb_akun";
+          $sql = "SELECT * FROM tb_user";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -450,7 +450,7 @@
           $start_index = ($current_page - 1) * $items_per_page;
 
           // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_akun WHERE id_lvl = 'USR01' LIMIT $start_index, $items_per_page";
+          $sql = "SELECT * FROM tb_user WHERE id_lvl = 'USR01' LIMIT $start_index, $items_per_page";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);

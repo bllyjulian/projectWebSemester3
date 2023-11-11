@@ -533,10 +533,7 @@ function confirmDelete(id_modul) {
     }
   });
 }
-document.getElementById('keterangan').addEventListener('click', function() {
-        var keterangan = "<?php echo $r->keterangan; ?>";
-        alert(keterangan); // Ganti dengan cara tampilan yang Anda inginkan saat di klik
-    });
+
 </script>
 
   <!-- Github buttons -->

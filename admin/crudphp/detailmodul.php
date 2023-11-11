@@ -452,14 +452,15 @@ if (isset($_GET['id_modul'])) {
     if ($data_bab) {
         foreach ($data_bab as $bab) {
           echo '<div class="position-relative mb-1">
-          <div class="d-flex justify-content-between align-items-center">
-              <span class="text-sm text-wrap cursor-pointer w-100 p-3 mb-2 text-start badge badge-sm bg-gradient-primary bab-toggle" data-bab-id="' . $bab['id_bab'] . '" style="line-height: 1.5; text-transform: none;">' . $bab['nama_bab'] . '</span>
+          <div class="d-flex justify-content-between align-items-center bg-gradient-primary badge badge-sm mb-2">
+          <span class="text-sm text-center cursor-pointer ms-1">
+          <a class="btn-link text-center text-danger text-sm" href="#">
+          <i id="info-circle" data-bab-id="' . $bab['id_bab'] . '" class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus" style="font-size: 1.5em;"></i>
+
+          </a> </span>
+              <span class="text-sm text-wrap cursor-pointer w-100 p-3 text-start badge badge-sm  bab-toggle" data-bab-id="' . $bab['id_bab'] . '" style="line-height: 1.5; text-transform: none;">' . $bab['nama_bab'] . '</span>
           </div>';
 
-
-  
-  
-    
             $stmt_subbabs = $koneksi->prepare("SELECT * FROM tb_subbab WHERE id_bab = ?");
             $stmt_subbabs->execute([$bab['id_bab']]);
             $data_subbabs = $stmt_subbabs->fetchAll(PDO::FETCH_ASSOC);
@@ -468,6 +469,7 @@ if (isset($_GET['id_modul'])) {
                 echo '<div class="ms-2 me-2 text-start subbab-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out;" data-bab-id="' . $bab['id_bab'] . '">';
                 foreach ($data_subbabs as $subbab) {
                   echo '<div class="mb-2">
+                  
                   <span class="text-sm text-start w-100 badge badge-sm bg-gradient-secondary text-white text-wrap" style="text-transform: none;">' . $subbab['nama_subbab'] . '</span>
                 </div>';
           
@@ -523,6 +525,7 @@ if (isset($_GET['id_modul'])) {
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      let idModul;
         const babToggles = document.querySelectorAll('.bab-toggle');
         babToggles.forEach(function (toggle) {
             toggle.addEventListener('click', function () {
@@ -540,24 +543,137 @@ if (isset($_GET['id_modul'])) {
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-    $(document).ready(function(){
-  // $("#navAkunAdmin").hide(); // Sembunyikan elemen saat halaman dimuat
-  // $("#navAkunMentor").hide(); // Sembunyikan elemen saat halaman dimuat
-  // $("#navAkunPengguna").hide(); // Sembunyikan elemen saat halaman dimuat
 
-  $(".nav-link.active").click(function(){
-    $("#navAkunAdmin").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-    $("#navAkunMentor").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
-    $("#navAkunPengguna").slideToggle(); // Toggle visibility saat item menu "Daftar Akun" diklik
+//edit hapus bab
+document.querySelectorAll('[data-bab-id]').forEach(function (icon) {
+  icon.addEventListener('click', function () {
+    const babId = this.dataset.babId;
+    const namaBab = this.closest('.position-relative').querySelector('.bab-toggle').innerText;
+
+    Swal.fire({
+  title: "Silahkan pilih aksi",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Edit",
+  cancelButtonText: "Hapus"
+}).then((result) => {
+  if (result.isConfirmed) {
+    editBab(babId, namaBab);
+  } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
+    return;
+  } else {
+    deleteBab(babId);
+  }
+});
   });
 });
+
+function editBab(babId, namaBab) {
+  Swal.fire({
+    title: "Edit Bab",
+    html:
+      '<input type="hidden" id="idBab" class="swal2-input" value="' + babId + '"/>' +
+      '<input type="text" id="judulBab" class="swal2-input" value="' + namaBab + '"/>' +
+      '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const idBab = Swal.getPopup().querySelector('#idBab').value;
+      const judulBab = Swal.getPopup().querySelector('#judulBab').value;
+      idModul = Swal.getPopup().querySelector('#idModul').value;
+
+      return fetch('proses.php?aksi=edit_bab', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_bab=' + encodeURIComponent(judulBab) + '&id_modul=' + encodeURIComponent(idModul),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Berhasil Mengedit Bab`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'detailmodul.php?id_modul=' + idModul;
+      });
+    }
+  });
+}
+
+function deleteBab(babId) {
+  Swal.fire({
+    title: 'Apakah anda yakin ingin menghapus?',
+    html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    text: "Data yang dihapus tidak bisa dipulihkan",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Hapus bab menggunakan fetch API
+      fetch(`../crudphp/proses.php?aksi=hapusbab&id_bab=${babId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.sukses) {
+            let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
+            Swal.fire(
+              'Sukses!',
+              'Data berhasil dihapus.',
+              'success'
+            ).then(() => {
+              window.location.href = 'detailmodul.php?id_modul=' + idModul;
+            });
+          } else {
+            Swal.fire(
+              'Gagal Hapus',
+              'Data tidak dihapus.',
+              'error'
+            );
+          }
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.fire(
+            'Gagal Hapus',
+            'Terjadi kesalahan saat menghapus data.',
+            'error'
+          );
+        });
+    } else {
+      Swal.fire(
+        'Batal Hapus',
+        'Data tidak dihapus.',
+        'info'
+      );
+    }
+  });
+}
+
   </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 
 document.getElementById('tombolTambah').addEventListener('click', function () {
-    let idModul; // Deklarasikan variabel di luar blok preConfirm
+    let idModul;
 
     Swal.fire({
         title: "Tambah Bab",

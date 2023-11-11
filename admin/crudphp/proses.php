@@ -429,23 +429,6 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response);
     }
-
-    if ($_GET['aksi'] == "hapusevent") {
-        $id = $_GET["id_event"];
-    
-        // Jalankan query DELETE
-        $stmt = $koneksi->prepare("DELETE FROM tb_event WHERE id_event = ?");
-        $stmt->execute([$id]);
-    
-        if ($stmt->rowCount() > 0) {
-
-        } else {
-            echo "<script>alert('Gagal menghapus data');</script>";
-        }
-    
-        // Redirect atau lakukan aksi lain setelah penghapusan
-        echo "<script>window.location='../pages/event.php';</script>";
-    }
        
     if ($_GET['aksi'] == "hapusmodul") {
         $id = $_GET["id_modul"];
@@ -537,6 +520,68 @@ if ($_GET['aksi'] == "editakun") {
             ];
         }
 
+        echo json_encode($response);
+    }
+    
+    if ($_GET['aksi'] == "edit_bab") {
+        $id_bab = $_POST["id_bab"];
+        $nama_bab = $_POST["judul_bab"];
+        $id_modul = $_POST["id_modul"];
+    
+        $data = array(
+            $nama_bab,
+            $id_bab
+        );
+    
+        try {
+            $sql = "UPDATE tb_bab SET nama_bab=? WHERE id_bab=?";
+            $stmt = $koneksi->prepare($sql);
+    
+            $stmt->execute($data);
+    
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil mengedit bab'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal mengedit bab'
+                ];
+            }
+        } catch (PDOException $e) {
+            // Tangani kesalahan PDO jika terjadi
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+    
+    if ($_GET['aksi'] == "hapusbab") {
+        $id_bab = $_GET["id_bab"];
+    
+        // Jalankan query DELETE
+        $stmt = $koneksi->prepare("DELETE FROM tb_bab WHERE id_bab = ?");
+        $stmt->execute([$id_bab]);
+    
+        // Berikan respons JSON
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Data berhasil dihapus.'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menghapus data.'
+            ];
+        }
+    
+        // Kembalikan respons JSON
         echo json_encode($response);
     }
     
