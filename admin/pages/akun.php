@@ -383,7 +383,7 @@ echo '</p>';
 ?>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
+                <button class="btn bg-gradient-success"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
 
                 </div>
 
@@ -507,10 +507,10 @@ if ($total_data > ($current_page * $items_per_page)):
   <div class="col-lg-6 my-auto text-end">
   <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
+        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
     <?php endif; ?>
 
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm">Next &gt;</a>
+    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
 </div>
 
   </div>

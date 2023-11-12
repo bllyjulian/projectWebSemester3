@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Edit modul 
+    Detail Modul 
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -440,7 +440,7 @@ if (isset($_GET['id_modul'])) {
 
       </div>
         <div class="col-lg-6 col-5 my-auto text-end">
-                <button id="tombolTambah" class="btn bg-gradient-success btn-sm"><a style="color: white;" href="#">Tambah</a></button>
+                <button id="tombolTambah" class="btn bg-gradient-success"><a style="color: white;" href="#">Tambah</a></button>
 
                 </div>
     </div>
@@ -463,14 +463,18 @@ if (isset($_GET['id_modul'])) {
             $stmt_subbabs = $koneksi->prepare("SELECT * FROM tb_subbab WHERE id_bab = ?");
             $stmt_subbabs->execute([$bab['id_bab']]);
             $data_subbabs = $stmt_subbabs->fetchAll(PDO::FETCH_ASSOC);
-    
             if ($data_subbabs) {
                 echo '<div class="ms-2 me-2 text-start subbab-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out;" data-bab-id="' . $bab['id_bab'] . '">';
                 foreach ($data_subbabs as $subbab) {
                   echo '<div class="mb-2">
-                  
-                  <span class="text-sm text-start w-100 badge badge-sm bg-gradient-secondary text-white text-wrap" style="text-transform: none;">' . $subbab['nama_subbab'] . '</span>
-                </div>';
+                  <div class="d-flex align-items-center bg-gradient-secondary badge badge-sm w-100">
+                      <a class="btn-link text-danger text-sm edit-hapussubbab" href="#" data-subbab-id="' . $subbab['id_subbab'] . '">
+                          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus" style="font-size: 1.5em;"></i>
+                      </a>
+                      <span class="text-sm text-start w-100 badge badge-sm text-white text-wrap subbab-toggle" data-subbab-id="' . $subbab['id_subbab'] . '" style="text-transform: none;">' . $subbab['nama_subbab'] . '</span>
+                      <span class="text-sm text-start w-100 badge badge-sm text-white text-wrap pengantarsubbab-toggle" data-subbab-id="' . $subbab['id_subbab'] . '" style=" display: none; text-transform: none;">' . $subbab['pengantar'] . '</span>
+                  </div>
+              </div>';
           
                 }
                 echo '</div>';
@@ -529,6 +533,7 @@ if (isset($_GET['id_modul'])) {
         babToggles.forEach(function (toggle) {
             toggle.addEventListener('click', function () {
                 const babId = toggle.getAttribute('data-bab-id');
+                const subbabId = toggle.getAttribute('data-subbab-id');
                 const subbabContainer = document.querySelector('.subbab-container[data-bab-id="' + babId + '"]');
                 subbabContainer.style.maxHeight = (subbabContainer.style.maxHeight === '0px' || subbabContainer.style.maxHeight === '') ? subbabContainer.scrollHeight + 'px' : '0';
             });
@@ -543,7 +548,7 @@ if (isset($_GET['id_modul'])) {
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 
-//edit hapus bab
+//CRUD bab
 document.querySelectorAll('.edit-hapus').forEach(function (button) {
   button.addEventListener('click', function () {
     const babId = this.getAttribute('data-bab-id');
@@ -552,22 +557,89 @@ document.querySelectorAll('.edit-hapus').forEach(function (button) {
     Swal.fire({
       title: "Silahkan pilih aksi",
       icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Edit",
-      cancelButtonText: "Hapus"
+      showConfirmButton: true,
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  denyButtonColor: "#d33",
+  cancelButtonColor: "#1fb314",
+  confirmButtonText: "Edit",
+  denyButtonText: "Hapus",
+  cancelButtonText: "Tambah Subbab"
     }).then((result) => {
       if (result.isConfirmed) {
         editBab(babId, namaBab);
+      } else if (result.isDenied) {
+        deleteBab(babId);
       } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
         return;
       } else {
-        deleteBab(babId);
+        tambahsubBab(babId, namaBab);
       }
     });
   });
 });
+
+function tambahsubBab(babId, namaBab) {
+  Swal.fire({
+    title: "Tambah Subbab",
+    html:
+      '<input type="hidden" id="idBab" class="swal2-input" value="' + babId + '"/>' +
+      '<p class="text-lg font-weight-bold mb-4">' + namaBab + '</p>' +
+      '<div class="input-group">' +
+      '<label class="text-lg font-weight-bold mr-2 mb-0" for="judulsubBab">Judul Subbab</label>' +
+      '<input type="text" id="judulsubBab" class="swal2-input" />' +
+      '</div>' +
+      '<div class="input-group">' +
+      '<label class="text-lg font-weight-bold mr-2 mb-0" for="pengantarBab">Deskripsi (opsional)</label>' + // Fixed the label here
+      '<input type="text" id="pengantarBab" class="swal2-input" />' +
+      '</div>' +
+      '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const idBab = document.getElementById('idBab').value;
+      const judulsubBab = document.getElementById('judulsubBab').value;
+      const pengantarBab = document.getElementById('pengantarBab').value;
+      idModul = document.getElementById('idModul').value;
+
+      // Validate if the "Judul Subbab" field is not empty
+      if (!judulsubBab) {
+        Swal.showValidationMessage('Judul Subbab harus diisi');
+        return false; // Prevent form submission when validation fails
+      }
+
+      return fetch('proses.php?aksi=tambah_subbab', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_bab=' + encodeURIComponent(pengantarBab) + '&id_modul=' + encodeURIComponent(idModul),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Berhasil Menambah Subbab`,
+        icon: 'success',
+      }).then(() => {
+        window.location.href = 'detailmodul.php?id_modul=' + idModul;
+      });
+    }
+  });
+}
 
 
 function editBab(babId, namaBab) {
@@ -584,6 +656,12 @@ function editBab(babId, namaBab) {
       const idBab = Swal.getPopup().querySelector('#idBab').value;
       const judulBab = Swal.getPopup().querySelector('#judulBab').value;
       idModul = Swal.getPopup().querySelector('#idModul').value;
+
+      // Validate if the "Judul Bab" field is not empty
+      if (!judulBab) {
+        Swal.showValidationMessage('Judul bab harus diisi');
+        return false; // Prevent form submission when validation fails
+      }
 
       return fetch('proses.php?aksi=edit_bab', {
         method: 'POST',
@@ -618,7 +696,7 @@ function editBab(babId, namaBab) {
 
 function deleteBab(babId) {
   Swal.fire({
-    title: 'Apakah anda yakin ingin menghapus?',
+    title: 'Apakah anda yakinn ingin menghapus?',
     html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
     text: "Data yang dihapus tidak bisa dipulihkan",
     icon: 'warning',
@@ -669,107 +747,277 @@ function deleteBab(babId) {
   });
 }
 
+
+//CRUD subbab
+document.querySelectorAll('.edit-hapussubbab').forEach(function (button) {
+  button.addEventListener('click', function () {
+    const babId = this.getAttribute('data-bab-id');
+        const subbabId = this.getAttribute('data-subbab-id');
+        const namaBab = this.closest('.position-relative').querySelector('.bab-toggle').innerText;
+        const subbabToggle = document.querySelector('.subbab-toggle[data-subbab-id="' + subbabId + '"]');
+        const namasubBab = subbabToggle.innerText;
+//         const pengantarsubbabToggle = document.querySelector('.pengantarsubbab-toggle[data-subbab-id="' + subbabId + '"]');
+//         const pengantarsubBab = pengantarsubbabToggle.innerText;
+// console.log(pengantarsubBab);
+
+    Swal.fire({
+      title: "Silahkan pilih aksi",
+      icon: "warning",
+      showConfirmButton: true,
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  denyButtonColor: "#d33",
+  cancelButtonColor: "#1fb314",
+  confirmButtonText: "Edit",
+  denyButtonText: "Hapuss",
+  cancelButtonText: "Tambah Materi"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        editsubBab(subbabId, babId, namasubBab);
+      } else if (result.isDenied) {
+        deletesubBab(subbabId);
+      } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
+        return;
+      } else {
+        tambahsubBab(babId, namaBab);
+      }
+    });
+  });
+});
+
+function tambahmateri(babId, namaBab) {
+  Swal.fire({
+    title: "Tambah Subbab",
+    html:
+    '<input type="hidden" id="idBab" class="swal2-input" value="' + babId + '"/>' +
+    '<p class="text-lg font-weight-bold mb-4">' + namasubBab + '</p>' +
+    '<div class="input-group">' +
+    '<label class="text-lg font-weight-bold mr-2 mb-0" for="judulsubBab">Judul Subbab</label>' +
+    '<input type="text" id="judulsubBab" class="swal2-input" />' +
+    '</div>' +
+    '<div class="input-group">' +
+    '<label class="text-lg font-weight-bold mr-2 mb-0" for="pengantarBab">Deskripsi(opsional)</label>' +
+    '<input type="text" id="pengantarBab" class="swal2-input" />' +
+    '</div>' +
+    '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+  const idBab = document.getElementById('idBab').value;
+  const judulsubBab = document.getElementById('judulsubBab').value;
+  const pengantarBab = document.getElementById('pengantarBab').value;
+  idModul = document.getElementById('idModul').value;
+
+  // Validate if the "Judul Subbab" field is not empty
+  if (!judulsubBab) {
+    Swal.showValidationMessage('Judul Subbab harus diisi');
+    return false; // Prevent form submission when validation fails
+  }
+
+  return fetch('proses.php?aksi=tambah_subbab', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_bab=' + encodeURIComponent(pengantarBab) + '&id_modul=' + encodeURIComponent(idModul),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error during fetch:', error);
+      Swal.showValidationMessage(`Request failed: ${error}`);
+    });
+},
+
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Berhasil Menambah Subbab`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'detailmodul.php?id_modul=' + idModul;
+      });
+    }
+  });
+}
+
+function editsubBab(subbabId, babId, namasubBab) {
+  Swal.fire({
+    title: "Edit Subbab",
+    html:
+    '<input type="text" id="subbabId" class="swal2-input" value="' + subbabId + '"/>' +
+                '<input type="hidden" id="babId" class="swal2-input" value="' + babId + '"/>' +
+                '<input type="text" id="judulsubBab" class="swal2-input" value="' + namasubBab + '"/>' +
+                // '<input type="text" id="pengantarsubBab" class="swal2-input" value="' + pengantarsubBab + '"/>' +
+                '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const subbabId = Swal.getPopup().querySelector('#subbabId').value;
+      const babId = Swal.getPopup().querySelector('#babId').value;
+      const judulsubBab = Swal.getPopup().querySelector('#judulsubBab').value;
+      idModul = Swal.getPopup().querySelector('#idModul').value;
+
+      // Validate if the "Judul Subbab" field is not empty
+      if (!judulsubBab) {
+        Swal.showValidationMessage('Judul subbab harus diisi');
+        return false; // Prevent form submission when validation fails
+      }
+
+      return fetch('proses.php?aksi=edit_subbab', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'id_subbab=' + encodeURIComponent(subbabId) + '&id_bab=' + encodeURIComponent(babId) + '&nama_subbab=' + encodeURIComponent(judulsubBab) + '&id_modul=' + encodeURIComponent(idModul),
+})
+
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Berhasil Mengedit Subbab`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'detailmodul.php?id_modul=' + idModul;
+      });
+    }
+  });
+}
+function deletesubBab(subbabId) {
+  Swal.fire({
+    title: 'Apakah hhhanda yakin ingin menghapus?',
+    html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    text: "Data yang dihapus tidak bisa dipulihkan",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      let idModul = document.querySelector('#idModul').value;
+
+      fetch(`../crudphp/proses.php?aksi=hapussubbab&id_subbab=${subbabId}`, {
+  method: 'POST',  // Pastikan ini menggunakan metode POST
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: 'id_subbab=' + encodeURIComponent(subbabId),
+})
+
+      .then(response => response.json())
+      .then(data => {
+        if (data.sukses) {
+          Swal.fire(
+            'Sukses!',
+            'Data berhasil dihapus.',
+            'success'
+          ).then(() => {
+            window.location.href = 'detailmodul.php?id_modul=' + idModul;
+          });
+        } else {
+          Swal.fire(
+            'Gagal Hapus',
+            'Data tidak dihapus.',
+            'error'
+          );
+        }
+      })
+      .catch(error => {
+        console.error('Error during fetch:', error);
+          let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
+            Swal.fire(
+              'Sukses!',
+              'Data berhasil dihapus.',
+              'success'
+            ).then(() => {
+              window.location.href = 'detailmodul.php?id_modul=' + idModul;
+            });
+        });
+    } else {
+      Swal.fire(
+        'Batal Hapus',
+        'Data tidak dihapus.',
+        'info'
+      );
+    }
+  });
+}
+
   </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-
 document.getElementById('tombolTambah').addEventListener('click', function () {
-    let idModul;
+  let idModul;
 
-    Swal.fire({
-        title: "Tambah Bab",
-        html:
-            '<input type="text" id="judulBab" class="swal2-input" />' +
-            '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Tambah",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            const judulBab = Swal.getPopup().querySelector('#judulBab').value;
-            idModul = Swal.getPopup().querySelector('#idModul').value;
+  Swal.fire({
+    title: "Tambah Bab",
+    html:
+      '<input type="text" id="judulBab" class="swal2-input" />' +
+      '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    showCancelButton: true,
+    confirmButtonText: "Tambah",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const judulBab = Swal.getPopup().querySelector('#judulBab').value;
+      idModul = Swal.getPopup().querySelector('#idModul').value;
 
-            return fetch('proses.php?aksi=tambah_bab', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'judul_bab=' + encodeURIComponent(judulBab) + '&id_modul=' + encodeURIComponent(idModul),
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(response.statusText);
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    console.error('Error during fetch:', error);
-                    Swal.showValidationMessage(`Request failed: ${error}`);
-                });
+      // Validate if the "Judul Bab" field is not empty
+      if (!judulBab) {
+        Swal.showValidationMessage('Judul bab harus diisi');
+        return false; // Prevent form submission when validation fails
+      }
+
+      return fetch('proses.php?aksi=tambah_bab', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: `Berhasil Menambahkan Bab`,
-                icon: 'success'
-            }).then(() => {
-                window.location.href = 'detailmodul.php?id_modul=' + idModul;
-            });
-        }
-    });
-});
-
-
-
-$(document).ready(function() {
-    $('#editModul').submit(function(event) {
-        event.preventDefault();
-
-        Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Apakah Anda yakin ingin menyimpan perubahan?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika pengguna mengonfirmasi, lanjutkan dengan pengiriman formulir
-                var formData = new FormData(this);
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'proses.php?aksi=editmodul',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.sukses) {
-                            Swal.fire({
-                                title: 'Berhasil!',
-                                text: response.pesan,
-                                icon: 'success'
-                            }).then(() => {
-                                window.location.href = '../pages/course';
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal!',
-                                text: response.pesan,
-                                footer: '<a href="">Perlu bantuan?</a>'
-                            });
-                        }
-                    },
-                    error: function() {
-                        // Tangani kesalahan
-                    }
-                });
-            }
+        body: 'judul_bab=' + encodeURIComponent(judulBab) + '&id_modul=' + encodeURIComponent(idModul),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
         });
-    });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Berhasil Menambahkan Bab`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'detailmodul.php?id_modul=' + idModul;
+      });
+    }
+  });
 });
 
 </script>

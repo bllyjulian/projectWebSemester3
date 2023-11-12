@@ -585,4 +585,102 @@ if ($_GET['aksi'] == "editakun") {
         echo json_encode($response);
     }
     
+    if ($_GET['aksi'] == "tambah_subbab") {
+        $nama_subbab = $_POST["judul_subbab"];
+        $pengantar_bab = $_POST["pengantar_bab"];
+        $id_bab = $_POST["id_bab"];
     
+        $data = array($nama_subbab, $pengantar_bab, $id_bab);
+    
+        try {
+            $sql = "INSERT INTO tb_subbab (nama_subbab, pengantar, id_bab) VALUES (?, ?, ?)";
+            $stmt = $koneksi->prepare($sql);
+    
+            $stmt->execute($data);
+    
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil menambahkan subbab'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal menambahkan subbab'
+                ];
+            }
+        } catch (PDOException $e) {
+            // Tangani kesalahan PDO jika terjadi
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+    if ($_GET['aksi'] == "edit_subbab") {
+        $id_bab = $_POST["id_bab"];
+        $nama_subbab = $_POST["nama_subbab"];
+        $id_subbab = $_POST["id_subbab"];
+    
+        $data = array(
+            $nama_subbab,
+            $id_subbab
+        );
+    
+        try {
+            $sql = "UPDATE tb_subbab SET nama_subbab=? WHERE id_subbab=?";
+            $stmt = $koneksi->prepare($sql);
+    
+            $stmt->execute($data);
+    
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil mengedit subbab'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal mengedit subbab'
+                ];
+            }
+        } catch (PDOException $e) {
+            // Tangani kesalahan PDO jika terjadi
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+    if ($_GET['aksi'] == "hapussubbab") {
+        $id_subbab = $_GET["id_subbab"];
+        
+        try {
+            // Jalankan query DELETE
+            $stmt = $koneksi->prepare("DELETE FROM tb_subbab WHERE id_subbab = ?");
+            $stmt->execute([$id_subbab]);
+        
+            // Berikan respons JSON
+            if ($stmt->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Data berhasil dihapus.'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal menghapus data. Tidak ada data yang dihapus.'
+                ];
+            }
+        } catch (PDOException $e) {
+            // Tangani kesalahan PDO jika terjadi
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }        
