@@ -770,7 +770,7 @@ document.querySelectorAll('.edit-hapussubbab').forEach(function (button) {
   denyButtonColor: "#d33",
   cancelButtonColor: "#1fb314",
   confirmButtonText: "Edit",
-  denyButtonText: "Hapuss",
+  denyButtonText: "Hapus",
   cancelButtonText: "Tambah Materi"
     }).then((result) => {
       if (result.isConfirmed) {
