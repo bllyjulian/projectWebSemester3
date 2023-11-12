@@ -852,7 +852,7 @@ function editsubBab(subbabId, babId, namasubBab) {
   Swal.fire({
     title: "Edit Subbab",
     html:
-    '<input type="text" id="subbabId" class="swal2-input" value="' + subbabId + '"/>' +
+    '<input type="hidden" id="subbabId" class="swal2-input" value="' + subbabId + '"/>' +
                 '<input type="hidden" id="babId" class="swal2-input" value="' + babId + '"/>' +
                 '<input type="text" id="judulsubBab" class="swal2-input" value="' + namasubBab + '"/>' +
                 // '<input type="text" id="pengantarsubBab" class="swal2-input" value="' + pengantarsubBab + '"/>' +
