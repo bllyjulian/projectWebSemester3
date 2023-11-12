@@ -455,7 +455,7 @@ if (isset($_GET['id_modul'])) {
           <div class="d-flex justify-content-between align-items-center bg-gradient-primary badge badge-sm mb-2">
           <span class="text-sm text-center cursor-pointer ms-1">
           <a class="btn-link text-center text-danger text-sm edit-hapus" href="#" data-bab-id="' . $bab['id_bab'] . '">
-          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus" style="font-size: 1.5em;"></i>
+          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus/Tambah Subbab" style="font-size: 1.5em;"></i>
         </a> </span>
               <span class="text-sm text-wrap cursor-pointer w-100 p-3 text-start badge badge-sm  bab-toggle" data-bab-id="' . $bab['id_bab'] . '" style="line-height: 1.5; text-transform: none;">' . $bab['nama_bab'] . '</span>
           </div>';
@@ -469,7 +469,7 @@ if (isset($_GET['id_modul'])) {
                   echo '<div class="mb-2">
                   <div class="d-flex align-items-center bg-gradient-secondary badge badge-sm w-100">
                       <a class="btn-link text-danger text-sm edit-hapussubbab" href="#" data-subbab-id="' . $subbab['id_subbab'] . '">
-                          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus" style="font-size: 1.5em;"></i>
+                          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus/Tambah Materi" style="font-size: 1.5em;"></i>
                       </a>
                       <span class="text-sm text-start w-100 badge badge-sm text-white text-wrap subbab-toggle" data-subbab-id="' . $subbab['id_subbab'] . '" style="text-transform: none;">' . $subbab['nama_subbab'] . '</span>
                       <span class="text-sm text-start w-100 badge badge-sm text-white text-wrap pengantarsubbab-toggle" data-subbab-id="' . $subbab['id_subbab'] . '" style=" display: none; text-transform: none;">' . $subbab['pengantar'] . '</span>
