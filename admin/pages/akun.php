@@ -383,6 +383,8 @@ echo '</p>';
 ?>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
+
+                <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akunAdmin"><i class="fa fa-filter " aria-hidden="true"></i></a></button>
                 <button class="btn bg-gradient-success"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
 
                 </div>
@@ -468,7 +470,7 @@ echo '</p>';
 
             <td class="align-middle text-lg-start">
                 <span class="text-secondary text-xs font-weight-bold"><?= $r->jenis_kelamin;?></span>
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp;?></span>
+                <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp;?></span> -->
             </td>
             <td class="align-middle text-lg-start">
             <div class=" text-start m-0">

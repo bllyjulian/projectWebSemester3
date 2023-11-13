@@ -378,11 +378,6 @@
             <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
             <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap" placeholder="" autocomplete="off">
         </div>
-        
-        <!-- <div class="form-group">
-            <label class="text-lg font-weightc-bold" for="password">Password</label>
-            <input type="password" class="form-control" required name="password" id="password" placeholder="" autocomplete="off">
-        </div> -->
         <div class="form-group">
     <label class="text-lg font-weight-bold" for="password">Password</label>
     <div class="input-group1">
