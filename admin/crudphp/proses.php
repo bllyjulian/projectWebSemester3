@@ -686,4 +686,58 @@ if ($_GET['aksi'] == "editakun") {
                 'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
             ];
         }
-    }        
+    }    
+
+    if ($_GET['aksi'] == "tambahmateri") {
+        $jumlah_data = count($_POST['judul_materi']);
+        $response = []; // Respons awal dalam bentuk array kosong
+    
+        for ($i = 0; $i < $jumlah_data; $i++) {
+            $judul = $_POST['judul_materi'][$i];
+            $materi = $_POST['materi'][$i];
+            $id_subbab = $_POST['id_subbab'][$i];
+            $nama_gambar = $_FILES['gambar']['name'][$i];
+            $tmp_gambar = $_FILES['gambar']['tmp_name'][$i];
+            $url_gambar = null;
+    
+            if ($nama_gambar !== '') {
+                $nama_baru = md5($nama_gambar . time()) . '.' . pathinfo($nama_gambar, PATHINFO_EXTENSION);
+                $folder_tujuan = 'gambarmateri/';
+                $path_gambar = $folder_tujuan . $nama_baru;
+    
+                if (move_uploaded_file($tmp_gambar, $path_gambar)) {
+                    $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
+                }
+            }
+    
+            // Menyiapkan data untuk disimpan ke dalam database
+            $data = array(
+                $judul,
+                $materi,
+                $url_gambar,
+                $id_subbab
+            );
+    
+            $sql = "INSERT INTO tb_materi (judul, materi, gambar, id_subbab) VALUES (?, ?, ?, ?)";
+            $stmt = $koneksi->prepare($sql);
+    
+            $stmt->execute($data);
+    
+            if ($stmt->rowCount() > 0) {
+                $response[] = [
+                    'sukses' => true,
+                    'pesan' => 'Berhasil menyimpan data'
+                ];
+            } else {
+                $response[] = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal menyimpan data'
+                ];
+            }
+        }
+    
+        echo json_encode($response); // Mengirim respons keseluruhan setelah semua data diolah
+    }
+    
+    
+    
