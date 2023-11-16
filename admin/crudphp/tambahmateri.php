@@ -751,15 +751,13 @@ function deleteBab(babId) {
 //CRUD subbab
 document.querySelectorAll('.edit-hapussubbab').forEach(function (button) {
   button.addEventListener('click', function () {
-        // const babId = this.getAttribute('data-bab-id');
-        const babId = this.closest('.position-relative').querySelector('.bab-toggle').getAttribute('data-bab-id');
+    const babId = this.getAttribute('data-bab-id');
         const subbabId = this.getAttribute('data-subbab-id');
         const namaBab = this.closest('.position-relative').querySelector('.bab-toggle').innerText;
         const subbabToggle = document.querySelector('.subbab-toggle[data-subbab-id="' + subbabId + '"]');
         const namasubBab = subbabToggle.innerText;
-        const pengantarSubbab = this.closest('.position-relative').querySelector('.pengantarsubbab-toggle[data-subbab-id="' + subbabId + '"]').innerText;
 
-    Swal.fire({
+    Swal.fire({ 
       title: "Silahkan pilih aksi",
       icon: "warning",
       showConfirmButton: true,
@@ -773,88 +771,30 @@ document.querySelectorAll('.edit-hapussubbab').forEach(function (button) {
   cancelButtonText: "Tambah Materi"
     }).then((result) => {
       if (result.isConfirmed) {
-        editsubBab(subbabId, babId, namasubBab, pengantarSubbab);
+        editsubBab(subbabId, babId, namasubBab);
       } else if (result.isDenied) {
         deletesubBab(subbabId);
       } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
         return;
       } else {
-        window.location.href = 'tambahmateri.php?id_modul=' + idModul + '&id_bab=' + babId + '&id_subbab=' + subbabId;
+        tambahmateri(babId, subbabId);
       }
     });
   });
 });
 
-function tambahmateri(babId, namaBab) {
-  Swal.fire({
-    title: "Tambah Subbab",
-    html:
-    '<input type="text" id="idBab" class="swal2-input" value="' + babId + '"/>' +
-    '<p class="text-lg font-weight-bold mb-4">' + namasubBab + '</p>' +
-    '<div class="input-group">' +
-    '<label class="text-lg font-weight-bold mr-2 mb-0" for="judulsubBab">Judul Subbab</label>' +
-    '<input type="text" id="judulsubBab" class="swal2-input" />' +
-    '</div>' +
-    '<div class="input-group">' +
-    '<label class="text-lg font-weight-bold mr-2 mb-0" for="pengantarBab">Deskripsi(opsional)</label>' +
-    '<input type="text" id="pengantarBab" class="swal2-input" />' +
-    '</div>' +
-    '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-    showCancelButton: true,
-    confirmButtonText: "Simpan",
-    showLoaderOnConfirm: true,
-    preConfirm: () => {
-  const idBab = document.getElementById('idBab').value;
-  const judulsubBab = document.getElementById('judulsubBab').value;
-  const pengantarBab = document.getElementById('pengantarBab').value;
-  idModul = document.getElementById('idModul').value;
-
-  // Validate if the "Judul Subbab" field is not empty
-  if (!judulsubBab) {
-    Swal.showValidationMessage('Judul Subbab harus diisi');
-    return false; // Prevent form submission when validation fails
-  }
-
-  return fetch('proses.php?aksi=tambah_subbab', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_bab=' + encodeURIComponent(pengantarBab) + '&id_modul=' + encodeURIComponent(idModul),
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      return response.json();
-    })
-    .catch(error => {
-      console.error('Error during fetch:', error);
-      Swal.showValidationMessage(`Request failed: ${error}`);
-    });
-},
-
-    allowOutsideClick: () => !Swal.isLoading(),
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: `Berhasil Menambah Subbab`,
-        icon: 'success'
-      }).then(() => {
-        window.location.href = 'tambahmateri.php?id_modul=' + idModul;
-      });
-    }
-  });
+function tambahmateri(babId, subbabId) {
+  drf
 }
 
-function editsubBab(subbabId, babId, namasubBab, pengantarSubbab) {
+function editsubBab(subbabId, babId, namasubBab) {
   Swal.fire({
     title: "Edit Subbab",
     html:
-               '<input type="hidden" id="subbabId" class="swal2-input" value="' + subbabId + '"/>' +
+    '<input type="hidden" id="subbabId" class="swal2-input" value="' + subbabId + '"/>' +
                 '<input type="hidden" id="babId" class="swal2-input" value="' + babId + '"/>' +
                 '<input type="text" id="judulsubBab" class="swal2-input" value="' + namasubBab + '"/>' +
-                '<input type="text" id="pengantarsubBab" class="swal2-input" value="' + pengantarSubbab + '"/>' +
+                // '<input type="text" id="pengantarsubBab" class="swal2-input" value="' + pengantarsubBab + '"/>' +
                 '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
     showCancelButton: true,
     confirmButtonText: "Simpan",
@@ -863,7 +803,6 @@ function editsubBab(subbabId, babId, namasubBab, pengantarSubbab) {
       const subbabId = Swal.getPopup().querySelector('#subbabId').value;
       const babId = Swal.getPopup().querySelector('#babId').value;
       const judulsubBab = Swal.getPopup().querySelector('#judulsubBab').value;
-      const pengantarSubbab = Swal.getPopup().querySelector('#pengantarsubBab').value;
       idModul = Swal.getPopup().querySelector('#idModul').value;
 
       // Validate if the "Judul Subbab" field is not empty
@@ -877,7 +816,7 @@ function editsubBab(subbabId, babId, namasubBab, pengantarSubbab) {
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: 'id_subbab=' + encodeURIComponent(subbabId) + '&id_bab=' + encodeURIComponent(babId) + '&nama_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_subbab=' + encodeURIComponent(pengantarSubbab) + '&id_modul=' + encodeURIComponent(idModul),
+    body: 'id_subbab=' + encodeURIComponent(subbabId) + '&id_bab=' + encodeURIComponent(babId) + '&nama_subbab=' + encodeURIComponent(judulsubBab) + '&id_modul=' + encodeURIComponent(idModul),
 })
 
         .then(response => {

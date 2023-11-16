@@ -622,15 +622,17 @@ if ($_GET['aksi'] == "editakun") {
     if ($_GET['aksi'] == "edit_subbab") {
         $id_bab = $_POST["id_bab"];
         $nama_subbab = $_POST["nama_subbab"];
+        $pengantar_subbab = $_POST["pengantar_subbab"];
         $id_subbab = $_POST["id_subbab"];
     
         $data = array(
             $nama_subbab,
+            $pengantar_subbab,
             $id_subbab
         );
     
         try {
-            $sql = "UPDATE tb_subbab SET nama_subbab=? WHERE id_subbab=?";
+            $sql = "UPDATE tb_subbab SET nama_subbab=?, pengantar=? WHERE id_subbab=?";
             $stmt = $koneksi->prepare($sql);
     
             $stmt->execute($data);
@@ -656,6 +658,7 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response);
     }
+    
     if ($_GET['aksi'] == "hapussubbab") {
         $id_subbab = $_GET["id_subbab"];
         
