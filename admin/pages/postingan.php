@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
     Daftar Akun
   </title>
@@ -29,8 +29,9 @@
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href="#">
+      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
         <img src="../assets/img/logo.png" class="navbar-brand-img h-150" alt="main_logo">
+        <!-- <img src="https://raw.githubusercontent.com/bllyjulian/projectWebSemester3/master/api/foto_frofil/tes.jpg" class="navbar-brand-img h-100" alt="main_logo"> -->
         <span class="ms-1 font-weight-bold">codingCamp</span>
       </a>
     </div>
@@ -58,7 +59,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php' || basename($_SERVER['PHP_SELF']) == 'akunPengguna.php' || basename($_SERVER['PHP_SELF']) == 'akunMentor.php') ? 'active' : ''; ?>" href="../pages/akun">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -78,7 +79,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>" href="../pages/course">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/course">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -237,17 +238,17 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Daftar Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Cari disini...">
-            </div>
-          </div>
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+  <div class="input-group">
+    <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+    <input type="text" class="form-control" id="searchInput" placeholder="Cari disini...">
+  </div>
+</div>
           <ul class="navbar-nav  justify-content-end">
             </li>
             <li class="nav-item d-flex align-items-center">
@@ -365,16 +366,25 @@
 
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Daftar Akun</h6>
+                  <h6>Akun Mentor</h6>
+                  <?php 
+require_once('../crudphp/koneksi.php');
 
+
+$sql = "SELECT COUNT(*) FROM tb_admin WHERE id_lvl = 'MTR01'"; // Menghitung jumlah data tanpa memuatnya
+$row = $koneksi->prepare($sql);
+$row->execute();
+$total_data = $row->fetchColumn();
+// Menampilkan total akun terdaftar
+echo '<p class="text-sm">';
+echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+echo '<span class="font-weight-bold ms-1">'.$total_data.' Akun terdaftar</span>';
+echo '</p>';
+?>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                  
-                  <div class="dropdown float-lg-end pe-4">
-
-                  
-
-                  </div>
+                <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akun"><i class="fa fa-filter " aria-hidden="true"></i></a></button>
+                <button class="btn bg-gradient-success"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
 
                 </div>
 
@@ -388,11 +398,11 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hak Akses</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center  text-uppercase text-secondary text-xxs font-weight-bolder">
-                      <button class="btn bg-gradient-success btn-sm"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
-                      </th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hak Akses</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis Kelamin</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        AKsi
+                    </th>
 
                     </tr>
                   </thead>
@@ -405,7 +415,7 @@
           $items_per_page = 7;
 
           // Menghitung total data
-          $sql = "SELECT * FROM tb_akun";
+          $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -418,7 +428,7 @@
           $start_index = ($current_page - 1) * $items_per_page;
 
           // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_akun LIMIT $start_index, $items_per_page";
+          $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC LIMIT $start_index, $items_per_page";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -428,45 +438,51 @@
     ?>
 
      <tr>
-            <td>
-                <div class="d-flex px-2 py-1">
-                    <div>
-                        <img src="data:image/jpeg;base64,<?= base64_encode($r->foto_profil); ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
-                    </div>
-                    <div class="d-flex flex-column justify-content-left">
-                        <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
-                        <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
-                    </div>
-                </div>
-            </td>
-            <td>
+     <td>
+    <div class="d-flex px-2 py-1">
+        <div>
+            <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
+        </div>
+        <div class="d-flex flex-column justify-content-left">
+            <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
+            <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+        </div>
+    </div>
+</td>
+ <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
                 <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
-                <td class="text-center align-middle text-sm">
-    <?php if ($r->id_lvl == "SPA01"): ?>
-        <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-    <?php elseif ($r->id_lvl == "ADM01"): ?>
-        <span class="badge badge-sm bg-gradient-success">Admin</span>
-    <?php elseif ($r->id_lvl == "MTR01"): ?>
-        <span class="badge badge-sm bg-gradient-info">Mentor</span>
-    <?php elseif ($r->id_lvl == "USR01"): ?>
-        <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
-    <?php else: ?>
-        <span class="badge badge-sm bg-gradient-primary"><?= $r->id_lvl;?></span>
-    <?php endif; ?>
-</td>
+                <td class="align-middle text-lg-start text-sm">
+                <?php if ($r->id_lvl == "SPA01"): ?>
+                    <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
+                <?php elseif ($r->id_lvl == "ADM01"): ?>
+                    <span class="badge badge-sm bg-gradient-success">Admin</span>
+                <?php elseif ($r->id_lvl == "MTR01"): ?>
+                    <span class="badge badge-sm bg-gradient-info">Mentor</span>
+                <?php elseif ($r->id_lvl == "USR01"): ?>
+                    <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
+                <?php else: ?>
+                    <span class="badge badge-sm bg-gradient-primary"><?= $r->id_l;?></span>
+                <?php endif; ?>
+          </td>
 
 
-
-            <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->status;?></span>
+            <td class="align-middle text-lg-start">
+                <span class="text-secondary text-xs font-weight-bold"><?= $r->jenis_kelamin;?></span>
+                <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp;?></span> -->
             </td>
-            <td class="align-middle text-center">
-            <a href="<?= "../crudphp/editakun.php?username=".$r->username;?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-        Edit |
-    </a>
-    <a href="#" class="text-secondary font-weight-bold text-xs" onclick="confirmDelete('<?= $r->username;?>')">Hapus</a>
+            <td class="align-middle text-lg-start">
+            <div class=" text-start m-0">
+              
+              <a class="btn-link text-dark text-gradient mb-0 text-sm" href="<?= "../crudphp/editakun.php?username=".$r->username;?>">
+              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
+            </a>
+              <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete('<?= $r->username;?>')" href="#">
+              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+            </a>
+              
 
+            </div>
 </td>
 
         </tr>
@@ -479,30 +495,29 @@ if ($total_data > ($current_page * $items_per_page)):
       
       ?>
 <?php endif; ?>
-<?php 
-require_once('../crudphp/koneksi.php');
 
-// Menghitung total data
-$sql = "SELECT COUNT(*) FROM tb_akun"; // Menghitung jumlah data tanpa memuatnya
-$row = $koneksi->prepare($sql);
-$row->execute();
-$total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
-
-// Menampilkan total akun terdaftar
-echo '<p style="margin-left: 23px;" class="text-sm">';
-echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-echo '<span class="font-weight-bold ms-1">'.$total_data.' Akun terdaftar</span>';
-echo '</p>';
-?>
                   </tbody>
                 </table>
-              </div>
-              <div style="margin-right: 80px;" class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
+                </div>
+              <div class="card-header pb-0">
+
+<div class="row">
+  <div class="col-lg-6 col-7">
+<!-- filter rencananya -->
+  </div>
+  <div class="col-lg-6 my-auto text-end">
+  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark btn-sm">&lt; Previous</a>
+        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
     <?php endif; ?>
 
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark btn-sm">Next &gt;</a>
+    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
+</div>
+
+  </div>
+
+</div>
+
 </div>
 
             </div>
@@ -518,25 +533,9 @@ echo '</p>';
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
+                <a href="#" class="font-weight-bold">Coding Camp</a>
+                
               </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -553,13 +552,11 @@ echo '</p>';
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-
-
+<script>
 function confirmDelete(username) {
   Swal.fire({
     title: 'Apakah anda yakin ingin menghapus?',
-    text: "Data telah dihapus tidak bisa dipulihkan",
+    text: "Data yang dihapus tidak bisa dipulihkan",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -567,14 +564,67 @@ function confirmDelete(username) {
     confirmButtonText: 'Iya, Hapus'
   }).then((result) => {
     if (result.isConfirmed) {
-      // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-      window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
+      Swal.fire(
+        'Sukses!',
+        'Data berhasil dihapus.',
+        'success'
+      ).then(() => {
+        // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
+        window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
+      });
+    } else {
+      Swal.fire(
+        'Batal Hapus',
+        'Data tidak dihapus.',
+        'info'
+      );
     }
   });
 }
 
+document.getElementById('searchInput').addEventListener('input', function() {
+    var searchValue = this.value.toLowerCase();
+    var rows = document.querySelectorAll('#tabelakun tbody tr');
 
-  </script>
+    rows.forEach(function(row) {
+      var cells = row.getElementsByTagName('td');
+      var found = false;
+      for (var i = 0; i < cells.length; i++) {
+        var cellText = cells[i].innerText.toLowerCase();
+        if (cellText.includes(searchValue)) {
+          found = true;
+          break;
+        }
+      }
+      row.style.display = found ? '' : 'none';
+    });
+  });
+// var dataFromPHP = <?php echo json_encode($hasil); ?>;
+// document.getElementById('searchInput').addEventListener('input', function() {
+//     var searchValue = this.value.toLowerCase();
+//     var rows = document.querySelectorAll('#tabelakun tbody tr');
+
+//     // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
+//     var currentPage = parseInt('<?php echo $current_page; ?>');
+
+//     if (currentPage === 1) {
+//         rows.forEach(function(row) {
+//             var cells = row.getElementsByTagName('td');
+//             var found = false;
+//             for (var i = 0; i < cells.length; i++) {
+//                 var cellText = cells[i].innerText.toLowerCase();
+//                 if (cellText.includes(searchValue)) {
+//                     found = true;
+//                     break;
+//                 }
+//             }
+//             row.style.display = found ? '' : 'none';
+//         });
+//     }
+// });
+
+</script>
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
