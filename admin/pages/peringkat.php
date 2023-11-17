@@ -375,7 +375,7 @@ $sql = "SELECT COUNT(*) FROM tb_user"; // Menghitung jumlah data tanpa memuatnya
 $row = $koneksi->prepare($sql);
 $row->execute();
 $total_data = $row->fetchColumn();
-// Menampilkan total akun terdaftar
+// Menampilkan total akun terdaftarr
 echo '<p class="text-sm">';
 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
 echo '<span class="font-weight-bold ms-1">'.$total_data.' Akun terdaftar</span>';

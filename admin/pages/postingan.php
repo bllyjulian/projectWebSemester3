@@ -599,29 +599,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
       row.style.display = found ? '' : 'none';
     });
   });
-// var dataFromPHP = <?php echo json_encode($hasil); ?>;
-// document.getElementById('searchInput').addEventListener('input', function() {
-//     var searchValue = this.value.toLowerCase();
-//     var rows = document.querySelectorAll('#tabelakun tbody tr');
-
-//     // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
-//     var currentPage = parseInt('<?php echo $current_page; ?>');
-
-//     if (currentPage === 1) {
-//         rows.forEach(function(row) {
-//             var cells = row.getElementsByTagName('td');
-//             var found = false;
-//             for (var i = 0; i < cells.length; i++) {
-//                 var cellText = cells[i].innerText.toLowerCase();
-//                 if (cellText.includes(searchValue)) {
-//                     found = true;
-//                     break;
-//                 }
-//             }
-//             row.style.display = found ? '' : 'none';
-//         });
-//     }
-// });
 
 </script>
 
