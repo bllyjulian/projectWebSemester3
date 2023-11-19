@@ -3,10 +3,11 @@ $billy = "hosting";
 
 try {
     if ($billy === "hosting") {
+
         $host = 'localhost';
-        $user = 'id21327863_blly';
-        $pass = 'Blly@2003';
-        $db   = 'id21327863_codingcamp';
+        $user = 'codingca_codingca';
+        $pass = 'Soekamti@08';
+        $db   = 'codingca_camp';
     } else {
         $host = 'localhost';
         $user = 'root';
