@@ -5,8 +5,8 @@ try {
     if ($billy === "hosting") {
 
         $host = 'localhost';
-        $user = 'codingca_codingca';
-        $pass = 'Soekamti@08';
+        $user = 'codingca_billy';
+        $pass = '#Blly2003';
         $db   = 'codingca_camp';
     } else {
         $host = 'localhost';
