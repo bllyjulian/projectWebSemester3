@@ -18,7 +18,6 @@ header ('Content-Type: application/json;charset=utf8');
     }
     echo json_encode($result);
   } else {
-    // Note: Always use prepared statements for security.
     $idmodul = mysqli_real_escape_string($connection, $_GET['id_modul']);
     $idjenismodul = mysqli_real_escape_string($connection, $_GET['id_jenismodul']);
     $query = mysqli_query($connection, "SELECT * FROM tb_modul WHERE id_modul='$idmodul' OR id_jenismodul= '$idjenismodul'");
