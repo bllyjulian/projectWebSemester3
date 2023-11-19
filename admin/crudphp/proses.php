@@ -59,13 +59,13 @@
     
             move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/' . urlencode($nama_baru);
+            $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/foto_profil/' . urlencode($nama_baru);
         } else {
             // Jika gambar tidak diupload
             if ($jeniskelamin == "Laki Laki") {
-                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosongv1.jpg';
+                $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/foto_profil/ppkosongv1.jpg';
             } elseif ($jeniskelamin == "Perempuan") {
-                $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/foto_profil/ppkosongv2.jpg';
+                $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/foto_profil/ppkosongv2.jpg';
             }
         }
             $data = array(
@@ -189,7 +189,7 @@ if ($_GET['aksi'] == "editakun") {
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($nama_baru);
+        $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/poster/' . urlencode($nama_baru);
     
         $data[] = $url_gambar; 
     
@@ -235,7 +235,7 @@ if ($_GET['aksi'] == "editakun") {
     
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/poster/' . urlencode($nama_baru);
+            $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/poster/' . urlencode($nama_baru);
         } else {
             $url_gambar = $_POST['gambarawal']; 
         }
@@ -345,7 +345,7 @@ if ($_GET['aksi'] == "editakun") {
         $path_gambar = $folder_tujuan . $nama_baru;
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
 
-        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
+        $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         $data = array(
             $id_modul,
             $judul,
@@ -396,7 +396,7 @@ if ($_GET['aksi'] == "editakun") {
     
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
+            $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         } else {
             $url_gambar = $_POST['gambarawal']; 
         }
@@ -463,7 +463,7 @@ if ($_GET['aksi'] == "editakun") {
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/iconjenismodul/' . urlencode($gambar);
+        $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/iconjenismodul/' . urlencode($gambar);
     
         $data[] = $url_gambar; 
     
@@ -706,7 +706,7 @@ if ($_GET['aksi'] == "editakun") {
                 $path_gambar = $folder_tujuan . $nama_baru;
     
                 if (move_uploaded_file($tmp_gambar, $path_gambar)) {
-                    $url_gambar = 'https://www.codingcamp.my.id/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
+                    $url_gambar = 'https://apicodingcamp.000webhostapp.com/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
                 }
             }
     

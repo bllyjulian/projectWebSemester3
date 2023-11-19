@@ -4,9 +4,9 @@ $billy = "hosting";
 try {
     if ($billy === "hosting") {
         $host = 'localhost';
-        $user = 'codingc1_bllly';
-        $pass = 'Soekamti@08';
-        $db   = 'codingc1_camp';
+        $user = 'id21327863_blly';
+        $pass = 'Blly@2003';
+        $db   = 'id21327863_codingcamp';
     } else {
         $host = 'localhost';
         $user = 'root';
