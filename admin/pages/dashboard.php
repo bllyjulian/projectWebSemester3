@@ -366,7 +366,7 @@
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Postingan</p>
                     <h5 class="font-weight-bolder mb-0">
                       232
-                      <span class="text-success text-sm font-weight-bolder">+55</span>
+                      <span class="text-success text-sm font-weight-bolder">+54</span>
                     </h5>
                   </div>
                 </div>
