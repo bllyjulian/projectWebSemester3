@@ -493,6 +493,9 @@ echo '</p>';
         </div>
       </footer>
     </div>
+    <?php
+$koneksi = null;
+?>
   </main>
   
 

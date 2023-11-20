@@ -738,6 +738,6 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response); // Mengirim respons keseluruhan setelah semua data diolah
     }
+    $koneksi = null;
     
-    
-    
+    ?>

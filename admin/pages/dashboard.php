@@ -736,6 +736,9 @@
         </div>
       </footer>
     </div>
+    <?php
+$koneksi = null;
+?>
   </main>
 
   <!--   Core JS Files   -->

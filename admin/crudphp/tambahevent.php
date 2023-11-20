@@ -419,7 +419,9 @@
     </div>
 
     </section>
-
+    <?php
+$koneksi = null;
+?>
         
   </main>
 

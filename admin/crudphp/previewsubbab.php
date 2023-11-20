@@ -502,6 +502,9 @@ if (isset($_GET['id_subbab'])) {
         </div>
       </footer>
     </div>
+    <?php
+$koneksi = null;
+?>
   </main>
 
   <!--   Core JS Files   -->

@@ -382,7 +382,9 @@
 
     </section>
 
-        
+    <?php
+$koneksi = null;
+?>
   </main>
 
       <footer class="footer pt-3  ">

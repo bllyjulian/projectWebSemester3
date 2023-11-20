@@ -481,7 +481,9 @@ if (isset($_GET['id_subbab'])) {
 </section>
 
 
-
+<?php
+$koneksi = null;
+?>
         
   </main>
     </div>

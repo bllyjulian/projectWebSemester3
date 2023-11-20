@@ -204,6 +204,9 @@
         </div>
       </div>
     </footer>
+    <?php
+$koneksi = null;
+?>
     <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   </main>
   <!--   Core JS Files   -->

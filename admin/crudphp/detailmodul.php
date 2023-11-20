@@ -498,7 +498,9 @@ if (isset($_GET['id_modul'])) {
 </section>
 
 
-
+<?php
+$koneksi = null;
+?>
         
   </main>
     </div>

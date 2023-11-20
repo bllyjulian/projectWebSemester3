@@ -380,6 +380,7 @@ echo '<p class="text-sm">';
 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
 echo '<span class="font-weight-bold ms-1">'.$total_data.' Akun terdaftar</span>';
 echo '</p>';
+
 ?>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -497,6 +498,7 @@ if ($total_data > ($current_page * $items_per_page)):
       ?>
 <?php endif; ?>
 
+
                   </tbody>
                 </table>
                 </div>
@@ -510,7 +512,7 @@ if ($total_data > ($current_page * $items_per_page)):
   <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
     <?php if ($current_page > 1): ?>
         <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-    <?php endif; ?>
+    <?php endif;  ?>
 
     <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
 </div>
@@ -542,6 +544,9 @@ if ($total_data > ($current_page * $items_per_page)):
         </div>
       </footer>
     </div>
+    <?php
+$koneksi = null;
+?>
   </main>
   
 

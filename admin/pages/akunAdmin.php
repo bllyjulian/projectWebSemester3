@@ -541,6 +541,9 @@ if ($total_data > ($current_page * $items_per_page)):
         </div>
       </footer>
     </div>
+    <?php
+$koneksi = null;
+?>
   </main>
   
 

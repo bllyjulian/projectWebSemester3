@@ -682,6 +682,9 @@ $data_to_display = array_slice($hasil, 0, $show_count);
         </div>
       </footer>
     </div>
+    <?php
+$koneksi = null;
+?>
   </main>
   
 

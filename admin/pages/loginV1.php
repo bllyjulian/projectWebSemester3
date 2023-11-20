@@ -115,6 +115,9 @@
     </div>
   </div>
 </div>
+<?php
+$koneksi = null;
+?>
 <script>
  var signup = document.getElementById('signup')
 var login = document.getElementById('login')
