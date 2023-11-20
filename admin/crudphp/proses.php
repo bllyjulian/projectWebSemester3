@@ -738,6 +738,76 @@ if ($_GET['aksi'] == "editakun") {
     
         echo json_encode($response); // Mengirim respons keseluruhan setelah semua data diolah
     }
+    if ($_GET['aksi'] == "editmateri") {
+        $id_materi = $_POST["id_materi"];
+        $judul = $_POST["judul"];
+        $materi = $_POST["materi"];
+        $id_subbab = $_POST["id_subbab"];
+    
+        if (!empty($_FILES['gambar']['name'])) {
+            $gambar = $_FILES['gambar']['name'];
+            $ext = pathinfo($gambar, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+            $nama_baru = md5($gambar . time()) . '.' . $ext; // Menghasilkan nama unik
+    
+            $gambar = str_replace(' ', '_', $nama_baru); // Mengganti spasi dengan _
+    
+            $folder_tujuan = 'gambarmateri/'; 
+            $path_gambar = $folder_tujuan . $nama_baru;
+    
+            move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
+    
+            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
+        } else {
+            $url_gambar = $_POST['gambarawal']; 
+        }
+        $data = array(
+            $judul,
+            $materi,
+            $url_gambar, 
+            $id_subbab,
+            $id_materi
+        );
+    
+        $sql = "UPDATE tb_materi SET judul=?, materi=?, gambar=?, id_subbab=? WHERE id_materi=?";
+        $stmt = $koneksi->prepare($sql);
+    
+        $stmt->execute($data);
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+
+    if ($_GET['aksi'] == "hapusmateri") {
+        $id_materi = $_POST["id_materi"];
+    
+        // Jalankan query DELETE
+        $stmt = $koneksi->prepare("DELETE FROM tb_materi WHERE id_materi = ?");
+        $stmt->execute([$id_materi]);
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menghapus data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menghapus data'
+            ];
+        }
+    }
+
     $koneksi = null;
     
     ?>

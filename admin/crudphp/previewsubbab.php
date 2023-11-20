@@ -428,6 +428,7 @@ if (isset($_GET['id_subbab'])) {
 } else {
     echo 'ID Subbab tidak tersedia';
 }
+
 ?>
 <?php
 require_once('koneksi.php');
@@ -441,23 +442,35 @@ if (isset($_GET['id_subbab'])) {
     $data_subbab = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($data_subbab) {
-        foreach ($data_subbab as $data) {
-            $judul = $data['judul'];
-            $materi = nl2br($data['materi']); // Konversi karakter baris baru menjadi elemen HTML <br>
-            $gambar = $data['gambar'];
+      foreach ($data_subbab as $data) {
+          echo '
+          <div class="d-flex align-items-center justify-content-between pb-1">
 
-            echo '<h6>' . $judul . '</h6>';
-            echo '<p>' . $materi . '</p>';
-
-            if (!empty($gambar)) {
-                echo '<img src="' . $gambar . '" alt="Gambar Materi" style="max-width: 100%; height: auto;">';
-            }
-
-            echo '<hr>'; // Tambahkan garis pemisah antara setiap data materi
-        }
-    } else {
-        echo 'Materi belum ada ';
-    }
+              <h6 style="display:none;">' . $data['id_materi'] . '</h6>
+              <h6>' . $data['judul'] . '</h6>
+              <div class="text-start m-0 d-flex">
+              <a class="btn-link text-dark text-gradient mb-0 text-sm me-2" href="../crudphp/editmateri?id_modul=' . $data_modul['id_modul'] . '&id_bab=' . $id_bab . '&id_subbab=' . $id_subbab .'&id_materi='. $data['id_materi'] . '">
+              <i class="fas fa-pencil-alt text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
+          </a>
+                  <a class="btn-link text-danger text-gradient mb-0 text-sm" onclick="confirmDelete(\'' . $data['id_materi'] . '\');" href="#">
+                      <i class="far fa-trash-alt text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+                  </a>
+              </div>
+          </div>';
+  
+          $materi = nl2br($data['materi']); // Konversi karakter baris baru menjadi elemen HTML <br>
+          $gambar = $data['gambar'];
+          echo '<p>' . $materi . '</p>';
+  
+          if (!empty($gambar)) {
+              echo '<img src="' . $gambar . '" alt="Gambar Materi" style="max-width: 100%; height: auto;">';
+          }
+  
+          echo '<hr>'; // Tambahkan garis pemisah antara setiap data materi
+      }
+  } else {
+      echo 'Materi belum ada ';
+  }
 } else {
     echo 'ID Subbab tidak tersedia';
 }
@@ -514,78 +527,63 @@ $koneksi = null;
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    const idModulElement = document.querySelector('h5[style="display: none;"]');
-    if (idModulElement) {
-        const idModul = idModulElement.textContent.trim();
-
-        $('#materiForm').submit(function(event) {
-            event.preventDefault();
-
-            // Serialkan data formulir
-            var formData = new FormData(this);
-
-            $.ajax({
-                type: 'POST',
-                url: 'proses.php?aksi=tambahmateri',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: function(response) {
-                    // Periksa respons untuk menampilkan pesan yang sesuai
-                    if (response && Array.isArray(response)) {
-                        var success = true;
-                        for (var i = 0; i < response.length; i++) {
-                            if (!response[i].sukses) {
-                                success = false;
-                                break;
-                            }
-                        }
-
-                        if (success) {
-                            Swal.fire(
-                                'Berhasil!',
-                                'Semua data berhasil disimpan',
-                                'success'
-                            ).then(() => {
-                                window.location.href = 'detailmodul.php?id_modul=' + idModul;
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal!',
-                                text: 'Gagal menyimpan beberapa data',
-                                footer: '<a href="https://contoh.com/bantuan">Perlu Bantuan?</a>'
-                            });
-                        }
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal!',
-                            text: 'Respons tidak valid',
-                            footer: '<a href="https://contoh.com/bantuan">Perlu Bantuan?</a>'
-                        });
-                    }
-                },
-                error: function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal!',
-                        text: 'Terjadi kesalahan saat mengirim permintaan',
-                        footer: '<a href="https://contoh.com/bantuan">Perlu Bantuan?</a>'
-                    });
-                }
+ <script>
+function confirmDelete(id_materi) {
+  Swal.fire({
+    title: 'Apakah anda yakin ingin menghapus?',
+    text: "Data yang dihapus tidak bisa dipulihkan",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Iya, Hapus'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'proses.php?aksi=hapusmateri',
+        data: { id_materi: id_materi },
+        dataType: 'json',
+        success: function(response) {
+          if (response.sukses) {
+            Swal.fire(
+              'Sukses!',
+              'Data berhasil dihapus.',
+              'success'
+            ).then(() => {
+              location.reload(); 
             });
-        });
+          } else {
+            Swal.fire(
+              'Gagal!',
+              'Terjadi kesalahan saat menghapus data.',
+              'error'
+            );
+          }
+        },
+        error: function() {
+          Swal.fire(
+              'Sukses!',
+              'Data berhasil dihapus.',
+              'success'
+            ).then(() => {
+              location.reload(); 
+            });
+        }
+      });
     } else {
-        console.error('Elemen ID modul tidak ditemukan.');
+      Swal.fire(
+        'Batal Hapus',
+        'Data tidak dihapus.',
+        'info'
+      );
     }
-});
+  });
+}
 
 
 </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
