@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Mengambil tanggal sekarang dalam format yang diinginkan (misalnya, TCCYYMMDD)
         $prefix = 'TCC' . date('ymd');
 
-        // Mengambil nomor urut transaksi terakhir untuk hari ini
         $query = mysqli_query($connection, "SELECT COUNT(*) AS total_transaksi FROM tb_transaksi WHERE id_transaksi LIKE '$prefix%'");
         $result = mysqli_fetch_assoc($query);
         $num = str_pad($result['total_transaksi'] + 1, 3, '0', STR_PAD_LEFT); // Format nomor urut dengan panjang 3 digit
