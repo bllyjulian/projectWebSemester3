@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Akun
+    Data Transaksi
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -236,9 +236,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Transaksi</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Data Transaksi</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -360,12 +360,12 @@
 
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Data Transaksi</h6>
+                  <h6>Transaksi</h6>
                   <?php 
 require_once('../crudphp/koneksi.php');
 
-// Menghitung jumlah total transaksi
-$sql_count = "SELECT COUNT(*) FROM tb_transaksi";
+// Menghitung jumlah total transaksi (jumlah baris unik dalam kolom id_transaksi)
+$sql_count = "SELECT COUNT(DISTINCT id_transaksi) AS total_transaksi FROM tb_transaksi";
 $row = $koneksi->prepare($sql_count);
 $row->execute();
 $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_transaksi'];
@@ -373,14 +373,23 @@ $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_transaksi'];
 // Menampilkan total transaksi
 echo '<p class="text-sm">';
 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-echo '<span class="font-weight-bold ms-1">'.$total_data.' Transaksi</span>';
+echo '<span class="font-weight-bold ms-1">'.$total_data.' Data Transaksi</span>';
 echo '</p>';
 ?>
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akun"><i class="fa fa-filter " aria-hidden="true"></i></a></button>
-                <button class="btn bg-gradient-success"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
 
+                </div>
+                <div class="col-lg-6 col-7 my-auto text-end">
+                <!-- <div class="dropdown">
+  <button class="btn bg-gradient-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Secondary
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item" href="javascript:;">Action</a></li>
+    <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
+    <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
+  </ul>
+</div> -->
+filter disini
                 </div>
 
               </div>
@@ -391,12 +400,14 @@ echo '</p>';
                 <table class="table align-items-center mb-0" id="tabelakun">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Transaksi<br>Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Nama Lengkap</th>
+                    <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">ID Transaksi</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Modul<br>Harga</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Koin dipakai<br>Total Harga</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bukti Pembayaran</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
+                        Aksi
                     </th>
 
                     </tr>
@@ -410,7 +421,27 @@ echo '</p>';
           $items_per_page = 7;
 
           // Menghitung total data
-          $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC";
+          $sql = "SELECT 
+          tb_transaksi.id_transaksi,
+          tb_transaksi.subtotal,
+          tb_transaksi.koin_dipakai,
+          tb_transaksi.total,
+          tb_statustransaksi.jenis_status,
+          tb_transaksi.username,
+          tb_modul.judul,
+          tb_modul.harga,
+          tb_metodepembayaran.nama_pembayaran,
+          tb_metodepembayaran.icon,
+          tb_transaksi.tanggal_transaksi,
+          tb_transaksi.id_status
+      FROM 
+          tb_transaksi
+      JOIN 
+          tb_statustransaksi ON tb_transaksi.id_status = tb_statustransaksi.id_status
+      JOIN 
+          tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
+      JOIN 
+          tb_metodepembayaran ON tb_transaksi.id_pembayaran = tb_metodepembayaran.id_pembayaran ORDER BY tb_transaksi.tanggal_transaksi DESC";
           $row = $koneksi->prepare($sql);
           $row->execute();
           $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -423,11 +454,38 @@ echo '</p>';
           $start_index = ($current_page - 1) * $items_per_page;
 
           // Mengambil data dengan membatasi jumlah
-          $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC LIMIT $start_index, $items_per_page";
-          $row = $koneksi->prepare($sql);
-          $row->execute();
-          $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-          $no = $start_index + 1; // Inisialisasi nomor
+          $sql = "SELECT 
+          tb_transaksi.id_transaksi,
+          tb_transaksi.subtotal,
+          tb_transaksi.koin_dipakai,
+          tb_transaksi.bukti_pembayaran,
+          tb_transaksi.total,
+          tb_statustransaksi.jenis_status,
+          tb_transaksi.username,
+          tb_modul.judul,
+          tb_modul.harga,
+          tb_metodepembayaran.nama_pembayaran,
+          tb_metodepembayaran.icon,
+          tb_transaksi.tanggal_transaksi,
+          tb_transaksi.id_status,
+          tb_user.nama_lengkap,
+          tb_user.foto_profil
+      FROM 
+          tb_transaksi
+      JOIN 
+          tb_statustransaksi ON tb_transaksi.id_status = tb_statustransaksi.id_status
+      JOIN 
+          tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
+      JOIN 
+          tb_metodepembayaran ON tb_transaksi.id_pembayaran = tb_metodepembayaran.id_pembayaran
+      JOIN 
+          tb_user ON tb_transaksi.username = tb_user.username
+      ORDER BY tb_transaksi.tanggal_transaksi DESC LIMIT $start_index, $items_per_page";
+
+$row = $koneksi->prepare($sql);
+$row->execute();
+$hasil = $row->fetchAll(PDO::FETCH_OBJ);
+$no = $start_index + 1; // Inisialisasi nomor
                   foreach($hasil as $r) {
                     
     ?>
@@ -438,34 +496,44 @@ echo '</p>';
         <div>
             <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
         </div>
-        <div class="d-flex flex-column justify-content-left">
-            <h6 class="mb-0 text-sm"><?= $r->id_transaksi;?></h6>
-            <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
+        <div>
+            <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
+            <p class="text-xs text-secondary mb-0"><?= $r->nama_lengkap;?></p>
         </div>
     </div>
 </td>
  <td>
-                <p class="text-xs font-weight-bold mb-0"><?= $r->nama_lengkap;?></p>
-                <p class="text-xs text-secondary mb-0"><?= $r->no_hp;?></p>
+ <p class="text-xs font-weight-bold mb-0"><?= $r->id_transaksi;?></p>
+ </td>
+ <td  style="text-wrap: wrap;">
+ <div style="width: 250px;" class="d-flex flex-column justify-content-left">
+            <h6 class="mb-0 text-sm"><?= $r->judul;?></h6>
+            <p class="text-xs text-secondary mb-0">Rp. <?= $r->harga;?></p>
+        </div>
+ </td>
+ <td>
+ <div>
+            <h6 class="mb-0 text-sm"><?= $r->koin_dipakai;?> Koin</h6>
+            <p class="text-xs text-secondary mb-0">Rp. <?= $r->total;?></p>
+        </div>
+ </td>
+ <td>
+ <a class="text-secondary text-xs font-weight-bold" href="<?= $r->bukti_pembayaran;?>">Lihat Disini!</a>
+ </td>
                 <td class="align-middle text-lg-start text-sm">
-                <?php if ($r->id_lvl == "SPA01"): ?>
-                    <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-                <?php elseif ($r->id_lvl == "ADM01"): ?>
-                    <span class="badge badge-sm bg-gradient-success">Admin</span>
-                <?php elseif ($r->id_lvl == "MTR01"): ?>
-                    <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                <?php elseif ($r->id_lvl == "USR01"): ?>
-                    <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
+                <?php if ($r->id_status == "1"): ?>
+                    <span class="badge badge-sm bg-gradient-primary">Belum Dibayar</span>
+                <?php elseif ($r->id_status == "2"): ?>
+                    <span class="badge badge-sm bg-gradient-info">Diproses</span>
+                <?php elseif ($r->id_status == "3"): ?>
+                    <span class="badge badge-sm bg-gradient-success">Selesai</span>
+                <?php elseif ($r->id_status == "4"): ?>
+                    <span class="badge badge-sm bg-gradient-danger">Gagal</span>
                 <?php else: ?>
                     <span class="badge badge-sm bg-gradient-primary"><?= $r->id_l;?></span>
                 <?php endif; ?>
           </td>
 
-
-            <td class="align-middle text-lg-start">
-                <span class="text-secondary text-xs font-weight-bold"><?= $r->jenis_kelamin;?></span>
-                <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp;?></span> -->
-            </td>
             <td class="align-middle text-lg-start">
             <div class=" text-start m-0">
               
