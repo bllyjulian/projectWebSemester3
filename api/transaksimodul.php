@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_transaksi = $prefix . $num;
 
         // Set status ke "Belum Dibayar"
-        $status = 'Belum Dibayar';
+        $status = '1';
         $bukti_pembayaran = 'Belum Diisi';
 
         // Mulai transaksi
         mysqli_begin_transaction($connection);
 
         // Insert ke tabel transaksi
-        $query_insert = mysqli_query($connection, "INSERT INTO tb_transaksi (id_transaksi, subtotal, koin_dipakai, total, status, bukti_pembayaran, username, id_modul, id_pembayaran) 
+        $query_insert = mysqli_query($connection, "INSERT INTO tb_transaksi (id_transaksi, subtotal, koin_dipakai, total, id_status, bukti_pembayaran, username, id_modul, id_pembayaran) 
                                             VALUES ('$id_transaksi', '$subtotal', '$koin_dipakai', '$total', '$status', '$bukti_pembayaran', '$username', '$id_modul', '$id_pembayaran')");
 
         // Update jumlah koin pengguna di tabel tb_koin
