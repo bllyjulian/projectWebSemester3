@@ -160,7 +160,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'status.php') ? 'active' : ''; ?>" href="../pages/status">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'transaksi.php') ? 'active' : ''; ?>" href="../pages/transaksi">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -177,7 +177,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Status</span>
+            <span class="nav-link-text ms-1">transaksi</span>
           </a>
         </li>
         <li class="nav-item mt-3">
@@ -502,21 +502,27 @@ if ($total_data > ($current_page * $items_per_page)):
                 </div>
               <div class="card-header pb-0">
 
-<div class="row">
+              <div class="row">
   <div class="col-lg-6 col-7">
-<!-- filter rencananya -->
+    <!-- Filter (opsional) -->
   </div>
   <div class="col-lg-6 my-auto text-end">
-  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-    <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-    <?php endif;  ?>
-
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
-</div>
-
+    <div class="text-end p-0 border-1">
+      <?php 
+      $items_per_page = 7;
+      $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+      $total_pages = ceil($total_data / $items_per_page);
+      $current_page = max(1, min($current_page, $total_pages));
+      $start_index = ($current_page - 1) * $items_per_page;
+      if ($current_page > 1) {
+        echo '<a href="?page='.($current_page - 1).'" class="btn btn-outline-dark me-1">&lt; Previous</a>';
+      }
+      if ($total_data > ($current_page * $items_per_page)) {
+        echo '<a href="?page='.($current_page + 1).'" class="btn btn-dark">Next &gt;</a>';
+      }
+      ?>
+    </div>
   </div>
-
 </div>
 
 </div>

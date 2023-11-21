@@ -160,7 +160,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'status.php') ? 'active' : ''; ?>" href="../pages/status">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'transaksi.php') ? 'active' : ''; ?>" href="../pages/transaksi">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -177,7 +177,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Status</span>
+            <span class="nav-link-text ms-1">transaksi</span>
           </a>
         </li>
         <li class="nav-item mt-3">
@@ -355,28 +355,25 @@
         <div class="col-12">
 
           <div class="card mb-4">
-            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Tabel Akun</h6>
-              
-            </div> -->
 
             <div class="card-header pb-0">
 
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Akun Mentor</h6>
+                  <h6>Data Transaksi</h6>
                   <?php 
 require_once('../crudphp/koneksi.php');
 
-
-$sql = "SELECT COUNT(*) FROM tb_admin WHERE id_lvl = 'MTR01'"; // Menghitung jumlah data tanpa memuatnya
-$row = $koneksi->prepare($sql);
+// Menghitung jumlah total transaksi
+$sql_count = "SELECT COUNT(*) FROM tb_transaksi";
+$row = $koneksi->prepare($sql_count);
 $row->execute();
-$total_data = $row->fetchColumn();
-// Menampilkan total akun terdaftar
+$total_data = $row->fetch(PDO::FETCH_ASSOC)['total_transaksi'];
+
+// Menampilkan total transaksi
 echo '<p class="text-sm">';
 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-echo '<span class="font-weight-bold ms-1">'.$total_data.' Akun terdaftar</span>';
+echo '<span class="font-weight-bold ms-1">'.$total_data.' Transaksi</span>';
 echo '</p>';
 ?>
                 </div>
@@ -394,10 +391,10 @@ echo '</p>';
                 <table class="table align-items-center mb-0" id="tabelakun">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Lengkap<br>No hp</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hak Akses</th>
-                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis Kelamin</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Transaksi<br>Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Modul<br>Harga</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bukti Pembayaran</th>
+                      <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                       <th class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                         AKsi
                     </th>
@@ -442,7 +439,7 @@ echo '</p>';
             <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
         </div>
         <div class="d-flex flex-column justify-content-left">
-            <h6 class="mb-0 text-sm"><?= $r->username;?></h6>
+            <h6 class="mb-0 text-sm"><?= $r->id_transaksi;?></h6>
             <p class="text-xs text-secondary mb-0"><?= $r->email;?></p>
         </div>
     </div>
@@ -499,21 +496,40 @@ if ($total_data > ($current_page * $items_per_page)):
                 </div>
               <div class="card-header pb-0">
 
-<div class="row">
+              <div class="row">
   <div class="col-lg-6 col-7">
-<!-- filter rencananya -->
+    <!-- Filter (opsional) -->
   </div>
   <div class="col-lg-6 my-auto text-end">
-  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-    <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-    <?php endif; ?>
+    <div class="text-end p-0 border-1">
+      <?php 
+      // Menentukan jumlah item per halaman
+      $items_per_page = 7;
 
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
-</div>
+      // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
+      $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 
+      // Menghitung total halaman
+      $total_pages = ceil($total_data / $items_per_page);
+
+      // Memastikan halaman saat ini tidak kurang dari 1 dan tidak lebih dari total halaman yang tersedia
+      $current_page = max(1, min($current_page, $total_pages));
+
+      // Menghitung indeks data untuk query
+      $start_index = ($current_page - 1) * $items_per_page;
+
+      // Menampilkan tombol navigasi "Previous" jika halaman saat ini lebih besar dari 1
+      if ($current_page > 1) {
+        echo '<a href="?page='.($current_page - 1).'" class="btn btn-outline-dark">&lt; Previous</a>';
+      }
+
+      // Menampilkan tombol navigasi "Next" jika masih ada data di halaman berikutnya
+      if ($total_data > ($current_page * $items_per_page)) {
+        echo '<a href="?page='.($current_page + 1).'" class="btn btn-dark">Next &gt;</a>';
+      }
+      ?>
+    </div>
   </div>
-
 </div>
 
 </div>

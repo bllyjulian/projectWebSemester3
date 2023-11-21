@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunMentor.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>" href="../pages/akun">
         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>customer-support</title>
@@ -160,7 +160,7 @@
           </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'status.php') ? 'active' : ''; ?>" href="../pages/status">
+        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'transaksi.php') ? 'active' : ''; ?>" href="../pages/transaksi">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>box-3d-50</title>
@@ -177,7 +177,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Status</span>
+            <span class="nav-link-text ms-1">transaksi</span>
           </a>
         </li>
         <li class="nav-item mt-3">
