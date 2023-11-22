@@ -2,7 +2,6 @@
     RewriteEngine On
     
     RewriteCond %{HTTP_HOST} ^codingcamp\.myhost\.id$ [NC]
-    RewriteRule ^$ /cc/loginpage/login [L]
 
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
