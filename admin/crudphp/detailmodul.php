@@ -1,3 +1,11 @@
+  <?php
+session_start();
+if (!isset($_SESSION['USER_INFO'])) {
+    header("Location: ../../loginpage/login");
+    exit();
+}
+$userInfo = $_SESSION['USER_INFO'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,14 +17,6 @@
   <title>
     Detail Modul 
   </title>
-  <?php
-session_start();
-if (!isset($_SESSION['USER_INFO'])) {
-    header("Location: ../../loginpage/login");
-    exit();
-}
-$userInfo = $_SESSION['USER_INFO'];
-?>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
