@@ -1,4 +1,4 @@
 <?php
-header("Location: loginpage/login");
+header("Location: kelompok1/loginpage/login");
 exit;
 ?>
