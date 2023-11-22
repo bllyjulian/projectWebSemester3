@@ -1,11 +1,11 @@
-  <?php
+<?php
   session_start();
   if (!isset($_SESSION['USER_INFO'])) {
       header("Location: ../../loginpage/login");
       exit();
   }
   $userInfo = $_SESSION['USER_INFO'];
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 

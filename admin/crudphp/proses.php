@@ -114,50 +114,52 @@
 
   
     
-if ($_GET['aksi'] == "editakun") {
-    $username = $_POST["username"];
-    $nama_lengkap = $_POST["nama_lengkap"];
-    $no_hp = $_POST["no_hp"];
-    $email = $_POST["email"];
-    $jeniskelamin = $_POST["jenis_kelamin"];
-    $id_lvl = $_POST["hak_akses"];
-
-    if ($jeniskelamin == "Laki Laki") {
-        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwo.png';
-    } elseif ($jeniskelamin == "Perempuan") {
-        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwe.png';
+    if ($_GET['aksi'] == "editakun") {
+        $username = $_POST["username"];
+        $nama_lengkap = $_POST["nama_lengkap"];
+        $no_hp = $_POST["no_hp"];
+        $email = $_POST["email"];
+        $jeniskelamin = $_POST["jenis_kelamin"];
+        $id_lvl = $_POST["hak_akses"];
+    
+        if ($jeniskelamin == "Laki Laki") {
+            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwo.png';
+        } elseif ($jeniskelamin == "Perempuan") {
+            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwe.png';
+        }
+    
+        // Perintah SQL untuk update data dengan prepared statement
+        $sql = "UPDATE tb_admin SET nama_lengkap=?, no_hp=?, email=?, jenis_kelamin=?, foto_profil=?, id_lvl=? WHERE username=?";
+        $stmt = $koneksi->prepare($sql);
+    
+        // Bind parameter ke prepared statement
+        $stmt->bindParam(1, $nama_lengkap);
+        $stmt->bindParam(2, $no_hp);
+        $stmt->bindParam(3, $email);
+        $stmt->bindParam(4, $jeniskelamin);
+        $stmt->bindParam(5, $url_gambar);
+        $stmt->bindParam(6, $id_lvl);
+        $stmt->bindParam(7, $username);
+    
+        // Eksekusi query
+        $stmt->execute();
+    
+        // Cek apakah data berhasil disimpan
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
     }
     
-    $data = array(
-        $nama_lengkap,
-        $no_hp,
-        $email,
-        $jeniskelamin,
-        $id_lvl,
-        $username // Sisipkan username di sini untuk WHERE clause
-    );
-
-    $sql = "UPDATE tb_admin SET nama_lengkap=?, no_hp=?, email=?, jenis_kelamin=?, id_lvl=? WHERE username=?";
-    $stmt = $koneksi->prepare($sql);
-
-    // Eksekusi query dengan menggunakan array $data
-    $stmt->execute($data);
-
-    // Cek apakah data berhasil disimpan
-    if ($stmt->rowCount() > 0) {
-        $response = [
-            'sukses' => true,
-            'pesan' => 'Berhasil menyimpan data'
-        ];
-    } else {
-        $response = [
-            'sukses' => false,
-            'pesan' => 'Gagal menyimpan data'
-        ];
-    }
-
-    echo json_encode($response);
-}
 
     
     if ($_GET['aksi'] == "hapusakun") {

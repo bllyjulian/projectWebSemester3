@@ -1,4 +1,4 @@
-  <?php
+<?php
 session_start();
 if (!isset($_SESSION['USER_INFO'])) {
     header("Location: ../../loginpage/login");
@@ -412,7 +412,6 @@ if (isset($_GET['username'])) {
         <select class="form-control" required name="hak_akses" id="hak_akses">
             <option value="ADM01" <?= ($data_pengguna['id_lvl'] == 'ADM01') ? 'selected' : ''; ?>>Admin</option>
             <option value="MTR01" <?= ($data_pengguna['id_lvl'] == 'MTR01') ? 'selected' : ''; ?>>Mentor</option>
-            <option value="USR01" <?= ($data_pengguna['id_lvl'] == 'USR01') ? 'selected' : ''; ?>>Pengguna</option>
         </select>
     </div>
 

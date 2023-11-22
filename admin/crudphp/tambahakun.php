@@ -1,4 +1,4 @@
-  <?php
+<?php
 session_start();
 if (!isset($_SESSION['USER_INFO'])) {
     header("Location: ../../loginpage/login");
@@ -430,7 +430,6 @@ $userInfo = $_SESSION['USER_INFO'];
             <select class="form-control" required name="hak_akses" id="hak_akses">
                 <option value="ADM01">Admin</option>
                 <option value="MTR01">Mentor</option>
-                <option value="USR01">Pengguna</option>
             </select>
         </div>
         <!-- <div class="form-group">
