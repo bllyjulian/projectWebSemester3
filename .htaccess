@@ -1,11 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # Redirect /cc/ to /cc/loginpage/login
     RewriteCond %{HTTP_HOST} ^codingcamp\.myhost\.id$ [NC]
-    RewriteRule ^cc/$ /cc/loginpage/login [R=301,L]
+    RewriteRule ^$ /cc/loginpage/login [L]
 
-    # Rewrite rule for other cases (example: appending .php to files)
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^([^\.]+)$ $1.php [NC,L]
