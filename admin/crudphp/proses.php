@@ -1,25 +1,38 @@
 <?php 
-    session_start();
-    require 'koneksi.php';
-    if (!empty($_GET['aksi']) && $_GET['aksi'] == 'login') {
-        $user = $_POST['user'];
-        $pass = $_POST['pass'];
-    
-        $sql = "SELECT * FROM tb_admin WHERE username = ? AND password = ?";
-        $row = $koneksi->prepare($sql);
-        $row->execute(array($user, $pass));
-        $count = $row->rowCount();
-    
-        if ($count > 0) {
-            $result = $row->fetch();
-            $_SESSION['ADMIN'] = $result;
-            $response = array('success' => true);
-            echo json_encode($response);
-        } else {
-            $response = array('success' => false, 'message' => 'Username dan Password Salah!');
-            echo json_encode($response);
-        }
-    }
+ session_start();
+ require 'koneksi.php';
+ 
+ if (!empty($_GET['aksi']) && $_GET['aksi'] == 'login') {
+     $user = $_POST['user'];
+     $pass = $_POST['pass'];
+ 
+     // Prepare the SQL statement with placeholders
+     $sql = "SELECT * FROM tb_admin WHERE username = :username AND password = :password";
+     $row = $koneksi->prepare($sql);
+ 
+     // Bind parameters to the prepared statement
+     $row->bindParam(':username', $user);
+     $row->bindParam(':password', $pass);
+ 
+     // Execute the prepared statement
+     $row->execute();
+     $count = $row->rowCount();
+ 
+     if ($count > 0) {
+         $result = $row->fetch();
+ 
+         // Simpan semua informasi pengguna ke dalam session
+         $_SESSION['USER_INFO'] = $result;
+ 
+         $response = array('success' => true);
+         echo json_encode($response);
+     } else {
+         $response = array('success' => false, 'message' => 'Username dan Password Salah!');
+         echo json_encode($response);
+     }
+ }
+ 
+  
     
     if ($_GET['aksi'] == "tambahakun") {
         $username = $_POST["username"];
@@ -63,9 +76,9 @@
         } else {
             // Jika gambar tidak diupload
             if ($jeniskelamin == "Laki Laki") {
-                $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/ppkosongv1.jpg';
+                $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwo.png';
             } elseif ($jeniskelamin == "Perempuan") {
-                $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/ppkosongv2.jpg';
+                $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwe.png';
             }
         }
             $data = array(
@@ -109,6 +122,12 @@ if ($_GET['aksi'] == "editakun") {
     $jeniskelamin = $_POST["jenis_kelamin"];
     $id_lvl = $_POST["hak_akses"];
 
+    if ($jeniskelamin == "Laki Laki") {
+        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwo.png';
+    } elseif ($jeniskelamin == "Perempuan") {
+        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwe.png';
+    }
+    
     $data = array(
         $nama_lengkap,
         $no_hp,

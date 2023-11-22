@@ -9,6 +9,15 @@
   <title>
     Dashboard
   </title>
+<?php
+session_start();
+if (!isset($_SESSION['USER_INFO'])) {
+    header("Location: ../../loginpage/login");
+    exit();
+}
+$userInfo = $_SESSION['USER_INFO'];
+?>
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -205,7 +214,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/login">
+          <a class="nav-link  " href="#" onclick="confirmLogout()">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>
@@ -504,7 +513,7 @@
     <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('../assets/img/ivancik.jpg');">
       <span class="mask bg-gradient-dark"></span>
       <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
-        <h5 id="greeting" class="text-white font-weight-bolder mb-4 pt-2"></h5>
+        <h5 id="greeting" class="text-white font-weight-bolder mb-4 pt-2"> username</h5>
         <p class="text-white">Kendalikan Coding Camp dari sini, upload modul, pantau postingan, buat kuis, dan pantau postingan.</p>
         <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
           Baca lebih lanjut
@@ -746,6 +755,25 @@ $koneksi = null;
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script>
+    function confirmLogout() {
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin keluar?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        window.location.href= "logout";
+      }
+
+    }
+    )};
+            
+
   // Mendapatkan elemen dengan id 'greeting'
   const greeting = document.getElementById('greeting');
 
@@ -764,12 +792,17 @@ $koneksi = null;
       return 'Selamat Malam';
     }
   }
+    // Mengambil informasi username dari session jika tersedia
+    const username = "<?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?>";
 
-  // Menentukan pesan salam berdasarkan waktu saat ini
-  const currentGreeting = getGreeting(currentTime);
-
-  // Menetapkan pesan salam ke dalam elemen dengan id 'greeting'
-  greeting.textContent = currentGreeting;
+    // Menampilkan pesan salam beserta username jika tersedia
+    if (username) {
+      const greetingMessage = getGreeting(currentTime);
+      greeting.innerText = `${greetingMessage}, ${username}!`;
+    } else {
+      // Jika informasi username tidak ada, tampilkan hanya pesan salam
+      greeting.innerText = getGreeting(currentTime);
+    }
 </script>
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");

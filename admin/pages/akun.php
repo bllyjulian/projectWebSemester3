@@ -9,6 +9,14 @@
   <title>
     Daftar Akun
   </title>
+  <?php
+session_start();
+if (!isset($_SESSION['USER_INFO'])) {
+    header("Location: ../../loginpage/login");
+    exit();
+}
+$userInfo = $_SESSION['USER_INFO'];
+?>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -205,7 +213,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/login">
+          <a class="nav-link  " href="#"  onclick="confirmLogout()">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>
@@ -384,7 +392,7 @@
                 <div class="col-lg-6 col-5 my-auto text-end">
 
                 <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akunAdmin"><i class="fa fa-filter " aria-hidden="true"></i></a></button>
-                <button class="btn bg-gradient-success"><a style="color: white;" href="../crudphp/tambahakun.php">Tambah</a></button>
+                <button class="btn bg-gradient-success"><a style="color: white;" href="../crudphp/tambahakun">Tambah</a></button>
 
                 </div>
 
@@ -563,6 +571,23 @@ $koneksi = null;
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+      function confirmLogout() {
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin keluar?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        window.location.href= "logout";
+      }
+
+    }
+    )};
 function confirmDelete(username) {
   Swal.fire({
     title: 'Apakah anda yakin ingin menghapus?',
@@ -609,29 +634,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
       row.style.display = found ? '' : 'none';
     });
   });
-// var dataFromPHP = <?php echo json_encode($hasil); ?>;
-// document.getElementById('searchInput').addEventListener('input', function() {
-//     var searchValue = this.value.toLowerCase();
-//     var rows = document.querySelectorAll('#tabelakun tbody tr');
 
-//     // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
-//     var currentPage = parseInt('<?php echo $current_page; ?>');
-
-//     if (currentPage === 1) {
-//         rows.forEach(function(row) {
-//             var cells = row.getElementsByTagName('td');
-//             var found = false;
-//             for (var i = 0; i < cells.length; i++) {
-//                 var cellText = cells[i].innerText.toLowerCase();
-//                 if (cellText.includes(searchValue)) {
-//                     found = true;
-//                     break;
-//                 }
-//             }
-//             row.style.display = found ? '' : 'none';
-//         });
-//     }
-// });
 
 </script>
 

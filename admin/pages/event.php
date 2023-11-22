@@ -9,6 +9,14 @@
   <title>
     Daftar Event
   </title>
+  <?php
+session_start();
+if (!isset($_SESSION['USER_INFO'])) {
+    header("Location: ../../loginpage/login");
+    exit();
+}
+$userInfo = $_SESSION['USER_INFO'];
+?>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -205,7 +213,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/login">
+          <a class="nav-link  " href="#" onclick="confirmLogout()">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>
@@ -503,26 +511,33 @@ if ($total_data > ($current_page * $items_per_page)):
                   </tbody>
                 </table>
                 </div>
-              <div class="card-header pb-0">
+                <div class="card-header pb-0">
 
 <div class="row">
-  <div class="col-lg-6 col-7">
-<!-- filter rencananya -->
-  </div>
-  <div class="col-lg-6 my-auto text-end">
-  <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-    <?php if ($current_page > 1): ?>
-        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-    <?php endif; ?>
-
-    <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
+<div class="col-lg-6 col-7">
+<!-- Filter (opsional) -->
+</div>
+<div class="col-lg-6 my-auto text-end">
+<div class="text-end p-0 border-1">
+<?php 
+$items_per_page = 7;
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$total_pages = ceil($total_data / $items_per_page);
+$current_page = max(1, min($current_page, $total_pages));
+$start_index = ($current_page - 1) * $items_per_page;
+if ($current_page > 1) {
+echo '<a href="?page='.($current_page - 1).'" class="btn btn-outline-dark me-1">&lt; Previous</a>';
+}
+if ($total_data > ($current_page * $items_per_page)) {
+echo '<a href="?page='.($current_page + 1).'" class="btn btn-dark">Next &gt;</a>';
+}
+?>
+</div>
+</div>
 </div>
 
-  </div>
-
 </div>
 
-</div>
 
             </div>
           </div>
@@ -603,6 +618,23 @@ function confirmDelete(id_event) {
     }
   });
 }
+function confirmLogout() {
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin keluar?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        window.location.href= "logout";
+      }
+
+    }
+    )};
 </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
