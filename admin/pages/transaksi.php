@@ -647,7 +647,7 @@ $userInfo = $_SESSION['USER_INFO'];
                           <?php if ($r->id_status == "1"): ?>
                             <span class="badge badge-sm bg-gradient-secondary">Belum Dibayar</span>
                           <?php elseif ($r->id_status == "2"): ?>
-                            <span class="badge badge-sm bg-gradient-info">Diproses</span>
+                            <span class="badge badge-sm bg-gradient-info text-start">Menunggu<br>Persetujuan</span>
                           <?php elseif ($r->id_status == "3"): ?>
                             <span class="badge badge-sm bg-gradient-success">Selesai</span>
                           <?php elseif ($r->id_status == "4"): ?>
@@ -669,7 +669,7 @@ $userInfo = $_SESSION['USER_INFO'];
         '<?= $r->koin_dipakai; ?>'
       )">
         <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-          data-bs-placement="top" title="Edit Data"></i>
+          data-bs-placement="top" title="konfirmasi"></i>
       </a>
     <?php endif; ?>
   </div>
