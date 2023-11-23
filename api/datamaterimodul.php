@@ -20,7 +20,7 @@ if (empty($_GET)) {
     // Always use prepared statements for security.
     $idsubbabmodul = mysqli_real_escape_string($connection, $_GET['id_subbab']);
     $query = mysqli_query($connection, "SELECT * FROM tb_materi WHERE id_subbab='$idsubbabmodul'");
-    
+
     $result = array();
     while ($row = mysqli_fetch_assoc($query)) {
         $result[] = array(

@@ -7,12 +7,12 @@ try {
         $host = 'localhost';
         $user = 'codingca_billy';
         $pass = '#Blly2003';
-        $db   = 'codingca_camp';
+        $db = 'codingca_camp';
     } else {
         $host = 'localhost';
         $user = 'root';
         $pass = '';
-        $db   = 'codingcamp';
+        $db = 'codingcamp';
     }
 
     $koneksi = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -22,7 +22,7 @@ try {
     $host = 'localhost';
     $user = 'root';
     $pass = '';
-    $db   = 'codingcamp';
+    $db = 'codingcamp';
 
     $koneksi = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $koneksi->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

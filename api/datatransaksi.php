@@ -43,7 +43,7 @@ if (empty($_GET)) {
         );
     }
     echo json_encode($result);
-}  else {
+} else {
     // Note: Always use prepared statements for security.
     $status = mysqli_real_escape_string($connection, $_GET['id_status']);
     $query = mysqli_query($connection, "SELECT 
@@ -67,22 +67,22 @@ JOIN
     tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
 JOIN 
     tb_metodepembayaran ON tb_transaksi.id_pembayaran = tb_metodepembayaran.id_pembayaran WHERE tb_transaksi.id_status='$status'");
-    
+
     $result = array();
     while ($row = mysqli_fetch_assoc($query)) {
         $result[] = array(
-          'id_transaksi' => $row['id_transaksi'],
-          'subtotal' => $row['subtotal'],
-          'koin_dipakai' => $row['koin_dipakai'],
-          'total' => $row['total'],
-          'jenis_status' => $row['jenis_status'],
-          'username' => $row['username'],
-          'judul' => $row['judul'],
-          'harga' => $row['harga'],
-          'nama_pembayaran' => $row['nama_pembayaran'],
-          'icon' => $row['icon'],
-          'tanggal_transaksi' => $row['tanggal_transaksi'],
-          'id_status' => $row['id_status']
+            'id_transaksi' => $row['id_transaksi'],
+            'subtotal' => $row['subtotal'],
+            'koin_dipakai' => $row['koin_dipakai'],
+            'total' => $row['total'],
+            'jenis_status' => $row['jenis_status'],
+            'username' => $row['username'],
+            'judul' => $row['judul'],
+            'harga' => $row['harga'],
+            'nama_pembayaran' => $row['nama_pembayaran'],
+            'icon' => $row['icon'],
+            'tanggal_transaksi' => $row['tanggal_transaksi'],
+            'id_status' => $row['id_status']
         );
     }
     echo json_encode($result);

@@ -4,7 +4,7 @@ header('Content-Type: application/json;charset=utf8');
 
 if (empty($_GET)) {
     $query = mysqli_query($connection, "SELECT tb_user.*, tb_koin.koin FROM tb_user LEFT JOIN tb_koin ON tb_user.username = tb_koin.username");
-  
+
     $result = array();
     while ($row = mysqli_fetch_assoc($query)) {
         $result[] = array(
@@ -25,7 +25,7 @@ if (empty($_GET)) {
     // Note: Always use prepared statements for security.
     $username = mysqli_real_escape_string($connection, $_GET['username']);
     $query = mysqli_query($connection, "SELECT tb_user.*, tb_koin.koin  FROM tb_user LEFT JOIN tb_koin ON tb_user.username = tb_koin.username WHERE tb_user.username='$username'");
-    
+
     $result = array();
     while ($row = mysqli_fetch_assoc($query)) {
         $result[] = array(
