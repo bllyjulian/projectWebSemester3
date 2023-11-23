@@ -31,15 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $num = str_pad($result['total_transaksi'] + 1, 3, '0', STR_PAD_LEFT); // Format nomor urut dengan panjang 3 digit
 
         $id_transaksi = $prefix . $num;
-
-        // Set status ke "Belum Dibayar"
         $status = '1';
         $bukti_pembayaran = 'Belum Diisi';
 
-        // Mulai transaksi
         mysqli_begin_transaction($connection);
 
-        // Insert ke tabel transaksi
         $query_insert = mysqli_query($connection, "INSERT INTO tb_transaksi (id_transaksi, subtotal, koin_dipakai, total, id_status, bukti_pembayaran, username, id_modul, id_pembayaran) 
                                             VALUES ('$id_transaksi', '$subtotal', '$koin_dipakai', '$total', '$status', '$bukti_pembayaran', '$username', '$id_modul', '$id_pembayaran')");
 
