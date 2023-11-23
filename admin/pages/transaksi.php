@@ -565,6 +565,7 @@ $userInfo = $_SESSION['USER_INFO'];
           tb_transaksi.total,
           tb_statustransaksi.jenis_status,
           tb_transaksi.username,
+          tb_modul.id_modul,
           tb_modul.judul,
           tb_modul.harga,
           tb_metodepembayaran.nama_pembayaran,
@@ -613,6 +614,9 @@ $userInfo = $_SESSION['USER_INFO'];
                           <p class="text-xs font-weight-bold mb-0">
                             <?= $r->id_transaksi; ?>
                           </p>
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?= $r->id_modul; ?>
+                          </p>
                         </td>
                         <td style="text-wrap: wrap;">
                           <div style="width: 250px;" class="d-flex flex-column justify-content-left">
@@ -625,22 +629,23 @@ $userInfo = $_SESSION['USER_INFO'];
                           </div>
                         </td>
                         <td>
-                          <div>
-                            <h6 class="mb-0 text-sm">
+                        <h6 class="mb-0 text-sm">
                               <?= $r->koin_dipakai; ?> Koin
                             </h6>
-                            <p class="text-xs text-secondary mb-0">Rp.
+                            <p class="text-xs text-secondary">Rp.
                               <?= $r->total; ?>
-                            </p>
-                          </div>
                         </td>
                         <td>
-                          <a class="text-secondary text-xs font-weight-bold" href="<?= $r->bukti_pembayaran; ?>">Lihat
-                            Disini!</a>
+                            <h6 class="mb-0 text-sm">
+                              <?= $r->nama_pembayaran; ?>
+                            </h6>
+                            <p> <a target="_blank" class="text-secondary text-xs font-weight-bold"
+                                href="<?= $r->bukti_pembayaran; ?>">Lihat
+                                Disini!</a></p>
                         </td>
                         <td class="align-middle text-lg-start text-sm">
                           <?php if ($r->id_status == "1"): ?>
-                            <span class="badge badge-sm bg-gradient-primary">Belum Dibayar</span>
+                            <span class="badge badge-sm bg-gradient-secondary">Belum Dibayar</span>
                           <?php elseif ($r->id_status == "2"): ?>
                             <span class="badge badge-sm bg-gradient-info">Diproses</span>
                           <?php elseif ($r->id_status == "3"): ?>
@@ -655,22 +660,20 @@ $userInfo = $_SESSION['USER_INFO'];
                         </td>
 
                         <td class="align-middle text-lg-start">
-                          <div class=" text-start m-0">
-
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/editakun.php?username=" . $r->username; ?>">
-                              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit Data"></i>
-                            </a>
-                            <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                              onclick="confirmDelete('<?= $r->username; ?>')" href="#">
-                              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Hapus Data"></i>
-                            </a>
-
-
-                          </div>
-                        </td>
+  <div class="text-start m-0">
+    <?php if ($r->id_status == "2"): ?>
+      <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="konfirtransaksi(
+        '<?= $r->id_transaksi; ?>',
+        '<?= $r->username; ?>',
+        '<?= $r->id_modul; ?>',
+        '<?= $r->koin_dipakai; ?>'
+      )">
+        <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
+          data-bs-placement="top" title="Edit Data"></i>
+      </a>
+    <?php endif; ?>
+  </div>
+</td>
 
                       </tr>
 
@@ -763,34 +766,80 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    function confirmDelete(username) {
+ function konfirtransaksi(id_transaksi, username, id_modul, koin_dipakai) {
+  Swal.fire({
+    title: "Silahkan Konfirmasi Transaksi ini",
+    icon: "warning",
+    showConfirmButton: true,
+    showDenyButton: true,
+    confirmButtonColor: "#3085d6",
+    denyButtonColor: "#d33",
+    confirmButtonText: "Setujui",
+    denyButtonText: "Tolak"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Perform actions when confirmed
+      setujui(id_transaksi, username, id_modul, koin_dipakai);
+    } else if (result.isDenied) {
+      // Perform actions when denied
+      tolak();
+    } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
+      // Perform actions when dismissed
+      return;
+    }
+  });
+}
+function setujui(id_transaksi, username, id_modul, koin_dipakai) {
+  Swal.fire({
+    title: "Apakah Anda yakin ingin konfirmasi transaksi?",
+    icon: "warning",
+    html:
+      '<input type="hidden" id="id_transaksi" class="swal2-input" value="' + id_transaksi + '"/>' +
+      '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' +
+      '<input type="hidden" id="idModul" class="swal2-input" value="' + id_modul + '" readonly/>' +
+      '<input type="hidden" id="koindipakai" class="swal2-input" value="' + koin_dipakai + '"/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const id_transaksiVal = document.getElementById('id_transaksi').value;
+      const usernameVal = document.getElementById('username').value;
+      const idModul = document.getElementById('idModul').value;
+      const koindipakaiVal = document.getElementById('koindipakai').value;
+
+      return fetch('../crudphp/proses.php?aksi=transaksisetuju', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_transaksi=' + encodeURIComponent(id_transaksiVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_modul=' + encodeURIComponent(idModul) + '&koin_dipakai=' + encodeURIComponent(koindipakaiVal),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
       Swal.fire({
-        title: 'Apakah anda yakin ingin menghapus?',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Hapus'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Sukses!',
-            'Data berhasil dihapus.',
-            'success'
-          ).then(() => {
-            // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-            window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
-          });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
-        }
+        title: `Transaksi Berhasil`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'transaksi';
       });
     }
+  });
+} 
+
+
+
 
     document.getElementById('searchInput').addEventListener('input', function () {
       var searchValue = this.value.toLowerCase();

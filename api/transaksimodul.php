@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($query_insert && $query_update_koin) {
             // Commit transaksi jika semua query berhasil dieksekusi
             mysqli_commit($connection);
-            $response = array('message' => 'Transaksi berhasil', 'id_transaksi' => $id_transaksi);
+            $response = array('message' => $id_transaksi);
             echo json_encode($response);
         } else {
             // Rollback transaksi jika ada query yang gagal dieksekusi

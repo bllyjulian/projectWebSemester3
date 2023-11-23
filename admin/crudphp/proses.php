@@ -871,6 +871,59 @@ if ($_GET['aksi'] == "bukti") {
 
     echo json_encode($response);
 }
+if ($_GET['aksi'] == "transaksisetuju") {
+    $username = $_POST["username"];
+    $id_modul = $_POST["id_modul"];
+    $koin_dipakai = $_POST["koin_dipakai"];
+
+    $data = array($username, $id_modul);
+
+    try {
+        // Lakukan INSERT
+        $sql_insert = "INSERT INTO tb_moduldimiliki (username, id_modul) VALUES (?, ?)";
+        $stmt_insert = $koneksi->prepare($sql_insert);
+
+        $stmt_insert->execute($data);
+
+        // Cek apakah insert berhasil
+        if ($stmt_insert->rowCount() > 0) {
+
+            $id_transaksi = $_POST["id_transaksi"]; 
+
+            $sql_update = "UPDATE tb_transaksi SET id_status = 3 WHERE id_transaksi = ?";
+            $stmt_update = $koneksi->prepare($sql_update);
+            $stmt_update->execute([$id_transaksi]);
+
+            // Cek apakah update berhasil
+            if ($stmt_update->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Transaksi telah disetujui dan status diperbarui'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal memperbarui status transaksi'
+                ];
+            }
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyetujui transaksi'
+            ];
+        }
+    } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+
+
+
 
 $koneksi = null;
 
