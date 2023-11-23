@@ -5,9 +5,9 @@ $billy = "local";
 try {
     if ($billy === "local") {
       $host = 'localhost';
-      $user = 'id21327863_blly';
-      $pass = 'Blly@2003';
-      $db   = 'id21327863_codingcamp';
+      $user = 'codingca_billy';
+      $pass = '#Blly2003';
+      $db   = 'codingca_camp';
     } else {
       $host = 'localhost';
       $user = 'root';

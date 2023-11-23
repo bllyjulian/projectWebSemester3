@@ -1,5 +1,4 @@
 <?php
-echo "Hello, this is a test!";
 require_once('connection.php');
 header('Content-Type: application/json;charset=utf8');
 
