@@ -71,14 +71,14 @@
             $path_gambar = $folder_tujuan . $nama_baru;
     
             move_uploaded_file($_FILES['foto_profil']['tmp_name'], $path_gambar);
-    
-            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/' . urlencode($nama_baru);
+
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/foto_profil/' . urlencode($nama_baru);
         } else {
             // Jika gambar tidak diupload
             if ($jeniskelamin == "Laki Laki") {
-                $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwo.png';
+                $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/foto_profil/fpkosongcwo.png';
             } elseif ($jeniskelamin == "Perempuan") {
-                $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwe.png';
+                $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/foto_profil/fpkosongcwe.png';
             }
         }
             $data = array(
@@ -123,9 +123,9 @@
         $id_lvl = $_POST["hak_akses"];
     
         if ($jeniskelamin == "Laki Laki") {
-            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwo.png';
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/foto_profil/fpkosongcwo.png';
         } elseif ($jeniskelamin == "Perempuan") {
-            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/foto_profil/fpkosongcwe.png';
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/foto_profil/fpkosongcwe.png';
         }
     
         // Perintah SQL untuk update data dengan prepared statement
@@ -210,7 +210,7 @@
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/poster/' . urlencode($nama_baru);
+        $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/poster/' . urlencode($nama_baru);
     
         $data[] = $url_gambar; 
     
@@ -256,7 +256,7 @@
     
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/poster/' . urlencode($nama_baru);
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/poster/' . urlencode($nama_baru);
         } else {
             $url_gambar = $_POST['gambarawal']; 
         }
@@ -366,7 +366,7 @@
         $path_gambar = $folder_tujuan . $nama_baru;
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
 
-        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
+        $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         $data = array(
             $id_modul,
             $judul,
@@ -417,7 +417,7 @@
     
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/gambarmodul/' . urlencode($nama_baru);
         } else {
             $url_gambar = $_POST['gambarawal']; 
         }
@@ -484,7 +484,7 @@
     
         move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-        $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/iconjenismodul/' . urlencode($gambar);
+        $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/iconjenismodul/' . urlencode($gambar);
     
         $data[] = $url_gambar; 
     
@@ -727,7 +727,7 @@
                 $path_gambar = $folder_tujuan . $nama_baru;
     
                 if (move_uploaded_file($tmp_gambar, $path_gambar)) {
-                    $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
+                    $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
                 }
             }
     
@@ -777,7 +777,7 @@
     
             move_uploaded_file($_FILES['gambar']['tmp_name'], $path_gambar);
     
-            $url_gambar = 'https://codingcamp.myhost.id/kelompok1/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/gambarmateri/' . urlencode($nama_baru);
         } else {
             $url_gambar = $_POST['gambarawal']; 
         }
@@ -829,6 +829,46 @@
         }
     }
 
+    if ($_GET['aksi'] == "bukti") {
+        $id_transaksi = $_POST["id_transaksi"];
+    
+        if (!empty($_FILES['bukti_pembayaran']['name'])) {
+            $bukti_pembayaran = $_FILES['bukti_pembayaran']['name'];
+            $ext = pathinfo($bukti_pembayaran, PATHINFO_EXTENSION);
+            $nama_baru = md5($bukti_pembayaran . time()) . '.' . $ext;
+    
+            $folder_tujuan = 'buktipembayaran/';
+            $path_gambar = $folder_tujuan . $nama_baru;
+    
+            move_uploaded_file($_FILES['bukti_pembayaran']['tmp_name'], $path_gambar);
+    
+            $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/' . $path_gambar;
+        }
+    
+        $data = array(
+            $url_gambar,
+            $id_transaksi
+        );
+    
+        $sql = "UPDATE tb_transaksi SET bukti_pembayaran=? WHERE id_transaksi=?";
+        $stmt = $koneksi->prepare($sql);
+        $stmt->execute($data);
+    
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menyimpan data'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menyimpan data'
+            ];
+        }
+    
+        echo json_encode($response);
+    }
+    
     $koneksi = null;
     
     ?>
