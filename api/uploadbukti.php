@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $url_gambar = 'https://codingcamp.myhost.id/admin/crudphp/buktipembayaran/' . $nama_baru;
 
-            $sql = "UPDATE tb_transaksi SET bukti_pembayaran=? WHERE id_transaksi=?";
+            $sql = "UPDATE tb_transaksi SET bukti_pembayaran=?, id_status=2 WHERE id_transaksi=?";
             $stmt = $connection->prepare($sql);
             $stmt->bind_param("ss", $url_gambar, $id_transaksi);
             $stmt->execute();
