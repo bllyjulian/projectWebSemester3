@@ -577,6 +577,7 @@ $userInfo = $_SESSION['USER_INFO'];
                           }
                           echo '</div>';
                         }
+                        
                         echo '</div>';
                       }
                     } else {
@@ -591,6 +592,15 @@ $userInfo = $_SESSION['USER_INFO'];
                 echo "ID Modul tidak ditemukan.";
               }
               ?>
+                            <div class=" w-100">
+                <div class="card card-plain border">
+                  <div class="card-body d-flex flex-column justify-content-center text-center">
+                    <a href="../crudphp/tambahmodul">
+                      <h5 class=" text-secondary"><i class="fa fa-plus text-secondary mb-0"></i> Tambah Tugas</h5>
+                    </a>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
         </section>

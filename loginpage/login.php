@@ -16,6 +16,9 @@
   <script src="js/app.js"></script>
 </head>
 <style>
+  body {
+    background: #F8F9FA;
+  }
   .input-group1 {
     position: relative;
   }
