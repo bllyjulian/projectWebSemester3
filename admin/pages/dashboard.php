@@ -243,7 +243,7 @@ $userInfo = $_SESSION['USER_INFO'];
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">transaksi</span>
+            <span class="nav-link-text ms-1">Transaksi</span>
           </a>
         </li>
         <li class="nav-item mt-3">

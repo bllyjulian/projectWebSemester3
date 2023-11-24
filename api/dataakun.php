@@ -22,7 +22,7 @@ if (empty($_GET)) {
     }
     echo json_encode($result);
 } else {
-    // Note: Always use prepared statements for security.
+
     $username = mysqli_real_escape_string($connection, $_GET['username']);
     $query = mysqli_query($connection, "SELECT tb_user.*, tb_koin.koin  FROM tb_user LEFT JOIN tb_koin ON tb_user.username = tb_koin.username WHERE tb_user.username='$username'");
 

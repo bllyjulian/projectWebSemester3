@@ -871,6 +871,7 @@ if ($_GET['aksi'] == "bukti") {
 
     echo json_encode($response);
 }
+
 if ($_GET['aksi'] == "transaksisetuju") {
     $username = $_POST["username"];
     $id_modul = $_POST["id_modul"];
@@ -922,7 +923,51 @@ if ($_GET['aksi'] == "transaksisetuju") {
     echo json_encode($response);
 }
 
+if ($_GET['aksi'] == "transaksiditolak") {
+    $username = $_POST["username"];
+    $koin_dipakai = $_POST["koin_dipakai"];
 
+    try {
+        // Update nilai koin di tabel tb_koin
+        $sql_update_koin = "UPDATE tb_koin SET koin = koin + ? WHERE username = ?";
+        $stmt_update_koin = $koneksi->prepare($sql_update_koin);
+        $stmt_update_koin->execute([$koin_dipakai, $username]);
+
+        // Cek apakah update berhasil di tb_koin
+        if ($stmt_update_koin->rowCount() > 0) {
+            $id_transaksi = $_POST["id_transaksi"]; 
+
+            $sql_update_transaksi = "UPDATE tb_transaksi SET id_status = 4 WHERE id_transaksi = ?";
+            $stmt_update_transaksi = $koneksi->prepare($sql_update_transaksi);
+            $stmt_update_transaksi->execute([$id_transaksi]);
+
+            // Cek apakah update berhasil di tb_transaksi
+            if ($stmt_update_transaksi->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Transaksi telah ditolak'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal memperbarui status transaksi'
+                ];
+            }
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menambahkan koin'
+            ];
+        }
+    } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
 
 
 $koneksi = null;

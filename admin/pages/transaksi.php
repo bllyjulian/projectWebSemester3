@@ -242,7 +242,7 @@ $userInfo = $_SESSION['USER_INFO'];
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">transaksi</span>
+            <span class="nav-link-text ms-1">Transaksi</span>
           </a>
         </li>
         <li class="nav-item mt-3">
@@ -448,10 +448,9 @@ $userInfo = $_SESSION['USER_INFO'];
 
           <div class="card mb-4">
 
-            <div class="card-header pb-0">
+            <div class="card-header pb-0 d-flex justify-content-lg-between">
 
               <div class="row">
-                <div class="col-lg-6 col-7">
                   <h6>Transaksi</h6>
                   <?php
                   require_once('../crudphp/koneksi.php');
@@ -469,22 +468,22 @@ $userInfo = $_SESSION['USER_INFO'];
                   echo '</p>';
                   ?>
 
-                </div>
-                <div class="col-lg-6 col-7 my-auto text-end">
-                  <!-- <div class="dropdown">
-  <button class="btn bg-gradient-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-    Secondary
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><a class="dropdown-item" href="javascript:;">Action</a></li>
-    <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
-    <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
-  </ul>
-</div> -->
-                  filter disini
-                </div>
-
+                
               </div>
+              <div class="dropdown">
+  <button class="btn bg-gradient-primary dropdown-toggle text-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Filter
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item filter-option" href="#" data-status="Belum dibayar">Belum dibayar</a></li>
+    <li><a class="dropdown-item filter-option" href="#" data-status="Menunggu Persetujuan">Menunggu Persetujuan</a></li>
+    <li><a class="dropdown-item filter-option" href="#" data-status="Ditolak">Ditolak</a></li>
+    <li><a class="dropdown-item filter-option" href="#" data-status="Dibatalkan">Dibatalkan</a></li>
+    <li><a class="dropdown-item filter-option" href="#" data-status="Selesai">Selesai</a></li>
+  </ul>
+</div>
+
+
 
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -611,10 +610,10 @@ $userInfo = $_SESSION['USER_INFO'];
                           </div>
                         </td>
                         <td>
-                          <p class="text-xs font-weight-bold mb-0">
+                          <p class="text-sm font-weight-bold mb-0">
                             <?= $r->id_transaksi; ?>
                           </p>
-                          <p class="text-xs font-weight-bold mb-0">
+                          <p class="text-xs font-weight-bold mb-0 d-none">
                             <?= $r->id_modul; ?>
                           </p>
                         </td>
@@ -651,7 +650,9 @@ $userInfo = $_SESSION['USER_INFO'];
                           <?php elseif ($r->id_status == "3"): ?>
                             <span class="badge badge-sm bg-gradient-success">Selesai</span>
                           <?php elseif ($r->id_status == "4"): ?>
-                            <span class="badge badge-sm bg-gradient-danger">Gagal</span>
+                            <span class="badge badge-sm bg-gradient-danger">Ditolak</span>
+                          <?php elseif ($r->id_status == "5"): ?>
+                            <span class="badge badge-sm bg-gradient-dark">Dibatalkan</span>
                           <?php else: ?>
                             <span class="badge badge-sm bg-gradient-primary">
                               <?= $r->id_l; ?>
@@ -660,7 +661,7 @@ $userInfo = $_SESSION['USER_INFO'];
                         </td>
 
                         <td class="align-middle text-lg-start">
-  <div class="text-start m-0">
+  <div c  lass="text-start m-0">
     <?php if ($r->id_status == "2"): ?>
       <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="konfirtransaksi(
         '<?= $r->id_transaksi; ?>',
@@ -668,8 +669,8 @@ $userInfo = $_SESSION['USER_INFO'];
         '<?= $r->id_modul; ?>',
         '<?= $r->koin_dipakai; ?>'
       )">
-        <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-          data-bs-placement="top" title="konfirmasi"></i>
+    <i class="fa fa-info-circle text-dark me-2 cursor-pointer" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Konfirmasi"></i>
       </a>
     <?php endif; ?>
   </div>
@@ -766,6 +767,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
+
  function konfirtransaksi(id_transaksi, username, id_modul, koin_dipakai) {
   Swal.fire({
     title: "Silahkan Konfirmasi Transaksi ini",
@@ -781,14 +783,14 @@ $userInfo = $_SESSION['USER_INFO'];
       // Perform actions when confirmed
       setujui(id_transaksi, username, id_modul, koin_dipakai);
     } else if (result.isDenied) {
-      // Perform actions when denied
-      tolak();
+      tolak(id_transaksi, username, id_modul, koin_dipakai);
     } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
       // Perform actions when dismissed
       return;
     }
   });
 }
+
 function setujui(id_transaksi, username, id_modul, koin_dipakai) {
   Swal.fire({
     title: "Apakah Anda yakin ingin konfirmasi transaksi?",
@@ -837,7 +839,54 @@ function setujui(id_transaksi, username, id_modul, koin_dipakai) {
     }
   });
 } 
+function tolak(id_transaksi, username, id_modul, koin_dipakai) {
+  Swal.fire({
+    title: "Apakah Anda yakin ingin Menolak Transaksi?",
+    icon: "warning",
+    html:
+      '<input type="text" id="id_transaksi" class="swal2-input" value="' + id_transaksi + '"/>' +
+      '<input type="text" id="username" class="swal2-input" value="' + username + '"/>' +
+      '<input type="text" id="idModul" class="swal2-input" value="' + id_modul + '" readonly/>' +
+      '<input type="text" id="koindipakai" class="swal2-input" value="' + koin_dipakai + '"/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const id_transaksiVal = document.getElementById('id_transaksi').value;
+      const usernameVal = document.getElementById('username').value;
+      const idModul = document.getElementById('idModul').value;
+      const koindipakaiVal = document.getElementById('koindipakai').value;
 
+      return fetch('../crudphp/proses.php?aksi=transaksiditolak', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_transaksi=' + encodeURIComponent(id_transaksiVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_modul=' + encodeURIComponent(idModul) + '&koin_dipakai=' + encodeURIComponent(koindipakaiVal),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Transaksi telah ditolak`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'transaksi';
+      });
+    }
+  });
+} 
 
 
 
