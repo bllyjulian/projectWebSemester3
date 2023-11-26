@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Akun
+    Edit Profil
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -75,7 +75,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunMentor.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>"
             href="../pages/akun">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -133,7 +133,7 @@ $userInfo = $_SESSION['USER_INFO'];
         </li>
         <li class="nav-item">
           <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php') ? 'active' : ''; ?>"
-            href="challenge">
+            href="../pages/challenge">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +249,7 @@ $userInfo = $_SESSION['USER_INFO'];
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Menu Akun</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'profil.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'profil.php' || basename($_SERVER['PHP_SELF']) == 'editprofil.php') ? 'active' : ''; ?>"
             href="../pages/profil">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -321,15 +321,15 @@ $userInfo = $_SESSION['USER_INFO'];
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Profil</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Edit</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" id="searchInput" placeholder="Cari disini...">
+              <input type="text" class="form-control" placeholder="Cari disini...">
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
@@ -440,205 +440,103 @@ $userInfo = $_SESSION['USER_INFO'];
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <div class="row">
+      <main class="main-content  mt-0">
+        <section class="min-vh-100 card mb-4">
 
+          <div class="container p-3">
+            <div class="card-body w-100">
+              <?php
+              require_once('koneksi.php');
 
-        <!-- </div> -->
-        <div class="col-12">
+              if (isset($_GET['username'])) {
+                $username = $_GET['username'];
 
-          <div class="card mb-4">
-            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Tabel Akun</h6>
-              
-            </div> -->
+                // Ambil data pengguna berdasarkan username
+                $stmt = $koneksi->prepare("SELECT * FROM tb_admin WHERE username = ?");
+                $stmt->execute([$username]);
+                $data_pengguna = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            <div class="card-header pb-0">
-
-              <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Akun Mentor</h6>
-                  <?php
-                  require_once('../crudphp/koneksi.php');
-
-
-                  $sql = "SELECT COUNT(*) FROM tb_admin WHERE id_lvl = 'MTR01'"; // Menghitung jumlah data tanpa memuatnya
-                  $row = $koneksi->prepare($sql);
-                  $row->execute();
-                  $total_data = $row->fetchColumn();
-                  // Menampilkan total akun terdaftar
-                  echo '<p class="text-sm">';
-                  echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                  echo '<span class="font-weight-bold ms-1">' . $total_data . ' Akun terdaftar</span>';
-                  echo '</p>';
+                if ($data_pengguna) {
+                  // Data pengguna ditemukan, tampilkan form edit
                   ?>
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akun"><i
-                        class="fa fa-filter " aria-hidden="true"></i></a></button>
-                  <button class="btn bg-gradient-success"><a style="color: white;"
-                      href="../crudphp/tambahakun">Tambah</a></button>
+                  <form method="post" action="proses.php?aksi=editakun" id="editForm">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="username">Username</label>
+                          <input type="text" class="form-control" required name="username" id="username"
+                            value="<?= $data_pengguna['username']; ?>" autocomplete="off" readonly>
+                        </div>
+                        <!-- Tambahkan elemen form untuk data pengguna lainnya -->
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
+                          <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap"
+                            value="<?= $data_pengguna['nama_lengkap']; ?>" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="email">Email</label>
+                          <input type="email" class="form-control" required name="email" id="email"
+                            value="<?= $data_pengguna['email']; ?>" placeholder="" autocomplete="off">
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
 
-                </div>
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="no_hp">Nomor Hp</label>
+                          <input type="tel" class="form-control" required name="no_hp" id="no_hp"
+                            value="<?= $data_pengguna['no_hp']; ?>" placeholder="" autocomplete="off">
+                        </div>
 
-              </div>
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="jenis_kelamin">Jenis Kelamin</label>
+                          <select class="form-control" required name="jenis_kelamin" id="jenis_kelamin">
+                            <option value="Laki Laki" <?= ($data_pengguna['jenis_kelamin'] == 'Laki Laki') ? 'selected' : ''; ?>>Laki Laki</option>
+                            <option value="Perempuan" <?= ($data_pengguna['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                          </select>
+                        </div>
 
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0" id="tabelakun">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email
-                      </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama
-                        Lengkap<br>No hp</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Hak Akses</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Jenis Kelamin</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
-                      </th>
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="hak_akses">Hak Akses</label>
+                          <select class="form-control" required name="hak_akses" id="hak_akses">
+                            <option value="ADM01" <?= ($data_pengguna['id_lvl'] == 'ADM01') ? 'selected' : ''; ?>>Admin
+                            </option>
+                            <option value="MTR01" <?= ($data_pengguna['id_lvl'] == 'MTR01') ? 'selected' : ''; ?>>Mentor
+                            </option>
+                          </select>
+                        </div>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    require_once('../crudphp/koneksi.php');
-
-
-                    // Menentukan jumlah item per halaman
-                    $items_per_page = 7;
-
-                    // Menghitung total data
-                    $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC";
-                    $row = $koneksi->prepare($sql);
-                    $row->execute();
-                    $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-                    $total_data = count($hasil);
-
-                    // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
-                    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-                    // Menghitung indeks data untuk query
-                    $start_index = ($current_page - 1) * $items_per_page;
-
-                    // Mengambil data dengan membatasi jumlah
-                    $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC LIMIT $start_index, $items_per_page";
-                    $row = $koneksi->prepare($sql);
-                    $row->execute();
-                    $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-                    $no = $start_index + 1; // Inisialisasi nomor
-                    foreach ($hasil as $r) {
-
-                      ?>
-
-                      <tr>
-                        <td>
-                          <div class="d-flex px-2 py-1">
-                            <div>
-                              <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
-                            </div>
-                            <div class="d-flex flex-column justify-content-left">
-                              <h6 class="mb-0 text-sm">
-                                <?= $r->username; ?>
-                              </h6>
-                              <p class="text-xs text-secondary mb-0">
-                                <?= $r->email; ?>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">
-                            <?= $r->nama_lengkap; ?>
-                          </p>
-                          <p class="text-xs text-secondary mb-0">
-                            <?= $r->no_hp; ?>
-                          </p>
-                        <td class="align-middle text-lg-start text-sm">
-                          <?php if ($r->id_lvl == "SPA01"): ?>
-                            <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-                          <?php elseif ($r->id_lvl == "ADM01"): ?>
-                            <span class="badge badge-sm bg-gradient-success">Admin</span>
-                          <?php elseif ($r->id_lvl == "MTR01"): ?>
-                            <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                          <?php elseif ($r->id_lvl == "USR01"): ?>
-                            <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
-                          <?php else: ?>
-                            <span class="badge badge-sm bg-gradient-primary">
-                              <?= $r->id_l; ?>
-                            </span>
-                          <?php endif; ?>
-                        </td>
+                      </div>
 
 
-                        <td class="align-middle text-lg-start">
-                          <span class="text-secondary text-xs font-weight-bold">
-                            <?= $r->jenis_kelamin; ?>
-                          </span>
-                          <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp; ?></span> -->
-                        </td>
-                        <td class="align-middle text-lg-start">
-                          <div class=" text-start m-0">
-
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/editakun?username=" . $r->username; ?>">
-                              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit Data"></i>
-                            </a>
-                            <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                              onclick="confirmDelete('<?= $r->username; ?>')" href="#">
-                              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Hapus Data"></i>
-                            </a>
 
 
-                          </div>
-                        </td>
-
-                      </tr>
-
-                      <?php $no++;
-                    }
-                    // Menampilkan navigasi "Next" jika ada data berikutnya
-                    if ($total_data > ($current_page * $items_per_page)):
-
-
-                      ?>
-                    <?php endif; ?>
-
-                  </tbody>
-                </table>
-              </div>
-              <div class="card-header pb-0">
-
-                <div class="row">
-                  <div class="col-lg-6 col-7">
-                    <!-- filter rencananya -->
-                  </div>
-                  <div class="col-lg-6 my-auto text-end">
-                    <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-                      <?php if ($current_page > 1): ?>
-                        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-                      <?php endif; ?>
-
-                      <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
 
-                  </div>
 
-                </div>
 
-              </div>
+                  </form>
+                  <?php
+                } else {
+                  echo "Data pengguna tidak ditemukan.";
+                }
+              } else {
+                echo "Username tidak ditemukan.";
+              }
+              ?>
+
+
 
             </div>
           </div>
-        </div>
-      </div>
+
+        </section>
+
+        <?php
+        $koneksi = null;
+        ?>
+      </main>
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -649,17 +547,32 @@ $userInfo = $_SESSION['USER_INFO'];
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart"></i> by
-                <a href="#" class="font-weight-bold">Coding Camp</a>
-
+                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                for a better web.
               </div>
+            </div>
+            <div class="col-lg-6">
+              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About
+                    Us</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                    target="_blank">License</a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </footer>
     </div>
-    <?php
-    $koneksi = null;
-    ?>
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -675,11 +588,11 @@ $userInfo = $_SESSION['USER_INFO'];
             <i class="fa fa-close"></i>
           </button>
         </div>
-        <!-- End Toggle Button -->
+    
       </div>
       <hr class="horizontal dark my-1">
       <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
+
         <div>
           <h6 class="mb-0">Warna Sidebar</h6>
         </div>
@@ -694,7 +607,7 @@ $userInfo = $_SESSION['USER_INFO'];
             <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
           </div>
         </a>
-        <!-- Sidenav Type -->
+
         <div class="mt-3">
           <h6 class="mb-0">Jenis Sidebar</h6>
           <p class="text-sm">Pilih antara 2 jenis sidenav yang berbeda.</p>
@@ -706,7 +619,7 @@ $userInfo = $_SESSION['USER_INFO'];
             onclick="sidebarType(this)">Putih</button>
         </div>
         <p class="text-sm d-xl-none d-block mt-2">Anda dapat mengubah jenis sidenav hanya pada tampilan desktop.</p>
-        <!-- Navbar Fixed -->
+
         <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
         </div>
@@ -732,60 +645,61 @@ $userInfo = $_SESSION['USER_INFO'];
       </div>
     </div>
   </div>
-
-
-
+  <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script>
-    function confirmDelete(username) {
-      Swal.fire({
-        title: 'Apakah anda yakin ingin menghapus?',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Hapus'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Sukses!',
-            'Data berhasil dihapus.',
-            'success'
-          ).then(() => {
-            // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-            window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
-          });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
-        }
-      });
-    }
+    $(document).ready(function () {
+      $('#editForm').submit(function (event) {
+        event.preventDefault();
 
-    document.getElementById('searchInput').addEventListener('input', function () {
-      var searchValue = this.value.toLowerCase();
-      var rows = document.querySelectorAll('#tabelakun tbody tr');
+        Swal.fire({
+          title: 'Konfirmasi',
+          text: 'Apakah Anda yakin ingin menyimpan perubahan?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Ya',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Jika pengguna mengonfirmasi, lanjutkan dengan pengiriman formulir
+            var formData = new FormData(this);
 
-      rows.forEach(function (row) {
-        var cells = row.getElementsByTagName('td');
-        var found = false;
-        for (var i = 0; i < cells.length; i++) {
-          var cellText = cells[i].innerText.toLowerCase();
-          if (cellText.includes(searchValue)) {
-            found = true;
-            break;
+            $.ajax({
+              type: 'POST',
+              url: 'proses.php?aksi=editakun',
+              data: formData,
+              processData: false,
+              contentType: false,
+              dataType: 'json',
+              success: function (response) {
+                if (response.sukses) {
+                  Swal.fire({
+                    title: 'Berhasil!',
+                    text: response.pesan,
+                    icon: 'success'
+                  }).then(() => {
+                    window.location.href = '../pages/profil'; // Arahkan ke event.php di dalam folder pages
+                  });
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: response.pesan,
+                    footer: '<a href="">Perlu bantuan?</a>'
+                  });
+                }
+              },
+              error: function () {
+                // Tangani kesalahan
+              }
+            });
           }
-        }
-        row.style.display = found ? '' : 'none';
+        });
       });
     });
     function confirmLogout() {
@@ -800,15 +714,13 @@ $userInfo = $_SESSION['USER_INFO'];
 
         if (result.isConfirmed) {
 
-          window.location.href = "logout";
+          window.location.href = "../pages/logout";
         }
 
       }
       )
     };
-
   </script>
-
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

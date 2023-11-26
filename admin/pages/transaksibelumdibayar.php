@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Akun
+    Data Transaksi
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -75,7 +75,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunMentor.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>"
             href="../pages/akun">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -216,7 +216,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'transaksi.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'transaksi.php' || basename($_SERVER['PHP_SELF']) == 'transaksibelumdibayar.php' || basename($_SERVER['PHP_SELF']) == 'transaksimenunggupersetujuan.php' || basename($_SERVER['PHP_SELF']) == 'transaksiselesai.php' || basename($_SERVER['PHP_SELF']) == 'transaksiditolak.php' || basename($_SERVER['PHP_SELF']) == 'transaksidibatalkan.php') ? 'active' : ''; ?>"
             href="../pages/transaksi">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -321,9 +321,9 @@ $userInfo = $_SESSION['USER_INFO'];
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Transaksi</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Data Transaksi</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -447,40 +447,43 @@ $userInfo = $_SESSION['USER_INFO'];
         <div class="col-12">
 
           <div class="card mb-4">
-            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Tabel Akun</h6>
-              
-            </div> -->
 
-            <div class="card-header pb-0">
+            <div class="card-header pb-0 d-flex justify-content-lg-between">
 
               <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Akun Mentor</h6>
+                  <h6>Transaksi</h6>
                   <?php
                   require_once('../crudphp/koneksi.php');
 
-
-                  $sql = "SELECT COUNT(*) FROM tb_admin WHERE id_lvl = 'MTR01'"; // Menghitung jumlah data tanpa memuatnya
-                  $row = $koneksi->prepare($sql);
+                  // Menghitung jumlah total transaksi (jumlah baris unik dalam kolom id_transaksi)
+                  $sql_count = "SELECT COUNT(DISTINCT id_transaksi) AS total_transaksi FROM tb_transaksi WHERE tb_transaksi.id_status= 1";
+                  $row = $koneksi->prepare($sql_count);
                   $row->execute();
-                  $total_data = $row->fetchColumn();
-                  // Menampilkan total akun terdaftar
+                  $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_transaksi'];
+
+                  // Menampilkan total transaksi
                   echo '<p class="text-sm">';
                   echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                  echo '<span class="font-weight-bold ms-1">' . $total_data . ' Akun terdaftar</span>';
+                  echo '<span class="font-weight-bold ms-1">' . $total_data . ' Transaksi Belum dibayar</span>';
                   echo '</p>';
                   ?>
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akun"><i
-                        class="fa fa-filter " aria-hidden="true"></i></a></button>
-                  <button class="btn bg-gradient-success"><a style="color: white;"
-                      href="../crudphp/tambahakun">Tambah</a></button>
 
-                </div>
-
+                
               </div>
+              <div class="dropdown">
+  <button class="btn bg-gradient-primary dropdown-toggle text-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Filter
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item filter-option" href="transaksibelumdibayar" data-status="Belum dibayar">Belum dibayar</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksimenunggupersetujuan" data-status="Menunggu Persetujuan">Menunggu Persetujuan</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksiditolak" data-status="Ditolak">Ditolak</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksidibatalkan" data-status="Dibatalkan">Dibatalkan</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksiselesai" data-status="Selesai">Selesai</a></li>
+  </ul>
+</div>
+
+
 
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -488,19 +491,25 @@ $userInfo = $_SESSION['USER_INFO'];
                 <table class="table align-items-center mb-0" id="tabelakun">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email
-                      </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama
-                        Lengkap<br>No hp</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Nama
+                        Lengkap</th>
                       <th
                         class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Hak Akses</th>
+                        ID Transaksi</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        Modul<br>Harga</th>
                       <th
                         class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Jenis Kelamin</th>
+                        Koin dipakai<br>Total Harga</th>
                       <th
                         class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
+                        Bukti Pembayaran</th>
+                      <th
+                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        Status</th>
+                      <th
+                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        Aksi
                       </th>
 
                     </tr>
@@ -514,7 +523,27 @@ $userInfo = $_SESSION['USER_INFO'];
                     $items_per_page = 7;
 
                     // Menghitung total data
-                    $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC";
+                    $sql = "SELECT 
+          tb_transaksi.id_transaksi,
+          tb_transaksi.subtotal,
+          tb_transaksi.koin_dipakai,
+          tb_transaksi.total,
+          tb_statustransaksi.jenis_status,
+          tb_transaksi.username,
+          tb_modul.judul,
+          tb_modul.harga,
+          tb_metodepembayaran.nama_pembayaran,
+          tb_metodepembayaran.icon,
+          tb_transaksi.tanggal_transaksi,
+          tb_transaksi.id_status
+      FROM 
+          tb_transaksi
+      JOIN 
+          tb_statustransaksi ON tb_transaksi.id_status = tb_statustransaksi.id_status
+      JOIN 
+          tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
+      JOIN 
+          tb_metodepembayaran ON tb_transaksi.id_pembayaran = tb_metodepembayaran.id_pembayaran WHERE tb_transaksi.id_status= 1 ORDER BY tb_transaksi.tanggal_transaksi DESC";
                     $row = $koneksi->prepare($sql);
                     $row->execute();
                     $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -527,7 +556,35 @@ $userInfo = $_SESSION['USER_INFO'];
                     $start_index = ($current_page - 1) * $items_per_page;
 
                     // Mengambil data dengan membatasi jumlah
-                    $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC LIMIT $start_index, $items_per_page";
+                    $sql = "SELECT 
+          tb_transaksi.id_transaksi,
+          tb_transaksi.subtotal,
+          tb_transaksi.koin_dipakai,
+          tb_transaksi.bukti_pembayaran,
+          tb_transaksi.total,
+          tb_statustransaksi.jenis_status,
+          tb_transaksi.username,
+          tb_modul.id_modul,
+          tb_modul.judul,
+          tb_modul.harga,
+          tb_metodepembayaran.nama_pembayaran,
+          tb_metodepembayaran.icon,
+          tb_transaksi.tanggal_transaksi,
+          tb_transaksi.id_status,
+          tb_user.nama_lengkap,
+          tb_user.foto_profil
+      FROM 
+          tb_transaksi
+      JOIN 
+          tb_statustransaksi ON tb_transaksi.id_status = tb_statustransaksi.id_status
+      JOIN 
+          tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
+      JOIN 
+          tb_metodepembayaran ON tb_transaksi.id_pembayaran = tb_metodepembayaran.id_pembayaran
+      JOIN 
+          tb_user ON tb_transaksi.username = tb_user.username WHERE tb_transaksi.id_status= 1
+      ORDER BY tb_transaksi.tanggal_transaksi DESC LIMIT $start_index, $items_per_page";
+
                     $row = $koneksi->prepare($sql);
                     $row->execute();
                     $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -542,32 +599,60 @@ $userInfo = $_SESSION['USER_INFO'];
                             <div>
                               <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
                             </div>
-                            <div class="d-flex flex-column justify-content-left">
+                            <div>
                               <h6 class="mb-0 text-sm">
                                 <?= $r->username; ?>
                               </h6>
                               <p class="text-xs text-secondary mb-0">
-                                <?= $r->email; ?>
+                                <?= $r->nama_lengkap; ?>
                               </p>
                             </div>
                           </div>
                         </td>
                         <td>
-                          <p class="text-xs font-weight-bold mb-0">
-                            <?= $r->nama_lengkap; ?>
+                          <p class="text-sm font-weight-bold mb-0">
+                            <?= $r->id_transaksi; ?>
                           </p>
-                          <p class="text-xs text-secondary mb-0">
-                            <?= $r->no_hp; ?>
+                          <p class="text-xs font-weight-bold mb-0 d-none">
+                            <?= $r->id_modul; ?>
                           </p>
+                        </td>
+                        <td style="text-wrap: wrap;">
+                          <div style="width: 250px;" class="d-flex flex-column justify-content-left">
+                            <h6 class="mb-0 text-sm">
+                              <?= $r->judul; ?>
+                            </h6>
+                            <p class="text-xs text-secondary mb-0">Rp.
+                              <?= $r->harga; ?>
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                        <h6 class="mb-0 text-sm">
+                              <?= $r->koin_dipakai; ?> Koin
+                            </h6>
+                            <p class="text-xs text-secondary">Rp.
+                              <?= $r->total; ?>
+                        </td>
+                        <td>
+                            <h6 class="mb-0 text-sm">
+                              <?= $r->nama_pembayaran; ?>
+                            </h6>
+                            <p> <a target="_blank" class="text-secondary text-xs font-weight-bold"
+                                href="<?= $r->bukti_pembayaran; ?>">Lihat
+                                Disini!</a></p>
+                        </td>
                         <td class="align-middle text-lg-start text-sm">
-                          <?php if ($r->id_lvl == "SPA01"): ?>
-                            <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-                          <?php elseif ($r->id_lvl == "ADM01"): ?>
-                            <span class="badge badge-sm bg-gradient-success">Admin</span>
-                          <?php elseif ($r->id_lvl == "MTR01"): ?>
-                            <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                          <?php elseif ($r->id_lvl == "USR01"): ?>
-                            <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
+                          <?php if ($r->id_status == "1"): ?>
+                            <span class="badge badge-sm bg-gradient-secondary">Belum Dibayar</span>
+                          <?php elseif ($r->id_status == "2"): ?>
+                            <span class="badge badge-sm bg-gradient-info text-start">Menunggu<br>Persetujuan</span>
+                          <?php elseif ($r->id_status == "3"): ?>
+                            <span class="badge badge-sm bg-gradient-success">Selesai</span>
+                          <?php elseif ($r->id_status == "4"): ?>
+                            <span class="badge badge-sm bg-gradient-danger">Ditolak</span>
+                          <?php elseif ($r->id_status == "5"): ?>
+                            <span class="badge badge-sm bg-gradient-dark">Dibatalkan</span>
                           <?php else: ?>
                             <span class="badge badge-sm bg-gradient-primary">
                               <?= $r->id_l; ?>
@@ -575,30 +660,21 @@ $userInfo = $_SESSION['USER_INFO'];
                           <?php endif; ?>
                         </td>
 
-
                         <td class="align-middle text-lg-start">
-                          <span class="text-secondary text-xs font-weight-bold">
-                            <?= $r->jenis_kelamin; ?>
-                          </span>
-                          <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp; ?></span> -->
-                        </td>
-                        <td class="align-middle text-lg-start">
-                          <div class=" text-start m-0">
-
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/editakun?username=" . $r->username; ?>">
-                              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit Data"></i>
-                            </a>
-                            <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                              onclick="confirmDelete('<?= $r->username; ?>')" href="#">
-                              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Hapus Data"></i>
-                            </a>
-
-
-                          </div>
-                        </td>
+  <div c  lass="text-start m-0">
+    <?php if ($r->id_status == "2"): ?>
+      <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="konfirtransaksi(
+        '<?= $r->id_transaksi; ?>',
+        '<?= $r->username; ?>',
+        '<?= $r->id_modul; ?>',
+        '<?= $r->koin_dipakai; ?>'
+      )">
+    <i class="fa fa-info-circle text-dark me-2 cursor-pointer" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Konfirmasi"></i>
+      </a>
+    <?php endif; ?>
+  </div>
+</td>
 
                       </tr>
 
@@ -618,19 +694,38 @@ $userInfo = $_SESSION['USER_INFO'];
 
                 <div class="row">
                   <div class="col-lg-6 col-7">
-                    <!-- filter rencananya -->
+                    <!-- Filter (opsional) -->
                   </div>
                   <div class="col-lg-6 my-auto text-end">
-                    <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-                      <?php if ($current_page > 1): ?>
-                        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-                      <?php endif; ?>
+                    <div class="text-end p-0 border-1">
+                      <?php
+                      // Menentukan jumlah item per halaman
+                      $items_per_page = 7;
 
-                      <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
+                      // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
+                      $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+                      // Menghitung total halaman
+                      $total_pages = ceil($total_data / $items_per_page);
+
+                      // Memastikan halaman saat ini tidak kurang dari 1 dan tidak lebih dari total halaman yang tersedia
+                      $current_page = max(1, min($current_page, $total_pages));
+
+                      // Menghitung indeks data untuk query
+                      $start_index = ($current_page - 1) * $items_per_page;
+
+                      // Menampilkan tombol navigasi "Previous" jika halaman saat ini lebih besar dari 1
+                      if ($current_page > 1) {
+                        echo '<a href="?page=' . ($current_page - 1) . '" class="btn btn-outline-dark">&lt; Previous</a>';
+                      }
+
+                      // Menampilkan tombol navigasi "Next" jika masih ada data di halaman berikutnya
+                      if ($total_data > ($current_page * $items_per_page)) {
+                        echo '<a href="?page=' . ($current_page + 1) . '" class="btn btn-dark">Next &gt;</a>';
+                      }
+                      ?>
                     </div>
-
                   </div>
-
                 </div>
 
               </div>
@@ -742,34 +837,128 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    function confirmDelete(username) {
+
+ function konfirtransaksi(id_transaksi, username, id_modul, koin_dipakai) {
+  Swal.fire({
+    title: "Silahkan Konfirmasi Transaksi ini",
+    icon: "warning",
+    showConfirmButton: true,
+    showDenyButton: true,
+    confirmButtonColor: "#3085d6",
+    denyButtonColor: "#d33",
+    confirmButtonText: "Setujui",
+    denyButtonText: "Tolak"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Perform actions when confirmed
+      setujui(id_transaksi, username, id_modul, koin_dipakai);
+    } else if (result.isDenied) {
+      tolak(id_transaksi, username, id_modul, koin_dipakai);
+    } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
+      // Perform actions when dismissed
+      return;
+    }
+  });
+}
+
+function setujui(id_transaksi, username, id_modul, koin_dipakai) {
+  Swal.fire({
+    title: "Apakah Anda yakin ingin konfirmasi transaksi?",
+    icon: "warning",
+    html:
+      '<input type="hidden" id="id_transaksi" class="swal2-input" value="' + id_transaksi + '"/>' +
+      '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' +
+      '<input type="hidden" id="idModul" class="swal2-input" value="' + id_modul + '" readonly/>' +
+      '<input type="hidden" id="koindipakai" class="swal2-input" value="' + koin_dipakai + '"/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const id_transaksiVal = document.getElementById('id_transaksi').value;
+      const usernameVal = document.getElementById('username').value;
+      const idModul = document.getElementById('idModul').value;
+      const koindipakaiVal = document.getElementById('koindipakai').value;
+
+      return fetch('../crudphp/proses.php?aksi=transaksisetuju', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_transaksi=' + encodeURIComponent(id_transaksiVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_modul=' + encodeURIComponent(idModul) + '&koin_dipakai=' + encodeURIComponent(koindipakaiVal),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
       Swal.fire({
-        title: 'Apakah anda yakin ingin menghapus?',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Hapus'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Sukses!',
-            'Data berhasil dihapus.',
-            'success'
-          ).then(() => {
-            // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-            window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
-          });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
-        }
+        title: `Transaksi Berhasil`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'transaksi';
       });
     }
+  });
+} 
+function tolak(id_transaksi, username, id_modul, koin_dipakai) {
+  Swal.fire({
+    title: "Apakah Anda yakin ingin Menolak Transaksi?",
+    icon: "warning",
+    html:
+      '<input type="text" id="id_transaksi" class="swal2-input" value="' + id_transaksi + '"/>' +
+      '<input type="text" id="username" class="swal2-input" value="' + username + '"/>' +
+      '<input type="text" id="idModul" class="swal2-input" value="' + id_modul + '" readonly/>' +
+      '<input type="text" id="koindipakai" class="swal2-input" value="' + koin_dipakai + '"/>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const id_transaksiVal = document.getElementById('id_transaksi').value;
+      const usernameVal = document.getElementById('username').value;
+      const idModul = document.getElementById('idModul').value;
+      const koindipakaiVal = document.getElementById('koindipakai').value;
+
+      return fetch('../crudphp/proses.php?aksi=transaksiditolak', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_transaksi=' + encodeURIComponent(id_transaksiVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_modul=' + encodeURIComponent(idModul) + '&koin_dipakai=' + encodeURIComponent(koindipakaiVal),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Transaksi telah ditolak`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'transaksi';
+      });
+    }
+  });
+} 
+
+
 
     document.getElementById('searchInput').addEventListener('input', function () {
       var searchValue = this.value.toLowerCase();
@@ -806,7 +995,6 @@ $userInfo = $_SESSION['USER_INFO'];
       }
       )
     };
-
   </script>
 
   <!-- Github buttons -->

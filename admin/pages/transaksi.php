@@ -335,9 +335,9 @@ $userInfo = $_SESSION['USER_INFO'];
           <ul class="navbar-nav  justify-content-end">
             </li>
             <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+              <a href="../pages/profil" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Bllyy</span>
+                <span class="d-sm-inline d-none"> <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?></span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -475,11 +475,11 @@ $userInfo = $_SESSION['USER_INFO'];
     Filter
   </button>
   <ul class="dropdown-menu dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-    <li><a class="dropdown-item filter-option" href="#" data-status="Belum dibayar">Belum dibayar</a></li>
-    <li><a class="dropdown-item filter-option" href="#" data-status="Menunggu Persetujuan">Menunggu Persetujuan</a></li>
-    <li><a class="dropdown-item filter-option" href="#" data-status="Ditolak">Ditolak</a></li>
-    <li><a class="dropdown-item filter-option" href="#" data-status="Dibatalkan">Dibatalkan</a></li>
-    <li><a class="dropdown-item filter-option" href="#" data-status="Selesai">Selesai</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksibelumdibayar" data-status="Belum dibayar">Belum dibayar</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksimenunggupersetujuan" data-status="Menunggu Persetujuan">Menunggu Persetujuan</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksiditolak" data-status="Ditolak">Ditolak</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksidibatalkan" data-status="Dibatalkan">Dibatalkan</a></li>
+    <li><a class="dropdown-item filter-option" href="transaksiselesai" data-status="Selesai">Selesai</a></li>
   </ul>
 </div>
 

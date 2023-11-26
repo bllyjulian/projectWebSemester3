@@ -335,9 +335,9 @@ $userInfo = $_SESSION['USER_INFO'];
           <ul class="navbar-nav  justify-content-end">
             </li>
             <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+              <a href="../pages/profil" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Bllyy</span>
+                <span class="d-sm-inline d-none"> <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?></span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -477,12 +477,26 @@ $userInfo = $_SESSION['USER_INFO'];
       $data_to_display = array_slice($hasil, 0, $show_count);
       ?>
 
-      <div class="col-12 mt-4">
-        <div class="card mb-4">
+      <div class="col-12">
+        <div class="card">
           <div class="card-header pb-0 p-3 d-flex justify-content-between align-items-center">
             <div>
               <h6 class="mb-1">Tantangan</h6>
-              <p class="text-sm">38 Tantangan terdaftar</p>
+              <?php
+                require_once('../crudphp/koneksi.php');
+
+                // Menghitung total data
+                $sql = "SELECT COUNT(*) FROM tb_challenge"; // Menghitung jumlah data tanpa memuatnya
+                $row = $koneksi->prepare($sql);
+                $row->execute();
+                $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                
+                // Menampilkan total akun terdaftar
+                echo '<p class="text-sm">';
+                echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+                echo '<span class="font-weight-bold ms-1">' . $total_data . ' Challenge terdaftar</span>';
+                echo '</p>';
+                ?>
             </div>
             <div class="ms-auto">
               <?php if ($show_all): ?>
@@ -497,7 +511,7 @@ $userInfo = $_SESSION['USER_INFO'];
           <div class="card-body p-3">
             <div class="row d-block ">
               <?php foreach ($data_to_display as $r): ?>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-1 p-3 w-100">
+                <div class="mb-3 w-100">
                   <div class="card card-blog card-plain border-1">
                     <div class="card-body p-3">
                       <div class="d-flex gap-1 pb-2">
@@ -556,7 +570,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <div class="col-xl-3 col-md-6 mb-xl-0 mb-4  p-3 w-100">
                 <div class="card h-100 card-plain border">
                   <div class="card-body d-flex flex-column justify-content-center text-center">
-                    <a href="../crudphp/tambahmodul">
+                    <a href="../crudphp/tambahchallenge">
                       <i class="fa fa-plus text-secondary mb-3"></i>
                       <h5 class=" text-secondary"> Tambah Tantangan </h5>
                     </a>

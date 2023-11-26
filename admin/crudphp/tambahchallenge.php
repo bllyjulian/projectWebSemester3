@@ -15,9 +15,8 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Akun
+    Tambah Modul
   </title>
-  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -25,12 +24,20 @@ $userInfo = $_SESSION['USER_INFO'];
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" rel="stylesheet">
+
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- <style>
+    .form-group1 {
+      display: none;
+    }
+
+  </style> -->
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -75,7 +82,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akunMentor.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'akun.php' || basename($_SERVER['PHP_SELF']) == 'tambahakun.php' || basename($_SERVER['PHP_SELF']) == 'editakun.php') ? 'active' : ''; ?>"
             href="../pages/akun">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -105,7 +112,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul.php') ? 'active' : ''; ?>"
             href="../pages/course">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -132,8 +139,8 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php') ? 'active' : ''; ?>"
-            href="challenge">
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php' || basename($_SERVER['PHP_SELF']) == 'tambahchallenge.php') ? 'active' : ''; ?>"
+            href="../pages/challenge">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -321,15 +328,15 @@ $userInfo = $_SESSION['USER_INFO'];
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Akun</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Challenge</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Akun</h6>
+          <h6 class="font-weight-bolder mb-0">Tambah</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" id="searchInput" placeholder="Cari disini...">
+              <input type="text" class="form-control" placeholder="Cari disini...">
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
@@ -440,205 +447,49 @@ $userInfo = $_SESSION['USER_INFO'];
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <div class="row">
+      <main class="main-content  mt-0">
+        <section class="min-vh-100 card mb-4">
 
+          <div class="container p-3">
+            <div class="card-body w-100">
 
-        <!-- </div> -->
-        <div class="col-12">
-
-          <div class="card mb-4">
-            <!-- <div class="card-header pb-0 d-flex justify-content-lg-between">
-              <h6>Tabel Akun</h6>
-              
-            </div> -->
-
-            <div class="card-header pb-0">
-
-              <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Akun Mentor</h6>
-                  <?php
-                  require_once('../crudphp/koneksi.php');
-
-
-                  $sql = "SELECT COUNT(*) FROM tb_admin WHERE id_lvl = 'MTR01'"; // Menghitung jumlah data tanpa memuatnya
-                  $row = $koneksi->prepare($sql);
-                  $row->execute();
-                  $total_data = $row->fetchColumn();
-                  // Menampilkan total akun terdaftar
-                  echo '<p class="text-sm">';
-                  echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                  echo '<span class="font-weight-bold ms-1">' . $total_data . ' Akun terdaftar</span>';
-                  echo '</p>';
-                  ?>
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akun"><i
-                        class="fa fa-filter " aria-hidden="true"></i></a></button>
-                  <button class="btn bg-gradient-success"><a style="color: white;"
-                      href="../crudphp/tambahakun">Tambah</a></button>
-
-                </div>
-
-              </div>
-
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0" id="tabelakun">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email
-                      </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama
-                        Lengkap<br>No hp</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Hak Akses</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Jenis Kelamin</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
-                      </th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    require_once('../crudphp/koneksi.php');
-
-
-                    // Menentukan jumlah item per halaman
-                    $items_per_page = 7;
-
-                    // Menghitung total data
-                    $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC";
-                    $row = $koneksi->prepare($sql);
-                    $row->execute();
-                    $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-                    $total_data = count($hasil);
-
-                    // Menentukan halaman saat ini (jika tidak diset, maka default halaman pertama)
-                    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-                    // Menghitung indeks data untuk query
-                    $start_index = ($current_page - 1) * $items_per_page;
-
-                    // Mengambil data dengan membatasi jumlah
-                    $sql = "SELECT * FROM tb_admin WHERE id_lvl = 'MTR01' ORDER BY timestamp DESC LIMIT $start_index, $items_per_page";
-                    $row = $koneksi->prepare($sql);
-                    $row->execute();
-                    $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-                    $no = $start_index + 1; // Inisialisasi nomor
-                    foreach ($hasil as $r) {
-
-                      ?>
-
-                      <tr>
-                        <td>
-                          <div class="d-flex px-2 py-1">
-                            <div>
-                              <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
-                            </div>
-                            <div class="d-flex flex-column justify-content-left">
-                              <h6 class="mb-0 text-sm">
-                                <?= $r->username; ?>
-                              </h6>
-                              <p class="text-xs text-secondary mb-0">
-                                <?= $r->email; ?>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">
-                            <?= $r->nama_lengkap; ?>
-                          </p>
-                          <p class="text-xs text-secondary mb-0">
-                            <?= $r->no_hp; ?>
-                          </p>
-                        <td class="align-middle text-lg-start text-sm">
-                          <?php if ($r->id_lvl == "SPA01"): ?>
-                            <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-                          <?php elseif ($r->id_lvl == "ADM01"): ?>
-                            <span class="badge badge-sm bg-gradient-success">Admin</span>
-                          <?php elseif ($r->id_lvl == "MTR01"): ?>
-                            <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                          <?php elseif ($r->id_lvl == "USR01"): ?>
-                            <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
-                          <?php else: ?>
-                            <span class="badge badge-sm bg-gradient-primary">
-                              <?= $r->id_l; ?>
-                            </span>
-                          <?php endif; ?>
-                        </td>
-
-
-                        <td class="align-middle text-lg-start">
-                          <span class="text-secondary text-xs font-weight-bold">
-                            <?= $r->jenis_kelamin; ?>
-                          </span>
-                          <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp; ?></span> -->
-                        </td>
-                        <td class="align-middle text-lg-start">
-                          <div class=" text-start m-0">
-
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/editakun?username=" . $r->username; ?>">
-                              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit Data"></i>
-                            </a>
-                            <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                              onclick="confirmDelete('<?= $r->username; ?>')" href="#">
-                              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Hapus Data"></i>
-                            </a>
-
-
-                          </div>
-                        </td>
-
-                      </tr>
-
-                      <?php $no++;
-                    }
-                    // Menampilkan navigasi "Next" jika ada data berikutnya
-                    if ($total_data > ($current_page * $items_per_page)):
-
-
-                      ?>
-                    <?php endif; ?>
-
-                  </tbody>
-                </table>
-              </div>
-              <div class="card-header pb-0">
-
+              <form method="post" action="proses.php?aksi=tambahmodul" enctype="multipart/form-data" id="myform">
                 <div class="row">
-                  <div class="col-lg-6 col-7">
-                    <!-- filter rencananya -->
-                  </div>
-                  <div class="col-lg-6 my-auto text-end">
-                    <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-                      <?php if ($current_page > 1): ?>
-                        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-                      <?php endif; ?>
-
-                      <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="materi">Keterangan</label>
+                          <textarea style="height: 300px;" class="form-control" name="materi[]" id="materi"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label class="text-lg font-weight-bold" for="judul_materi">Kuota</label>
+                          <input type="text" class="form-control" name="judul_materi[]" id="judul_materi"
+                            autocomplete="off">
+                        </div>
+                    <div class="form-group">
+                      <label class="text-lg font-weight-bold" for="id_jenismodul">Level</label>
+                      <select class="form-control" required name="id_jenismodul" id="id_jenismodul">
+                        <option value="3">Easy</option>
+                        <option value="4">Medium</option>
+                        <option value="5">Hard</option>
+                      </select>
                     </div>
-
+                  <div class="form-group mt-2">
+                    <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100"
+                      id="submit">
+                      Simpan
+                    </button>
                   </div>
-
                 </div>
 
-              </div>
 
+              </form>
             </div>
           </div>
-        </div>
-      </div>
+
+        </section>
+
+
+      </main>
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -649,9 +500,27 @@ $userInfo = $_SESSION['USER_INFO'];
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart"></i> by
-                <a href="#" class="font-weight-bold">Coding Camp</a>
-
+                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                for a better web.
               </div>
+            </div>
+            <div class="col-lg-6">
+              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About
+                    Us</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                    target="_blank">License</a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -732,60 +601,51 @@ $userInfo = $_SESSION['USER_INFO'];
       </div>
     </div>
   </div>
-
-
-
+  <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    function confirmDelete(username) {
-      Swal.fire({
-        title: 'Apakah anda yakin ingin menghapus?',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Hapus'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Sukses!',
-            'Data berhasil dihapus.',
-            'success'
-          ).then(() => {
-            // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-            window.location.href = `../crudphp/proses.php?aksi=hapusakun&username=${username}`;
-          });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
-        }
-      });
-    }
+    $(document).ready(function () {
+      $('#myform').submit(function (event) {
+        event.preventDefault();
 
-    document.getElementById('searchInput').addEventListener('input', function () {
-      var searchValue = this.value.toLowerCase();
-      var rows = document.querySelectorAll('#tabelakun tbody tr');
+        // Serialkan data formulir
+        var formData = new FormData(this);
 
-      rows.forEach(function (row) {
-        var cells = row.getElementsByTagName('td');
-        var found = false;
-        for (var i = 0; i < cells.length; i++) {
-          var cellText = cells[i].innerText.toLowerCase();
-          if (cellText.includes(searchValue)) {
-            found = true;
-            break;
+        $.ajax({
+          type: 'POST',
+          url: 'proses.php?aksi=tambahmodul',
+          data: formData,
+          processData: false,
+          contentType: false,
+          dataType: 'json',
+          success: function (response) {
+            if (response.sukses) {
+              Swal.fire(
+                'Berhasil!',
+                response.pesan,
+                'success'
+              ).then(() => {
+                window.location.href = '../pages/course'; // Ganti dengan halaman yang sesuai
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: response.pesan,
+                footer: '<a href="https://contoh.com/bantuan">Perlu Bantuan?</a>'
+              })
+            }
+          },
+
+          error: function () {
+            // Tangani kesalahan
           }
-        }
-        row.style.display = found ? '' : 'none';
+        });
       });
     });
     function confirmLogout() {
@@ -800,15 +660,13 @@ $userInfo = $_SESSION['USER_INFO'];
 
         if (result.isConfirmed) {
 
-          window.location.href = "logout";
+          window.location.href = "../pages/logout";
         }
 
       }
       )
     };
-
   </script>
-
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
