@@ -476,7 +476,7 @@ $userInfo = $_SESSION['USER_INFO'];
                   <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akunMentor"><i
                         class="fa fa-filter " aria-hidden="true"></i></a></button>
                   <button class="btn bg-gradient-success"><a style="color: white;"
-                      href="../crudphp/tambahakun.php">Tambah</a></button>
+                      href="../crudphp/tambahakun">Tambah</a></button>
 
                 </div>
 
@@ -500,7 +500,7 @@ $userInfo = $_SESSION['USER_INFO'];
                         Jenis Kelamin</th>
                       <th
                         class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
+                        Tanggal Lahir
                       </th>
 
                     </tr>
@@ -583,21 +583,9 @@ $userInfo = $_SESSION['USER_INFO'];
                           <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp; ?></span> -->
                         </td>
                         <td class="align-middle text-lg-start">
-                          <div class=" text-start m-0">
-
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/editakun.php?username=" . $r->username; ?>">
-                              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit Data"></i>
-                            </a>
-                            <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                              onclick="confirmDelete('<?= $r->username; ?>')" href="#">
-                              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Hapus Data"></i>
-                            </a>
-
-
-                          </div>
+                        <span class="text-secondary text-xs font-weight-bold">
+                            <?= $r->tanggal_lahir; ?>
+                          </span>
                         </td>
 
                       </tr>
@@ -661,7 +649,77 @@ $userInfo = $_SESSION['USER_INFO'];
     $koneksi = null;
     ?>
   </main>
-
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="fa fa-cog py-2"> </i>
+    </a>
+    <div class="card shadow-lg ">
+      <div class="card-header pb-0 pt-3 ">
+        <div class="float-start">
+          <h5 class="mt-3 mb-0">UI Configurator</h5>
+        </div>
+        <div class="float-end mt-4">
+          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+        <!-- End Toggle Button -->
+      </div>
+      <hr class="horizontal dark my-1">
+      <div class="card-body pt-sm-3 pt-0">
+        <!-- Sidebar Backgrounds -->
+        <div>
+          <h6 class="mb-0">Warna Sidebar</h6>
+        </div>
+        <a href="javascript:void(0)" class="switch-trigger background-color">
+          <div class="badge-colors my-2 text-start">
+            <span class="badge filter bg-gradient-primary active" data-color="primary"
+              onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+          </div>
+        </a>
+        <!-- Sidenav Type -->
+        <div class="mt-3">
+          <h6 class="mb-0">Jenis Sidebar</h6>
+          <p class="text-sm">Pilih antara 2 jenis sidenav yang berbeda.</p>
+        </div>
+        <div class="d-flex">
+          <button class="btn bg-gradient-primary w-100 px-3 mb-2 active" data-class="bg-transparent"
+            onclick="sidebarType(this)">Transparan</button>
+          <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white"
+            onclick="sidebarType(this)">Putih</button>
+        </div>
+        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+        <!-- Navbar Fixed -->
+        <div class="mt-3">
+          <h6 class="mb-0">Navbar Fixed</h6>
+        </div>
+        <div class="form-checked form-switch ps-0">
+          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixe" onclick="navbarFixed(this)">
+        </div>
+        <hr class="horizontal dark my-sm-4">
+        <a class="btn bg-gradient-dark w-100" href="#">Coding
+          Camp</a>
+        <a class="btn btn-outline-dark w-100"
+          href="#">Lihat Dokumentasi</a>
+        <div class="w-100 text-center">
+          <h6 class="mt-3">Perlu Bantuan?</h6>
+          <a href="https://instagram.com/codingcamp__"
+            class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="fab fa-instagram me-1" aria-hidden="true"></i> Instagram
+          </a>
+          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!"
+            class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

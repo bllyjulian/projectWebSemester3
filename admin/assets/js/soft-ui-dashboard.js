@@ -249,22 +249,24 @@ function sidebarColor(a) {
 }
 
 // Set Navbar Fixed
+document.addEventListener("DOMContentLoaded", function() {
+  const navbarFixed = document.getElementById('navbarFixed');
+  navbarFixed.checked = false; // Setel status checkbox menjadi tidak tercentang saat halaman dimuat
+});
 function navbarFixed(el) {
   let classes = ['position-sticky', 'blur', 'shadow-blur', 'mt-4', 'left-auto', 'top-1', 'z-index-sticky'];
   const navbar = document.getElementById('navbarBlur');
 
-  if (!el.getAttribute("checked")) {
+  if (!el.checked) {
     navbar.classList.add(...classes);
     navbar.setAttribute('navbar-scroll', 'true');
     navbarBlurOnScroll('navbarBlur');
-    el.setAttribute("checked", "true");
   } else {
     navbar.classList.remove(...classes);
     navbar.setAttribute('navbar-scroll', 'false');
     navbarBlurOnScroll('navbarBlur');
-    el.removeAttribute("checked");
   }
-};
+}
 
 // Navbar blur on scroll
 
