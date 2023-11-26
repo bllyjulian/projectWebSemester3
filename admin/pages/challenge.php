@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Modul
+    Tantangan
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -337,7 +337,9 @@ $userInfo = $_SESSION['USER_INFO'];
             <li class="nav-item d-flex align-items-center">
               <a href="../pages/profil" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none"> <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?></span>
+                <span class="d-sm-inline d-none">
+                  <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?>
+                </span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -483,20 +485,20 @@ $userInfo = $_SESSION['USER_INFO'];
             <div>
               <h6 class="mb-1">Tantangan</h6>
               <?php
-                require_once('../crudphp/koneksi.php');
+              require_once('../crudphp/koneksi.php');
 
-                // Menghitung total data
-                $sql = "SELECT COUNT(*) FROM tb_challenge"; // Menghitung jumlah data tanpa memuatnya
-                $row = $koneksi->prepare($sql);
-                $row->execute();
-                $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
-                
-                // Menampilkan total akun terdaftar
-                echo '<p class="text-sm">';
-                echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                echo '<span class="font-weight-bold ms-1">' . $total_data . ' Tantangan terdaftar</span>';
-                echo '</p>';
-                ?>
+              // Menghitung total data
+              $sql = "SELECT COUNT(*) FROM tb_challenge"; // Menghitung jumlah data tanpa memuatnya
+              $row = $koneksi->prepare($sql);
+              $row->execute();
+              $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+              
+              // Menampilkan total akun terdaftar
+              echo '<p class="text-sm">';
+              echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+              echo '<span class="font-weight-bold ms-1">' . $total_data . ' Tantangan terdaftar</span>';
+              echo '</p>';
+              ?>
             </div>
             <div class="ms-auto">
               <?php if ($show_all): ?>
@@ -515,31 +517,39 @@ $userInfo = $_SESSION['USER_INFO'];
                   <div class="card card-blog card-plain border-1">
                     <div class="card-body p-3">
                       <div class="d-flex gap-1 pb-2">
-                        <span class="badge badge-sm bg-gradient-primary">#<?= $r->nama_jenis; ?></span>
+                        <span class="badge badge-sm bg-gradient-primary">#
+                          <?= $r->nama_jenis; ?>
+                        </span>
                         <?php if ($r->jenis_lvl == "Easy"): ?>
-                          <span class="badge badge-sm bg-gradient-success">#<?= $r->jenis_lvl; ?></span>
-                          <?php elseif ($r->jenis_lvl == "Medium"): ?>
-                            <span class="badge badge-sm bg-gradient-warning">#<?= $r->jenis_lvl; ?></span>
-                          <?php elseif ($r->jenis_lvl == "Hard"): ?>
-                         <span class="badge badge-sm bg-gradient-danger">#<?= $r->jenis_lvl; ?></span>
-                          <?php endif; ?>
-                      </div>
+                          <span class="badge badge-sm bg-gradient-success">#
+                            <?= $r->jenis_lvl; ?>
+                          </span>
+                        <?php elseif ($r->jenis_lvl == "Medium"): ?>
+                          <span class="badge badge-sm bg-gradient-warning">#
+                            <?= $r->jenis_lvl; ?>
+                          </span>
+                        <?php elseif ($r->jenis_lvl == "Hard"): ?>
+                          <span class="badge badge-sm bg-gradient-danger">#
+                            <?= $r->jenis_lvl; ?>
+                          </span>
+                        <?php endif; ?>
+                      </div>  
                       <h5 style="display: none;">
                         <?= $r->id_challenge; ?>
                       </h5>
                       <h5>
                         <?= $r->soal; ?>
                       </h5>
-<div class="d-flex mb-3 gap-2">
+                      <div class="d-flex mb-3 gap-2">
 
-  <span>
-    <?= $r->tropi; ?> Tropi
-  </span>
-  <span>
-    <?= $r->koin; ?> Koin
-  </span>
+                        <span>
+                          <?= $r->tropi; ?> Tropi
+                        </span>
+                        <span>
+                          <?= $r->koin; ?> Koin
+                        </span>
 
-</div>
+                      </div>
 
 
                       <div class="d-flex align-items-center justify-content-between">

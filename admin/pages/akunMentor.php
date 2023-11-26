@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Daftar Akun
+    Akun Mentor
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
