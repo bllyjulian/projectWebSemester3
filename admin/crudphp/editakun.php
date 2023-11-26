@@ -588,11 +588,11 @@ $userInfo = $_SESSION['USER_INFO'];
             <i class="fa fa-close"></i>
           </button>
         </div>
-        <!-- End Toggle Button -->
+    
       </div>
       <hr class="horizontal dark my-1">
       <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
+
         <div>
           <h6 class="mb-0">Warna Sidebar</h6>
         </div>
@@ -607,7 +607,7 @@ $userInfo = $_SESSION['USER_INFO'];
             <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
           </div>
         </a>
-        <!-- Sidenav Type -->
+
         <div class="mt-3">
           <h6 class="mb-0">Jenis Sidebar</h6>
           <p class="text-sm">Pilih antara 2 jenis sidenav yang berbeda.</p>
@@ -618,13 +618,13 @@ $userInfo = $_SESSION['USER_INFO'];
           <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white"
             onclick="sidebarType(this)">Putih</button>
         </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
+        <p class="text-sm d-xl-none d-block mt-2">Anda dapat mengubah jenis sidenav hanya pada tampilan desktop.</p>
+
         <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
         </div>
         <div class="form-checked form-switch ps-0">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixe" onclick="navbarFixed(this)">
+          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
         </div>
         <hr class="horizontal dark my-sm-4">
         <a class="btn bg-gradient-dark w-100" href="#">Coding

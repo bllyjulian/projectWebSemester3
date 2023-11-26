@@ -315,66 +315,62 @@ $userInfo = $_SESSION['USER_INFO'];
   </aside>
   <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2">
-      <div class="container-fluid py-1">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+      navbar-scroll="true">
+      <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ps-2 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="text-white opacity-5" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Profile</li>
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Profil</li>
           </ol>
-          <h6 class="text-white font-weight-bolder ms-2">Profile</h6>
+          <h6 class="font-weight-bolder mb-0">Data Profil</h6>
         </nav>
-        <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
+              <input type="text" class="form-control" id="searchInput" placeholder="Cari disini...">
             </div>
           </div>
-          <ul class="navbar-nav justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-white btn-sm mb-0 me-3" target="_blank"
-                href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
+          <ul class="navbar-nav  justify-content-end">
             </li>
             <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
+              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">Bllyy</span>
               </a>
             </li>
-            <li class="nav-item d-xl-none ps-3 pe-0 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0">
-                <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                  <div class="sidenav-toggler-inner">
-                    <i class="sidenav-toggler-line bg-white"></i>
-                    <i class="sidenav-toggler-line bg-white"></i>
-                    <i class="sidenav-toggler-line bg-white"></i>
-                  </div>
-                </a>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
               </a>
             </li>
             <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0">
+              <a href="javascript:;" class="nav-link text-body p-0">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown"
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 ms-n4" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
                           <span class="font-weight-bold">New message</span> from Laur
                         </h6>
-                        <p class="text-xs text-secondary mb-0">
+                        <p class="text-xs text-secondary mb-0 ">
                           <i class="fa fa-clock me-1"></i>
                           13 minutes ago
                         </p>
@@ -387,13 +383,13 @@ $userInfo = $_SESSION['USER_INFO'];
                     <div class="d-flex py-1">
                       <div class="my-auto">
                         <img src="../assets/img/small-logos/logo-spotify.svg"
-                          class="avatar avatar-sm bg-gradient-dark me-3">
+                          class="avatar avatar-sm bg-gradient-dark  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
                           <span class="font-weight-bold">New album</span> by Travis Scott
                         </h6>
-                        <p class="text-xs text-secondary mb-0">
+                        <p class="text-xs text-secondary mb-0 ">
                           <i class="fa fa-clock me-1"></i>
                           1 day
                         </p>
@@ -404,7 +400,7 @@ $userInfo = $_SESSION['USER_INFO'];
                 <li>
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
-                      <div class="avatar avatar-sm bg-gradient-secondary me-3 my-auto">
+                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
                         <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
                           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                           <title>credit-card</title>
@@ -428,7 +424,7 @@ $userInfo = $_SESSION['USER_INFO'];
                         <h6 class="text-sm font-weight-normal mb-1">
                           Payment successfully completed
                         </h6>
-                        <p class="text-xs text-secondary mb-0">
+                        <p class="text-xs text-secondary mb-0 ">
                           <i class="fa fa-clock me-1"></i>
                           2 days
                         </p>
@@ -452,16 +448,18 @@ $userInfo = $_SESSION['USER_INFO'];
         <div class="row gx-4">
           <div class="col-auto">
             <div class="avatar avatar-xl position-relative">
-              <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              <img src="<?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['foto_profil'] : ''; ?>" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
             </div>
           </div>
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                Alec Thompson
+              <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?>
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
-                CEO / Co-Founder
+              <h5 class="mb-1">
+              <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['id_lvl'] : ''; ?>
+              </h5>
               </p>
             </div>
           </div>
@@ -633,11 +631,11 @@ $userInfo = $_SESSION['USER_INFO'];
               <hr class="horizontal gray-light my-4">
               <ul class="list-group">
                 <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong>
-                  &nbsp; Alec M. Thompson</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44)
-                  123 1234 123</li>
+                  &nbsp; <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['nama_lengkap'] : ''; ?></li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; +62
+                <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['no_hp'] : ''; ?></li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp;
-                  alecthompson@mail.com</li>
+                <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['email'] : ''; ?> </li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp;
                   USA</li>
                 <li class="list-group-item border-0 ps-0 pb-0">
@@ -952,13 +950,13 @@ $userInfo = $_SESSION['USER_INFO'];
           <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white"
             onclick="sidebarType(this)">Putih</button>
         </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+        <p class="text-sm d-xl-none d-block mt-2">Anda dapat mengubah jenis sidenav hanya pada tampilan desktop.</p>
         <!-- Navbar Fixed -->
         <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
         </div>
         <div class="form-checked form-switch ps-0">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixe" onclick="navbarFixed(this)">
+          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
         </div>
         <hr class="horizontal dark my-sm-4">
         <a class="btn bg-gradient-dark w-100" href="#">Coding
