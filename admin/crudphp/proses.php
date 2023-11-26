@@ -904,14 +904,12 @@ if ($_GET['aksi'] == "transaksiditolak") {
                 ];
             }
         } else {
-            // Jika koin yang dipakai tidak 0, lakukan update koin dan status transaksi
             $sql_update_koin = "UPDATE tb_koin SET koin = koin + ? WHERE username = ?";
             $stmt_update_koin = $koneksi->prepare($sql_update_koin);
             $stmt_update_koin->execute([$koin_dipakai, $username]);
 
             if ($stmt_update_koin->rowCount() > 0) {
                 $id_transaksi = $_POST["id_transaksi"];
-
                 $sql_update_transaksi = "UPDATE tb_transaksi SET id_status = 4 WHERE id_transaksi = ?";
                 $stmt_update_transaksi = $koneksi->prepare($sql_update_transaksi);
                 $stmt_update_transaksi->execute([$id_transaksi]);
@@ -935,6 +933,106 @@ if ($_GET['aksi'] == "transaksiditolak") {
             }
         }
     } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+
+if ($_GET['aksi'] == "tambahchallenge") {
+    $soal = $_POST["soal"];
+    $kuota = $_POST["kuota"];
+    $id_jenis = $_POST["id_jenis"];
+    $id_lvlchallenge = $_POST["id_lvlchallenge"];
+
+    $id_challenge = '';
+
+    $query_nama_jenis = "SELECT nama_jenis FROM tb_jenischallenge WHERE id_jenis = ?";
+    $stmt_nama_jenis = $koneksi->prepare($query_nama_jenis);
+    $stmt_nama_jenis->execute([$id_jenis]);
+    $result_nama_jenis = $stmt_nama_jenis->fetch(PDO::FETCH_ASSOC);
+
+    if ($result_nama_jenis) {
+        $nama_jenis = strtolower(str_replace(' ', '', $result_nama_jenis['nama_jenis']));
+
+        $query_count = "SELECT COUNT(*) as count FROM tb_challenge WHERE id_jenis = ?";
+        $stmt_count = $koneksi->prepare($query_count);
+        $stmt_count->execute([$id_jenis]);
+        $result_count = $stmt_count->fetch(PDO::FETCH_ASSOC);
+
+        $id_challenge = $nama_jenis . sprintf("%03d", $result_count['count'] + 1);
+    }
+    $tropi = 0;
+    $koin = 0;
+
+    if ($id_lvlchallenge == "EZ01") {
+        $tropi = 2;
+        $koin = 500;
+    } elseif ($id_lvlchallenge == "MD01") {
+        $tropi = 5;
+        $koin = 750;
+    } elseif ($id_lvlchallenge == "HR01") {
+        $tropi = 10;
+        $koin = 1000;
+    }
+
+    $data = array($id_challenge, $soal, $tropi, $koin, $kuota, $id_jenis, $id_lvlchallenge);
+
+    try {
+        $sql = "INSERT INTO tb_challenge (id_challenge, soal, tropi, koin, kuota, id_jenis, id_lvlchallenge) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+
+        $stmt->execute($data);
+
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menambahkan challenge'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menambahkan challenge'
+            ];
+        }
+    } catch (PDOException $e) {
+        // Tangani kesalahan PDO jika terjadi
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+
+if ($_GET['aksi'] == "tambahjenischal") {
+    $nama_jenis = $_POST["nama_jenis"];
+
+    $data = array($nama_jenis);
+
+    try {
+        $sql = "INSERT INTO tb_jenischallenge (nama_jenis) VALUES (?)";
+        $stmt = $koneksi->prepare($sql);
+
+        $stmt->execute($data);
+
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menambahkan jenis challenge'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menambahkan jenis challenge'
+            ];
+        }
+    } catch (PDOException $e) {
+        // Tangani kesalahan PDO jika terjadi
         $response = [
             'sukses' => false,
             'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()

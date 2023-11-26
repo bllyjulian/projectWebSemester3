@@ -337,7 +337,9 @@ $userInfo = $_SESSION['USER_INFO'];
             <li class="nav-item d-flex align-items-center">
               <a href="../pages/profil" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none"> <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?></span>
+                <span class="d-sm-inline d-none">
+                  <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?>
+                </span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -550,22 +552,22 @@ $userInfo = $_SESSION['USER_INFO'];
       </main>
 
       <footer class="footer pt-3  ">
-      <div class="container-fluid">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6 mb-lg-0 mb-4">
-            <div class="copyright text-center text-sm text-muted text-lg-start">
-              ©
-              <script>
-                document.write(new Date().getFullYear())
-              </script>,
-              made with <i class="fa fa-heart"></i> by
-              <a href="#" class="font-weight-bold">Coding Camp</a>
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                ©
+                <script>
+                  document.write(new Date().getFullYear())
+                </script>,
+                made with <i class="fa fa-heart"></i> by
+                <a href="#" class="font-weight-bold">Coding Camp</a>
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -623,16 +625,14 @@ $userInfo = $_SESSION['USER_INFO'];
         <hr class="horizontal dark my-sm-4">
         <a class="btn bg-gradient-dark w-100" href="#">Coding
           Camp</a>
-        <a class="btn btn-outline-dark w-100"
-          href="#">Lihat Dokumentasi</a>
+        <a class="btn btn-outline-dark w-100" href="#">Lihat Dokumentasi</a>
         <div class="w-100 text-center">
           <h6 class="mt-3">Perlu Bantuan?</h6>
-          <a href="https://instagram.com/codingcamp__"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://instagram.com/codingcamp__" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-instagram me-1" aria-hidden="true"></i> Instagram
           </a>
-          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!" class="btn btn-dark mb-0 me-2"
+            target="_blank">
             <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp
           </a>
         </div>

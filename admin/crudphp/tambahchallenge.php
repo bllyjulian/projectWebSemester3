@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Tambah Modul
+    Tambah Challenge
   </title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -344,7 +344,9 @@ $userInfo = $_SESSION['USER_INFO'];
             <li class="nav-item d-flex align-items-center">
               <a href="../pages/profil" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none"> <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?></span>
+                <span class="d-sm-inline d-none">
+                  <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?>
+                </span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -450,38 +452,55 @@ $userInfo = $_SESSION['USER_INFO'];
       <main class="main-content">
         <section class="min-vh-100 card mb-4">
           <div class="container p-3">
-            
+
             <div class="card-body w-100">
 
-              <form method="post" action="proses.php?aksi=tambahmodul" enctype="multipart/form-data" id="myform">
+              <form method="post" action="proses.php?aksi=tambahchallenge" enctype="multipart/form-data" id="myform">
                 <div class="row">
-                        <div class="form-group">
-                          <label class="text-lg font-weight-bold" for="materi">Soal</label>
-                          <textarea style="height: 200px;" class="form-control" name="materi[]" id="materi"></textarea>
-                        </div>
-                        <div class="form-group">
-                          <div class="d-flex justify-content-lg-between align-items-center gap-10">
-                            <label class="text-lg font-weight-bold" for="judul_materi">Jenis</label>
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="#">
-                              <i class="fas fa-plus me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Tambah Jenis"></i>
-                            </a>
-                          </div>
-                          <select class="form-control" required name="id_jenis" id="id_jenis">
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-                      </select>
-                        </div>
-                    <div class="form-group">
-                      <label class="text-lg font-weight-bold" for="id_jenismodul">Level</label>
-                      <select class="form-control" required name="id_jenismodul" id="id_jenismodul">
-                        <option value="3">Easy</option>
-                        <option value="4">Medium</option>
-                        <option value="5">Hard</option>
-                      </select>
+                  <div class="form-group">
+                    <label class="text-lg font-weight-bold" for="materi">Soal</label>
+                    <textarea style="height: 200px;" class="form-control" name="soal" id="soal"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <div class="d-flex justify-content-lg-between align-items-center gap-10">
+                      <label class="text-lg font-weight-bold" for="judul_materi">Jenis</label>
+                      <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" id="tambahjenischallenge">
+                        <i class="fas fa-plus me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
+                          data-bs-placement="top" title="Tambah Jenis"></i>
+                      </a>
                     </div>
+                    <select class="form-control" required name="id_jenis" id="id_jenis">
+                      <?php
+                      require_once('koneksi.php');
+
+                      $query = "SELECT id_jenis, nama_jenis FROM tb_jenischallenge";
+                      $result = $koneksi->query($query);
+
+                      // Periksa apakah hasil query mengembalikan data
+                      if ($result->rowCount() > 0) {
+                        // Loop melalui setiap baris hasil query dan tampilkan nilai dalam option select
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                          $id_jenis = $row['id_jenis'];
+                          $nama_jenis = $row['nama_jenis'];
+                          echo "<option value='$id_jenis'>$nama_jenis</option>";
+                        }
+                      }
+                      ?>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="text-lg font-weight-bold" for="id_lvlchallenge">Level</label>
+                    <select class="form-control" required name="id_lvlchallenge" id="id_lvlchallenge">
+                      <option value="EZ01">Easy</option>
+                      <option value="MD01">Medium</option>
+                      <option value="HR01">Hard</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="text-lg font-weight-bold" for="kuota">Kuota</label>
+                    <input type="number" class="form-control" required name="kuota" id="kuota" autocomplete="off">
+                  </div>
                   <div class="form-group mt-2">
                     <button style="height: 55px;" type="submit" class="btn btn-primary btn-md btn-block w-100"
                       id="submit">
@@ -489,52 +508,29 @@ $userInfo = $_SESSION['USER_INFO'];
                     </button>
                   </div>
                 </div>
-
-
               </form>
             </div>
           </div>
-
         </section>
-
-
       </main>
 
       <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                ©
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About
-                    Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                    target="_blank">License</a>
-                </li>
-              </ul>
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              ©
+              <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="#" class="font-weight-bold">Coding Camp</a>
+
             </div>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
     </div>
     <?php
     $koneksi = null;
@@ -595,16 +591,14 @@ $userInfo = $_SESSION['USER_INFO'];
         <hr class="horizontal dark my-sm-4">
         <a class="btn bg-gradient-dark w-100" href="#">Coding
           Camp</a>
-        <a class="btn btn-outline-dark w-100"
-          href="#">Lihat Dokumentasi</a>
+        <a class="btn btn-outline-dark w-100" href="#">Lihat Dokumentasi</a>
         <div class="w-100 text-center">
           <h6 class="mt-3">Perlu Bantuan?</h6>
-          <a href="https://instagram.com/codingcamp__"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://instagram.com/codingcamp__" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-instagram me-1" aria-hidden="true"></i> Instagram
           </a>
-          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!" class="btn btn-dark mb-0 me-2"
+            target="_blank">
             <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp
           </a>
         </div>
@@ -619,6 +613,56 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+ document.getElementById('tambahjenischallenge').addEventListener('click', function () {
+  Swal.fire({
+    title: "Tambah Jenis Challenge",
+    html:
+    '<div class="input-group">' +
+      '<input type="text" id="nama_jenis" name="nama_jenis" class="swal2-input w-100 m-2" />' +
+      '</div>',
+    showCancelButton: true,
+    confirmButtonText: "Tambah",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const namaJenis = Swal.getPopup().querySelector('#nama_jenis').value;
+
+      // Validate if the "Nama Jenis" field is not empty
+      if (!namaJenis) {
+        Swal.showValidationMessage('Nama Jenis harus diisi');
+        return false; // Prevent form submission when validation fails
+      }
+
+      return fetch('proses.php?aksi=tambahjenischal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'nama_jenis=' + encodeURIComponent(namaJenis),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Berhasil Menambahkan Jenis Challenge`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = '../crudphp/tambahchallenge';
+      });
+    }
+  });
+});
+
     $(document).ready(function () {
       $('#myform').submit(function (event) {
         event.preventDefault();
@@ -628,7 +672,7 @@ $userInfo = $_SESSION['USER_INFO'];
 
         $.ajax({
           type: 'POST',
-          url: 'proses.php?aksi=tambahmodul',
+          url: 'proses.php?aksi=tambahchallenge',
           data: formData,
           processData: false,
           contentType: false,
@@ -640,7 +684,7 @@ $userInfo = $_SESSION['USER_INFO'];
                 response.pesan,
                 'success'
               ).then(() => {
-                window.location.href = '../pages/course'; // Ganti dengan halaman yang sesuai
+                window.location.href = '../pages/challenge'; // Ganti dengan halaman yang sesuai
               });
             } else {
               Swal.fire({
