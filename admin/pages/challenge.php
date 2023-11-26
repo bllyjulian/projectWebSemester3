@@ -445,7 +445,22 @@ $userInfo = $_SESSION['USER_INFO'];
       require_once('../crudphp/koneksi.php');
 
       $items_per_page = 7;
-      $sql = "SELECT * FROM tb_modul";
+      $sql = "SELECT 
+      c.id_challenge,
+      c.soal,
+      c.tropi,
+      c.koin,
+      c.kuota,
+      c.id_jenis,
+      c.id_lvlchallenge,
+      lc.jenis_lvl,
+      jc.nama_jenis
+  FROM 
+      tb_challenge c
+  LEFT JOIN 
+      tb_lvlchallenge lc ON c.id_lvlchallenge = lc.id_lvlchallenge
+  LEFT JOIN 
+      tb_jenischallenge jc ON c.id_jenis = jc.id_jenis ORDER BY timestamp DESC";
       $row = $koneksi->prepare($sql);
       $row->execute();
       $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -486,23 +501,33 @@ $userInfo = $_SESSION['USER_INFO'];
                   <div class="card card-blog card-plain border-1">
                     <div class="card-body p-3">
                       <div class="d-flex gap-1 pb-2">
-                        <span class="badge badge-sm bg-gradient-info">#php</span>
-                      <span class="badge badge-sm bg-gradient-danger">#hard</span>
+                        <span class="badge badge-sm bg-gradient-primary">#<?= $r->nama_jenis; ?></span>
+                        <?php if ($r->jenis_lvl == "Easy"): ?>
+                          <span class="badge badge-sm bg-gradient-success">#<?= $r->jenis_lvl; ?></span>
+                          <?php elseif ($r->jenis_lvl == "Medium"): ?>
+                            <span class="badge badge-sm bg-gradient-warning">#<?= $r->jenis_lvl; ?></span>
+                          <?php elseif ($r->jenis_lvl == "Hard"): ?>
+                         <span class="badge badge-sm bg-gradient-danger">#<?= $r->jenis_lvl; ?></span>
+                          <?php endif; ?>
                       </div>
                       <h5 style="display: none;">
-                        <?= $r->id_modul; ?>
+                        <?= $r->id_challenge; ?>
                       </h5>
                       <h5>
-                        <?= $r->judul; ?>
+                        <?= $r->soal; ?>
                       </h5>
-                      <a href="javascript:;">
-                        <p class="text-gradient text-dark mb-2 text-sm">Rp.
-                          <?= $r->harga; ?>
-                        </p>
-                      </a>
-                      <p class="mb-4 text-sm">
-                        <?= $r->keterangan; ?>
-                      </p>
+<div class="d-flex mb-3 gap-2">
+
+  <span>
+    <?= $r->tropi; ?> Tropi
+  </span>
+  <span>
+    <?= $r->koin; ?> Koin
+  </span>
+
+</div>
+
+
                       <div class="d-flex align-items-center justify-content-between">
                         <button type="button" class="btn btn-outline-primary btn-sm mb-0">Koreksi</button>
                         <div class=" text-start m-0">
@@ -636,16 +661,14 @@ $userInfo = $_SESSION['USER_INFO'];
         <hr class="horizontal dark my-sm-4">
         <a class="btn bg-gradient-dark w-100" href="#">Coding
           Camp</a>
-        <a class="btn btn-outline-dark w-100"
-          href="#">Lihat Dokumentasi</a>
+        <a class="btn btn-outline-dark w-100" href="#">Lihat Dokumentasi</a>
         <div class="w-100 text-center">
           <h6 class="mt-3">Perlu Bantuan?</h6>
-          <a href="https://instagram.com/codingcamp__"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://instagram.com/codingcamp__" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-instagram me-1" aria-hidden="true"></i> Instagram
           </a>
-          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!" class="btn btn-dark mb-0 me-2"
+            target="_blank">
             <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp
           </a>
         </div>
