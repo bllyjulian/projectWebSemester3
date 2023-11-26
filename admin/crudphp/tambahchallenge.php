@@ -447,22 +447,32 @@ $userInfo = $_SESSION['USER_INFO'];
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <main class="main-content  mt-0">
+      <main class="main-content">
         <section class="min-vh-100 card mb-4">
-
           <div class="container p-3">
+            
             <div class="card-body w-100">
 
               <form method="post" action="proses.php?aksi=tambahmodul" enctype="multipart/form-data" id="myform">
                 <div class="row">
                         <div class="form-group">
-                          <label class="text-lg font-weight-bold" for="materi">Keterangan</label>
-                          <textarea style="height: 300px;" class="form-control" name="materi[]" id="materi"></textarea>
+                          <label class="text-lg font-weight-bold" for="materi">Soal</label>
+                          <textarea style="height: 200px;" class="form-control" name="materi[]" id="materi"></textarea>
                         </div>
                         <div class="form-group">
-                          <label class="text-lg font-weight-bold" for="judul_materi">Kuota</label>
-                          <input type="text" class="form-control" name="judul_materi[]" id="judul_materi"
-                            autocomplete="off">
+                          <div class="d-flex justify-content-lg-between align-items-center gap-10">
+                            <label class="text-lg font-weight-bold" for="judul_materi">Jenis</label>
+                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
+                              href="#">
+                              <i class="fas fa-plus me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tambah Jenis"></i>
+                            </a>
+                          </div>
+                          <select class="form-control" required name="id_jenis" id="id_jenis">
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+                      </select>
                         </div>
                     <div class="form-group">
                       <label class="text-lg font-weight-bold" for="id_jenismodul">Level</label>

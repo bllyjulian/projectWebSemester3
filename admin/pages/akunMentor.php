@@ -557,7 +557,7 @@ $userInfo = $_SESSION['USER_INFO'];
                             <?= $r->nama_lengkap; ?>
                           </p>
                           <p class="text-xs text-secondary mb-0">
-                            <?= $r->no_hp; ?>
+                            +62<?= $r->no_hp; ?>
                           </p>
                         <td class="align-middle text-lg-start text-sm">
                           <?php if ($r->id_lvl == "SPA01"): ?>

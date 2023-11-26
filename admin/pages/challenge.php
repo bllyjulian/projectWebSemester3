@@ -494,7 +494,7 @@ $userInfo = $_SESSION['USER_INFO'];
                 // Menampilkan total akun terdaftar
                 echo '<p class="text-sm">';
                 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                echo '<span class="font-weight-bold ms-1">' . $total_data . ' Challenge terdaftar</span>';
+                echo '<span class="font-weight-bold ms-1">' . $total_data . ' Tantangan terdaftar</span>';
                 echo '</p>';
                 ?>
             </div>

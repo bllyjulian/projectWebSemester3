@@ -457,7 +457,6 @@ $userInfo = $_SESSION['USER_INFO'];
                 $data_pengguna = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($data_pengguna) {
-                  // Data pengguna ditemukan, tampilkan form edit
                   ?>
                   <form method="post" action="proses.php?aksi=editakun" id="editForm">
                     <div class="row">
@@ -467,7 +466,6 @@ $userInfo = $_SESSION['USER_INFO'];
                           <input type="text" class="form-control" required name="username" id="username"
                             value="<?= $data_pengguna['username']; ?>" autocomplete="off" readonly>
                         </div>
-                        <!-- Tambahkan elemen form untuk data pengguna lainnya -->
                         <div class="form-group">
                           <label class="text-lg font-weight-bold" for="nama_lengkap">Nama Lengkap</label>
                           <input type="text" class="form-control" required name="nama_lengkap" id="nama_lengkap"
@@ -480,12 +478,14 @@ $userInfo = $_SESSION['USER_INFO'];
                         </div>
                       </div>
                       <div class="col-sm-6">
-
-                        <div class="form-group">
-                          <label class="text-lg font-weight-bold" for="no_hp">Nomor Hp</label>
-                          <input type="tel" class="form-control" required name="no_hp" id="no_hp"
-                            value="<?= $data_pengguna['no_hp']; ?>" placeholder="" autocomplete="off">
-                        </div>
+                      <div class="form-group">
+                      <label class="text-lg font-weight-bold" for="no_hp">Nomor Hp</label>
+                      <div class="input-group">
+                        <span class="input-group-text text-body">+62</span>
+                        <input type="tel" class="form-control" required name="no_hp" id="no_hp"
+                          placeholder="8xx xxxx xxxx"  value="<?= $data_pengguna['no_hp']; ?>" autocomplete="off" oninput="formatNomorHp(this)" maxlength="12">
+                      </div>
+                    </div>
 
                         <div class="form-group">
                           <label class="text-lg font-weight-bold" for="jenis_kelamin">Jenis Kelamin</label>
@@ -538,40 +538,22 @@ $userInfo = $_SESSION['USER_INFO'];
       </main>
 
       <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                ©
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About
-                    Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                    target="_blank">License</a>
-                </li>
-              </ul>
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              ©
+              <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="#" class="font-weight-bold">Coding Camp</a>
+
             </div>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -653,6 +635,12 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script>
+        function formatNomorHp(input) {
+      input.value = input.value.replace(/\D/g, ''); // Hapus karakter selain angka
+      if (input.value.length > 12) {
+        input.value = input.value.slice(0, 12);
+      }
+    }
     $(document).ready(function () {
       $('#editForm').submit(function (event) {
         event.preventDefault();

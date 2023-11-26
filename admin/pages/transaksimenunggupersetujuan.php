@@ -914,12 +914,12 @@ function tolak(id_transaksi, username, id_modul, koin_dipakai) {
     title: "Apakah Anda yakin ingin Menolak Transaksi?",
     icon: "warning",
     html:
-      '<input type="text" id="id_transaksi" class="swal2-input" value="' + id_transaksi + '"/>' +
-      '<input type="text" id="username" class="swal2-input" value="' + username + '"/>' +
-      '<input type="text" id="idModul" class="swal2-input" value="' + id_modul + '" readonly/>' +
-      '<input type="text" id="koindipakai" class="swal2-input" value="' + koin_dipakai + '"/>',
+      '<input type="hidden" id="id_transaksi" class="swal2-input" value="' + id_transaksi + '"/>' +
+      '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' +
+      '<input type="hidden" id="idModul" class="swal2-input" value="' + id_modul + '" readonly/>' +
+      '<input type="hidden" id="koindipakai" class="swal2-input" value="' + koin_dipakai + '"/>',
     showCancelButton: true,
-    confirmButtonText: "Simpan",
+    confirmButtonText: "Tolak",
     showLoaderOnConfirm: true,
     preConfirm: () => {
       const id_transaksiVal = document.getElementById('id_transaksi').value;
