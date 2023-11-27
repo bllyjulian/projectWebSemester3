@@ -14,6 +14,8 @@ $userInfo = $_SESSION['USER_INFO'];
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
   <title>
     Akun Pengguna
   </title>
@@ -31,6 +33,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -485,7 +488,7 @@ $userInfo = $_SESSION['USER_INFO'];
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0" id="tabelakun">
+                <table class="table align-items-center mb-0" id="myTable">
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email
@@ -730,6 +733,8 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
+    let table = new DataTable('#myTable');
+
     function confirmDelete(username) {
       Swal.fire({
         title: 'Apakah anda yakin ingin menghapus?',
