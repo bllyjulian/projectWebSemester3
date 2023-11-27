@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Tantangan
+    Preview Materi
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -30,7 +30,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -105,7 +105,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'previewsubbab.php') ? 'active' : ''; ?>"
             href="../pages/course">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -132,8 +132,8 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php') ? 'active' : ''; ?>"
-            href="challenge">
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php' || basename($_SERVER['PHP_SELF']) == 'detailchallenge.php') ? 'active' : ''; ?>"
+            href="../pages/challenge">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -321,9 +321,9 @@ $userInfo = $_SESSION['USER_INFO'];
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tantangan</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">challenge</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Daftar Tantangan</h6>
+          <h6 class="font-weight-bolder mb-0">Detail</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -442,194 +442,116 @@ $userInfo = $_SESSION['USER_INFO'];
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
+      <main class="main-content  mt-0">
+        <section class="min-vh-100 card mb-4">
+          <div class="container p-0">
+            <div class="card-body w-100">
+              <div class="row">
+                <h6>Pengumpulan</h6>
+                <?php
+                require_once('../crudphp/koneksi.php');
 
-      <?php
-      require_once('../crudphp/koneksi.php');
+                // Menghitung jumlah total transaksi (jumlah baris unik dalam kolom id_transaksi)
+                $sql_count = "SELECT COUNT(DISTINCT username) AS total_pengumpulan FROM tb_submitchallenge";
+                $row = $koneksi->prepare($sql_count);
+                $row->execute();
+                $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_pengumpulan'];
 
-      $items_per_page = 7;
-      $sql = "SELECT 
-      c.id_challenge,
-      c.soal,
-      c.tropi,
-      c.koin,
-      c.kuota,
-      c.id_jenis,
-      c.id_lvlchallenge,
-      lc.jenis_lvl,
-      jc.nama_jenis
-  FROM 
-      tb_challenge c
-  LEFT JOIN 
-      tb_lvlchallenge lc ON c.id_lvlchallenge = lc.id_lvlchallenge
-  LEFT JOIN 
-      tb_jenischallenge jc ON c.id_jenis = jc.id_jenis ORDER BY timestamp DESC";
-      $row = $koneksi->prepare($sql);
-      $row->execute();
-      $hasil = $row->fetchAll(PDO::FETCH_OBJ);
-      $total_data = count($hasil);
-
-      $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-      $start_index = ($current_page - 1) * $items_per_page;
-      $total_pages = ceil($total_data / $items_per_page);
-
-      $show_all = isset($_GET['show_all']);
-
-      $show_count = $show_all ? $total_data : min(3, $total_data);
-
-      $data_to_display = array_slice($hasil, 0, $show_count);
-      ?>
-
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header pb-0 p-3 d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="mb-1">Tantangan</h6>
-              <?php
-              require_once('../crudphp/koneksi.php');
-
-              // Menghitung total data
-              $sql = "SELECT COUNT(*) FROM tb_challenge"; // Menghitung jumlah data tanpa memuatnya
-              $row = $koneksi->prepare($sql);
-              $row->execute();
-              $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
-              
-              // Menampilkan total akun terdaftar
-              echo '<p class="text-sm">';
-              echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-              echo '<span class="font-weight-bold ms-1">' . $total_data . ' Tantangan terdaftar</span>';
-              echo '</p>';
-              ?>
-            </div>
-            <div class="ms-auto">
-              <?php if ($show_all): ?>
-                <button class="btn btn-primary" onclick="window.location.href='?page=<?= $current_page ?>'">Lebih
-                  Sedikit</button>
-              <?php else: ?>
-                <button class="btn btn-primary" onclick="window.location.href='?show_all'">Lihat Semua</button>
-              <?php endif; ?>
-            </div>
-          </div>
-
-          <div class="card-body p-3">
-            <div class="row d-block ">
-              <?php foreach ($data_to_display as $r): ?>
-                <div class="mb-3 w-100">
-                  <div class="card card-blog card-plain border-1">
-                    <div class="card-body p-3">
-                      <div class="d-flex gap-1 pb-2">
-                        <span class="badge badge-sm bg-gradient-primary">#
-                          <?= $r->nama_jenis; ?>
-                        </span>
-                        <?php if ($r->jenis_lvl == "Easy"): ?>
-                          <span class="badge badge-sm bg-gradient-success">#
-                            <?= $r->jenis_lvl; ?>
-                          </span>
-                        <?php elseif ($r->jenis_lvl == "Medium"): ?>
-                          <span class="badge badge-sm bg-gradient-warning">#
-                            <?= $r->jenis_lvl; ?>
-                          </span>
-                        <?php elseif ($r->jenis_lvl == "Hard"): ?>
-                          <span class="badge badge-sm bg-gradient-danger">#
-                            <?= $r->jenis_lvl; ?>
-                          </span>
-                        <?php endif; ?>
-                      </div>
-                      <h5 style="display: none;">
-                        <?= $r->id_challenge; ?>
-                      </h5>
-                      <h5>
-                        <?= $r->soal; ?>
-                      </h5>
-                      <div class="d-flex mb-3 gap-2">
-
-                        <span>
-                          <?= $r->tropi; ?> Tropi
-                        </span>
-                        <span>
-                          <?= $r->koin; ?> Koin
-                        </span>
-
-                      </div>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0"><a
-                              class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/detailchallenge?id_challenge=" . $r->id_challenge; ?>">
-
-                              Lihat</a></button>
-                        <div class=" text-start m-0">
-
-                          <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="editchal(
-                      '<?= $r->id_challenge; ?>',
-                      '<?= $r->soal; ?>',
-                      '<?= $r->id_lvlchallenge; ?>'
-                    )">
-                            <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                              data-bs-placement="top" title="Edit Data"></i>
-                          </a>
+                // Menampilkan total transaksi
+                echo '<p class="text-sm">';
+                echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+                echo '<span class="font-weight-bold ms-1">' . $total_data . ' Telah terkumpul</span>';
+                echo '</p>';
+                ?>
 
 
-                          <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                            onclick="confirmDelete('<?= $r->id_challenge; ?>')" href="#">
-                            <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                              data-bs-placement="top" title="Hapus Modul"></i>
-                          </a>
-
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-
-              <div class="col-xl-3 col-md-6 mb-xl-0 mb-4  p-3 w-100">
-                <div class="card h-100 card-plain border">
-                  <div class="card-body d-flex flex-column justify-content-center text-center">
-                    <a href="../crudphp/tambahchallenge">
-                      <i class="fa fa-plus text-secondary mb-3"></i>
-                      <h5 class=" text-secondary"> Tambah Tantangan </h5>
-                    </a>
-                  </div>
-                </div>
               </div>
+              <?php
+              require_once('koneksi.php');
+
+              if (isset($_GET['id_challenge'])) {
+                $id_challenge = $_GET['id_challenge'];
+
+                $stmt = $koneksi->prepare("SELECT tb_challenge.*, tb_submitchallenge.keterangan, tb_submitchallenge.linkpengumpulan, tb_user.*
+                FROM tb_challenge
+                INNER JOIN tb_submitchallenge ON tb_challenge.id_challenge = tb_submitchallenge.id_challenge
+                INNER JOIN tb_user ON tb_submitchallenge.username = tb_user.username
+                WHERE tb_challenge.id_challenge =?");
+                $stmt->execute([$id_challenge]);
+                $data_challenges = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if ($data_challenges) {
+                  foreach ($data_challenges as $data_challenge) {
+                    ?>
+
+<div class="row">
+  <div class="col-md-190 bg-gradient-danger">
+    <div class="card card-profile card-plain d-flex justify-content-lg-between">
+      <div class="z-index-1">
+        <div class="position-relative w-100">
+          <div class="blur-shadow-avatar">
+            <img class="avatar avatar-xxl shadow-lg" src="<?= $data_challenge['foto_profil']; ?>">
+          </div>
+        </div>
+      </div>
+      <div class="card-body ps-0">
+        <h5 class="mb-0">Alec Thompson</h5>
+        <p class="text-muted">CEO / Co-Founder</p>
+        <p>
+          And I love you like Kanye loves Kanye. We need to restart the human foundation.
+        </p>
+        <button type="button" class="btn-icon-only btn-simple btn btn-lg btn-twitter" data-toggle="tooltip" data-placement="bottom" title="Follow me!">
+          <span class="btn-inner--icon"><i class="fab fa-twitter" aria-hidden="true"></i></span>
+        </button>
+        <button type="button" class="btn-icon-only btn-simple btn btn-lg btn-dribbble" data-toggle="tooltip" data-placement="bottom" title="Follow me!">
+          <span class="btn-inner--icon"><i class="fab fa-dribbble" aria-hidden="true"></i></span>
+        </button>
+        <button type="button" class="btn-icon-only btn-simple btn btn-lg btn-linkedin" data-toggle="tooltip" data-placement="bottom" title="Follow me!">
+          <span class="btn-inner--icon"><i class="fab fa-linkedin" aria-hidden="true"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                     
+                      <?php
+                  }
+                } else {
+                  echo "Data Modul tidak ditemukan.";
+                }
+              } else {
+                echo "ID Modul tidak ditemukan.";
+              }
+              ?>
+              </div>
+            </div>
+
+        </section>
+
+
+
+
+      </main>
+    </div>
+    <footer class="footer pt-3  ">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              ©
+              <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="#" class="font-weight-bold">Coding Camp</a>
 
             </div>
           </div>
         </div>
       </div>
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                ©
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Coding Camp</a>
-
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="#" class="nav-link text-muted">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link text-muted">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link text-muted">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link pe-0 text-muted">License</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
+    </footer>
     </div>
     <?php
     $koneksi = null;
@@ -704,76 +626,15 @@ $userInfo = $_SESSION['USER_INFO'];
       </div>
     </div>
   </div>
-
-
-
+  <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-
-
-    function editchal(id_challenge, soal, id_lvlchallenge) {
-      Swal.fire({
-        title: "Edit Tantangan",
-        icon: "question",
-        html:
-          '<div class="input-group">' +
-          '<input type="hidden" id="id_challengeVal" class="swal2-input w-100" value="' + id_challenge + '"/>' +
-          '<label class="text-lg font-weight-bold m-2" for="judul_materi">Soal</label>' +
-          '<input type="text" id="soalVal" class="swal2-input w-100 m-2" value="' + soal + '" />' +
-          '<div class="input-group">' +
-          '<label class="text-lg font-weight-bold" for="id_lvlchallenge">Level</label>' +
-          '<select style=" border: 1px solid #ccc;" class="swal2-input w-100 m-2" required name="id_lvlchallengeVal" id="id_lvlchallengeVal">' +
-          '<option value="EZ01" ' + (id_lvlchallenge === "EZ01" ? 'selected' : '') + '>Easy</option>' +
-          '<option value="MD01" ' + (id_lvlchallenge === "MD01" ? 'selected' : '') + '>Medium</option>' +
-          '<option value="HR01" ' + (id_lvlchallenge === "HR01" ? 'selected' : '') + '>Hard</option>' +
-          '</select>' +
-          '</div>' +
-          '</div>',
-        showCancelButton: true,
-        confirmButtonText: "Simpan",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const id_challengeVal = document.getElementById('id_challengeVal').value;
-          const soalVal = document.getElementById('soalVal').value;
-          const id_lvlchallengeVal = document.getElementById('id_lvlchallengeVal').value;
-
-          return fetch('../crudphp/proses.php?aksi=editchal', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'id_challenge=' + encodeURIComponent(id_challengeVal) + '&soal=' + encodeURIComponent(soalVal) + '&id_lvlchallenge=' + encodeURIComponent(id_lvlchallengeVal),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              Swal.showValidationMessage(`Request failed: ${error}`);
-            });
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `Data Berhasil Diubah`,
-            icon: 'success'
-          }).then(() => {
-            window.location.href = 'challenge';
-          });
-        }
-      });
-    }
-
-    function confirmDelete(id_challenge) {
+    function confirmDelete(id_materi) {
       Swal.fire({
         title: 'Apakah anda yakin ingin menghapus?',
         text: "Data yang dihapus tidak bisa dipulihkan",
@@ -784,12 +645,37 @@ $userInfo = $_SESSION['USER_INFO'];
         confirmButtonText: 'Iya, Hapus'
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            'Sukses!',
-            'Data berhasil dihapus.',
-            'success'
-          ).then(() => {
-            window.location.href = `../crudphp/proses.php?aksi=hapuschal&id_challenge=${id_challenge}`;
+          $.ajax({
+            type: 'POST',
+            url: 'proses.php?aksi=hapusmateri',
+            data: { id_materi: id_materi },
+            dataType: 'json',
+            success: function (response) {
+              if (response.sukses) {
+                Swal.fire(
+                  'Sukses!',
+                  'Data berhasil dihapus.',
+                  'success'
+                ).then(() => {
+                  location.reload();
+                });
+              } else {
+                Swal.fire(
+                  'Gagal!',
+                  'Terjadi kesalahan saat menghapus data.',
+                  'error'
+                );
+              }
+            },
+            error: function () {
+              Swal.fire(
+                'Sukses!',
+                'Data berhasil dihapus.',
+                'success'
+              ).then(() => {
+                location.reload();
+              });
+            }
           });
         } else {
           Swal.fire(
@@ -813,13 +699,17 @@ $userInfo = $_SESSION['USER_INFO'];
 
         if (result.isConfirmed) {
 
-          window.location.href = "logout";
+          window.location.href = "../pages/logout";
         }
 
       }
       )
     };
   </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
