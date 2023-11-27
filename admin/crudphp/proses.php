@@ -1063,15 +1063,30 @@ if ($_GET['aksi'] == "editchal") {
     $soal = $_POST["soal"];
     $id_lvlchallenge = $_POST["id_lvlchallenge"];
 
-    // Assuming $koneksi represents your database connection
+    $tropi = 0;
+    $koin = 0;
+
+    if ($id_lvlchallenge == "EZ01") {
+        $tropi = 2;
+        $koin = 500;
+    } elseif ($id_lvlchallenge == "MD01") {
+        $tropi = 5;
+        $koin = 750;
+    } elseif ($id_lvlchallenge == "HR01") {
+        $tropi = 10;
+        $koin = 1000;
+    }
 
     $data = array(
         $soal,
-        $id_challenge // Assuming this should come first in the SQL query
+        $tropi,
+        $koin,
+        $id_lvlchallenge,
+        $id_challenge // Assuming this should come last in the SQL query
     );
 
     try {
-        $sql = "UPDATE tb_challenge SET soal=? WHERE id_challenge=?";
+        $sql = "UPDATE tb_challenge SET soal=?, tropi=?, koin=?, id_lvlchallenge=? WHERE id_challenge=?";
         $stmt = $koneksi->prepare($sql);
 
         $stmt->execute($data);

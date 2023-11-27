@@ -469,24 +469,31 @@ $userInfo = $_SESSION['USER_INFO'];
                           data-bs-placement="top" title="Tambah Jenis"></i>
                       </a>
                     </div>
-                    <select class="form-control" required name="id_jenis" id="id_jenis">
-                      <?php
-                      require_once('koneksi.php');
+                    <div class="dropdown w-100">
+                      <button class="btn btn-outline-dark dropdown-toggle text-start w-100" type="button"
+                        id="dropdownMenujenis" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pilihan
+                      </button>
+                      <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                        <?php
+                        require_once('koneksi.php');
 
-                      $query = "SELECT id_jenis, nama_jenis FROM tb_jenischallenge";
-                      $result = $koneksi->query($query);
+                        $query = "SELECT id_jenis, nama_jenis FROM tb_jenischallenge";
+                        $result = $koneksi->query($query);
 
-                      // Periksa apakah hasil query mengembalikan data
-                      if ($result->rowCount() > 0) {
-                        // Loop melalui setiap baris hasil query dan tampilkan nilai dalam option select
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                          $id_jenis = $row['id_jenis'];
-                          $nama_jenis = $row['nama_jenis'];
-                          echo "<option value='$id_jenis'>$nama_jenis</option>";
+                        if ($result->rowCount() > 0) {
+                          while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                            $id_jenis = $row['id_jenis'];
+                            $nama_jenis = $row['nama_jenis'];
+                            echo '<li class="d-flex justify-content-between w-100">';
+                            echo "<a class='dropdown-item' href='#' onclick='changeButtonText(\"$nama_jenis\"); changeInputValue(\"$id_jenis\")'>$nama_jenis</a>";
+                            echo '</li>';
+                          }
                         }
-                      }
-                      ?>
-                    </select>
+                        ?>
+                      </ul>
+                    </div>
+                    <input type="text" class="form-control" required name="id_jenis" id="id_jenis" autocomplete="off">
                   </div>
 
                   <div class="form-group">
@@ -515,22 +522,22 @@ $userInfo = $_SESSION['USER_INFO'];
       </main>
 
       <footer class="footer pt-3  ">
-      <div class="container-fluid">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6 mb-lg-0 mb-4">
-            <div class="copyright text-center text-sm text-muted text-lg-start">
-              ©
-              <script>
-                document.write(new Date().getFullYear())
-              </script>,
-              made with <i class="fa fa-heart"></i> by
-              <a href="#" class="font-weight-bold">Coding Camp</a>
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                ©
+                <script>
+                  document.write(new Date().getFullYear())
+                </script>,
+                made with <i class="fa fa-heart"></i> by
+                <a href="#" class="font-weight-bold">Coding Camp</a>
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
     </div>
     <?php
     $koneksi = null;
@@ -613,56 +620,63 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
- document.getElementById('tambahjenischallenge').addEventListener('click', function () {
-  Swal.fire({
-    title: "Tambah Jenis Challenge",
-    html:
-    '<div class="input-group">' +
-    '<label class="text-lg font-weight-bold" for="judul_materi">Nama Jenis</label>' +
-      '<input type="text" id="nama_jenis" name="nama_jenis" class="swal2-input w-100 m-2" />' +
-      '</div>',
-    showCancelButton: true,
-    confirmButtonText: "Tambah",
-    showLoaderOnConfirm: true,
-    preConfirm: () => {
-      const namaJenis = Swal.getPopup().querySelector('#nama_jenis').value;
-
-      // Validate if the "Nama Jenis" field is not empty
-      if (!namaJenis) {
-        Swal.showValidationMessage('Nama Jenis harus diisi');
-        return false; // Prevent form submission when validation fails
-      }
-
-      return fetch('proses.php?aksi=tambahjenischal', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'nama_jenis=' + encodeURIComponent(namaJenis),
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        })
-        .catch(error => {
-          console.error('Error during fetch:', error);
-          Swal.showValidationMessage(`Request failed: ${error}`);
-        });
-    },
-    allowOutsideClick: () => !Swal.isLoading(),
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: `Berhasil Menambahkan Jenis Challenge`,
-        icon: 'success'
-      }).then(() => {
-        window.location.href = '../crudphp/tambahchallenge';
-      });
+    function changeButtonText(selectedText) {
+      document.getElementById('dropdownMenujenis').innerText = selectedText;
     }
-  });
-});
+
+    function changeInputValue(selectedValue) {
+      document.getElementById('id_jenis').value = selectedValue;
+    }
+    document.getElementById('tambahjenischallenge').addEventListener('click', function () {
+      Swal.fire({
+        title: "Tambah Jenis Challenge",
+        html:
+          '<div class="input-group">' +
+          '<label class="text-lg font-weight-bold" for="judul_materi">Nama Jenis</label>' +
+          '<input type="text" id="nama_jenis" name="nama_jenis" class="swal2-input w-100 m-2" />' +
+          '</div>',
+        showCancelButton: true,
+        confirmButtonText: "Tambah",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const namaJenis = Swal.getPopup().querySelector('#nama_jenis').value;
+
+          // Validate if the "Nama Jenis" field is not empty
+          if (!namaJenis) {
+            Swal.showValidationMessage('Nama Jenis harus diisi');
+            return false; // Prevent form submission when validation fails
+          }
+
+          return fetch('proses.php?aksi=tambahjenischal', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'nama_jenis=' + encodeURIComponent(namaJenis),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error during fetch:', error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Berhasil Menambahkan Jenis Challenge`,
+            icon: 'success'
+          }).then(() => {
+            window.location.href = '../crudphp/tambahchallenge';
+          });
+        }
+      });
+    });
 
     $(document).ready(function () {
       $('#myform').submit(function (event) {

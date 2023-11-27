@@ -713,63 +713,63 @@ $userInfo = $_SESSION['USER_INFO'];
 
   <script>
 
-    
-function editchal(id_challenge, soal, id_lvlchallenge) {
-    Swal.fire({
-      title: "Edit Tantangan",
-      icon: "question",
-      html:
-      '<div class="input-group">' +
-    '<input type="hidden" id="id_challengeVal" class="swal2-input w-100" value="' + id_challenge + '"/>' +
-    '<label class="text-lg font-weight-bold m-2" for="judul_materi">Soal</label>' +
-    '<input type="text" id="soalVal" class="swal2-input w-100 m-2" value="' + soal + '" />' +
-    '<div class="input-group">' +
-    '<label class="text-lg font-weight-bold" for="id_lvlchallenge">Level</label>' +
-    '<select style=" border: 1px solid #ccc;" class="swal2-input w-100 m-2" required name="id_lvlchallengeVal" id="id_lvlchallengeVal">' +
-    '<option value="EZ01" ' + (id_lvlchallenge === "EZ01" ? 'selected' : '') + '>Easy</option>' +
-    '<option value="MD01" ' + (id_lvlchallenge === "MD01" ? 'selected' : '') + '>Medium</option>' +
-    '<option value="HR01" ' + (id_lvlchallenge === "HR01" ? 'selected' : '') + '>Hard</option>' +
-    '</select>' +
-    '</div>' +
-    '</div>',
-    showCancelButton: true,
-    confirmButtonText: "Simpan",
-    showLoaderOnConfirm: true,
-    preConfirm: () => {
-      const id_challengeVal = document.getElementById('id_challengeVal').value;
-      const soalVal = document.getElementById('soalVal').value;
-      const id_lvlchallengeVal = document.getElementById('id_lvlchallengeVal').value;
 
-      return fetch('../crudphp/proses.php?aksi=editchal', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'id_challenge=' + encodeURIComponent(id_challengeVal) + '&soal=' + encodeURIComponent(soalVal) + '&id_lvlchallenge=' + encodeURIComponent(id_lvlchallengeVal),
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        })
-        .catch(error => {
-          console.error('Error during fetch:', error);
-          Swal.showValidationMessage(`Request failed: ${error}`);
-        });
-    },
-    allowOutsideClick: () => !Swal.isLoading(),
-  }).then((result) => {
-    if (result.isConfirmed) {
+    function editchal(id_challenge, soal, id_lvlchallenge) {
       Swal.fire({
-        title: `Data Berhasil Diubah`,
-        icon: 'success'
-      }).then(() => {
-        window.location.href = 'challenge';
+        title: "Edit Tantangan",
+        icon: "question",
+        html:
+          '<div class="input-group">' +
+          '<input type="hidden" id="id_challengeVal" class="swal2-input w-100" value="' + id_challenge + '"/>' +
+          '<label class="text-lg font-weight-bold m-2" for="judul_materi">Soal</label>' +
+          '<input type="text" id="soalVal" class="swal2-input w-100 m-2" value="' + soal + '" />' +
+          '<div class="input-group">' +
+          '<label class="text-lg font-weight-bold" for="id_lvlchallenge">Level</label>' +
+          '<select style=" border: 1px solid #ccc;" class="swal2-input w-100 m-2" required name="id_lvlchallengeVal" id="id_lvlchallengeVal">' +
+          '<option value="EZ01" ' + (id_lvlchallenge === "EZ01" ? 'selected' : '') + '>Easy</option>' +
+          '<option value="MD01" ' + (id_lvlchallenge === "MD01" ? 'selected' : '') + '>Medium</option>' +
+          '<option value="HR01" ' + (id_lvlchallenge === "HR01" ? 'selected' : '') + '>Hard</option>' +
+          '</select>' +
+          '</div>' +
+          '</div>',
+        showCancelButton: true,
+        confirmButtonText: "Simpan",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const id_challengeVal = document.getElementById('id_challengeVal').value;
+          const soalVal = document.getElementById('soalVal').value;
+          const id_lvlchallengeVal = document.getElementById('id_lvlchallengeVal').value;
+
+          return fetch('../crudphp/proses.php?aksi=editchal', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_challenge=' + encodeURIComponent(id_challengeVal) + '&soal=' + encodeURIComponent(soalVal) + '&id_lvlchallenge=' + encodeURIComponent(id_lvlchallengeVal),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error during fetch:', error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Data Berhasil Diubah`,
+            icon: 'success'
+          }).then(() => {
+            window.location.href = 'challenge';
+          });
+        }
       });
     }
-  });
-}
 
     function confirmDelete(id_challenge) {
       Swal.fire({
