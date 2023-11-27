@@ -486,11 +486,10 @@ $userInfo = $_SESSION['USER_INFO'];
                           placeholder="8xx xxxx xxxx"  value="<?= $data_pengguna['no_hp']; ?>" autocomplete="off" oninput="formatNomorHp(this)" maxlength="12">
                       </div>
                     </div>
-
                         <div class="form-group">
                           <label class="text-lg font-weight-bold" for="jenis_kelamin">Jenis Kelamin</label>
                           <select class="form-control" required name="jenis_kelamin" id="jenis_kelamin">
-                            <option value="Laki Laki" <?= ($data_pengguna['jenis_kelamin'] == 'Laki Laki') ? 'selected' : ''; ?>>Laki Laki</option>
+                            <option value="Laki - Laki" <?= ($data_pengguna['jenis_kelamin'] == 'Laki Laki') ? 'selected' : ''; ?>>Laki - Laki</option>
                             <option value="Perempuan" <?= ($data_pengguna['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                           </select>
                         </div>

@@ -533,7 +533,7 @@ $userInfo = $_SESSION['USER_INFO'];
                             <?= $r->jenis_lvl; ?>
                           </span>
                         <?php endif; ?>
-                      </div>  
+                      </div>
                       <h5 style="display: none;">
                         <?= $r->id_challenge; ?>
                       </h5>
@@ -556,15 +556,18 @@ $userInfo = $_SESSION['USER_INFO'];
                         <button type="button" class="btn btn-outline-primary btn-sm mb-0">Koreksi</button>
                         <div class=" text-start m-0">
 
-                          <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                            href="<?= "../crudphp/editakun.php?username=" . $r->username; ?>">
+                          <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="editchal(
+        '<?= $r->id_challenge; ?>',
+        '<?= $r->soal; ?>',
+        '<?= $r->id_lvlchallenge; ?>'
+      )">
                             <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
                               data-bs-placement="top" title="Edit Data"></i>
                           </a>
 
 
                           <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                            onclick="confirmDelete('<?= $r->id_modul; ?>')" href="#">
+                            onclick="confirmDelete('<?= $r->id_challenge; ?>')" href="#">
                             <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
                               data-bs-placement="top" title="Hapus Modul"></i>
                           </a>
@@ -709,7 +712,66 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    function confirmDelete(id_modul) {
+
+    
+function editchal(id_challenge, soal, id_lvlchallenge) {
+    Swal.fire({
+      title: "Edit Tantangan",
+      icon: "question",
+      html:
+      '<div class="input-group">' +
+    '<input type="hidden" id="id_challengeVal" class="swal2-input w-100" value="' + id_challenge + '"/>' +
+    '<label class="text-lg font-weight-bold m-2" for="judul_materi">Soal</label>' +
+    '<input type="text" id="soalVal" class="swal2-input w-100 m-2" value="' + soal + '" />' +
+    '<div class="input-group">' +
+    '<label class="text-lg font-weight-bold" for="id_lvlchallenge">Level</label>' +
+    '<select style=" border: 1px solid #ccc;" class="swal2-input w-100 m-2" required name="id_lvlchallengeVal" id="id_lvlchallengeVal">' +
+    '<option value="EZ01" ' + (id_lvlchallenge === "EZ01" ? 'selected' : '') + '>Easy</option>' +
+    '<option value="MD01" ' + (id_lvlchallenge === "MD01" ? 'selected' : '') + '>Medium</option>' +
+    '<option value="HR01" ' + (id_lvlchallenge === "HR01" ? 'selected' : '') + '>Hard</option>' +
+    '</select>' +
+    '</div>' +
+    '</div>',
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const id_challengeVal = document.getElementById('id_challengeVal').value;
+      const soalVal = document.getElementById('soalVal').value;
+      const id_lvlchallengeVal = document.getElementById('id_lvlchallengeVal').value;
+
+      return fetch('../crudphp/proses.php?aksi=editchal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id_challenge=' + encodeURIComponent(id_challengeVal) + '&soal=' + encodeURIComponent(soalVal) + '&id_lvlchallenge=' + encodeURIComponent(id_lvlchallengeVal),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `Data Berhasil Diubah`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = 'challenge';
+      });
+    }
+  });
+}
+
+    function confirmDelete(id_challenge) {
       Swal.fire({
         title: 'Apakah anda yakin ingin menghapus?',
         text: "Data yang dihapus tidak bisa dipulihkan",
@@ -725,8 +787,7 @@ $userInfo = $_SESSION['USER_INFO'];
             'Data berhasil dihapus.',
             'success'
           ).then(() => {
-            // Lakukan pengalihan ke proses.php dengan parameter aksi=hapusakun&username=username
-            window.location.href = `../crudphp/proses.php?aksi=hapusmodul&id_modul=${id_modul}`;
+            window.location.href = `../crudphp/proses.php?aksi=hapuschal&id_challenge=${id_challenge}`;
           });
         } else {
           Swal.fire(

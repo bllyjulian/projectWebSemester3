@@ -840,8 +840,8 @@ $userInfo = $_SESSION['USER_INFO'];
 
  function konfirtransaksi(id_transaksi, username, id_modul, koin_dipakai) {
   Swal.fire({
-    title: "Silahkan Konfirmasi Transaksi ini",
-    icon: "warning",
+    title: "Silahkan Konfirmasi Transaksi",
+    icon: "question",
     showConfirmButton: true,
     showDenyButton: true,
     confirmButtonColor: "#3085d6",

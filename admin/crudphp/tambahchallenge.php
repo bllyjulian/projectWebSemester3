@@ -618,6 +618,7 @@ $userInfo = $_SESSION['USER_INFO'];
     title: "Tambah Jenis Challenge",
     html:
     '<div class="input-group">' +
+    '<label class="text-lg font-weight-bold" for="judul_materi">Nama Jenis</label>' +
       '<input type="text" id="nama_jenis" name="nama_jenis" class="swal2-input w-100 m-2" />' +
       '</div>',
     showCancelButton: true,

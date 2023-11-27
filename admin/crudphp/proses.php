@@ -1042,8 +1042,61 @@ if ($_GET['aksi'] == "tambahjenischal") {
     echo json_encode($response);
 }
 
+if ($_GET['aksi'] == "hapuschal") {
+    $id = $_GET["id_challenge"];
 
+    // Jalankan query DELETE
+    $stmt = $koneksi->prepare("DELETE FROM tb_challenge WHERE id_challenge = ?");
+    $stmt->execute([$id]);
 
+    if ($stmt->rowCount() > 0) {
+
+    } else {
+        echo "<script>alert('Gagal menghapus data');</script>";
+    }
+
+    // Redirect atau lakukan aksi lain setelah penghapusan
+    echo "<script>window.location='../pages/challenge';</script>";
+}
+if ($_GET['aksi'] == "editchal") {
+    $id_challenge = $_POST["id_challenge"];
+    $soal = $_POST["soal"];
+    $id_lvlchallenge = $_POST["id_lvlchallenge"];
+
+    // Assuming $koneksi represents your database connection
+
+    $data = array(
+        $soal,
+        $id_challenge // Assuming this should come first in the SQL query
+    );
+
+    try {
+        $sql = "UPDATE tb_challenge SET soal=? WHERE id_challenge=?";
+        $stmt = $koneksi->prepare($sql);
+
+        $stmt->execute($data);
+
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil mengedit challenge'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal mengedit challenge'
+            ];
+        }
+    } catch (PDOException $e) {
+        // Handle PDO errors
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
 $koneksi = null;
 
 ?>
