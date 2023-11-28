@@ -534,9 +534,6 @@ $userInfo = $_SESSION['USER_INFO'];
                                   <?= $data_challenge['koin']; ?>
                                 </span>
                               </div>
-
-
-
                               <div class="d-flex mt-2  gap-2">
                                 <a class="text-info mb-0 p-1" href="<?= $data_challenge['linkpengumpulan']; ?>"
                                   target="_blank">
@@ -544,25 +541,22 @@ $userInfo = $_SESSION['USER_INFO'];
                                     title="Koreksi" aria-hidden="true"></i>
                                 </a>
 
-                                <a class="text-success mb-0 p-1" href="#" onclick="konfirchal(
-                                '<?= $data_challenge['id_challenge']; ?>',
-                                '<?= $data_challenge['username']; ?>',
-                                '<?= $data_challenge['tropi']; ?>',
-                                '<?= $data_challenge['koin']; ?>'
-                              )">
+                                <a class="text-success mb-0 p-1" href="#" <?php if ($data_challenge['id_status'] != "1")
+                                  echo "disabled"; ?>
+                                  onclick="<?php if ($data_challenge['id_status'] == "1")
+                                    echo "konfirchal('{$data_challenge['id_challenge']}', '{$data_challenge['username']}', '{$data_challenge['tropi']}', '{$data_challenge['koin']}')"; ?> ">
                                   <i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Setujui" aria-hidden="true"></i>
                                 </a>
 
-                                <a class="text-danger mb-0 p-1" href="#" onclick="tolakchal(
-                                  '<?= $data_challenge['id_challenge']; ?>',
-                                  '<?= $data_challenge['username']; ?>',
-                                  '<?= $data_challenge['tropi']; ?>',
-                                  '<?= $data_challenge['koin']; ?>'
-                                )">
+                                <a class="text-danger mb-0 p-1" href="#" <?php if ($data_challenge['id_status'] != "1")
+                                  echo "disabled"; ?>
+                                  onclick="<?php if ($data_challenge['id_status'] == "1")
+                                    echo "tolakchal('{$data_challenge['id_challenge']}', '{$data_challenge['username']}', '{$data_challenge['tropi']}', '{$data_challenge['koin']}')"; ?>">
                                   <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Tolak" aria-hidden="true"></i>
                                 </a>
+
                               </div>
 
 
