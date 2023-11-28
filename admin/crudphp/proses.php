@@ -1116,10 +1116,10 @@ if ($_GET['aksi'] == "accchal") {
     $username = $_POST["username"];
     $koin = $_POST["koin"];
     $tropi = $_POST["tropi"];
+    $id_challenge = $_POST["id_challenge"];
 
     try {
         if ($koin >= 0) {
-            $id_challenge = $_POST["id_challenge"];
 
             $sql_update_transaksi = "UPDATE tb_submitchallenge SET id_status = 2 WHERE username = ? AND id_challenge=?";
             $stmt_update_transaksi = $koneksi->prepare($sql_update_transaksi);
