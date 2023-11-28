@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Detail Modul
+    Koreksi Tugas
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -105,7 +105,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'tambahmodul.php' || basename($_SERVER['PHP_SELF']) == 'detailmodul.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'course' || basename($_SERVER['PHP_SELF']) == 'course.php' || basename($_SERVER['PHP_SELF']) == 'previewsubbab.php' || basename($_SERVER['PHP_SELF']) == 'koreksitugas.php') ? 'active' : ''; ?>"
             href="../pages/course">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -132,7 +132,7 @@ $userInfo = $_SESSION['USER_INFO'];
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php') ? 'active' : ''; ?>"
+          <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'challenge.php' || basename($_SERVER['PHP_SELF']) == 'detailchallenge.php') ? 'active' : ''; ?>"
             href="../pages/challenge">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -215,7 +215,7 @@ $userInfo = $_SESSION['USER_INFO'];
             <span class="nav-link-text ms-1">Peringkat</span>
           </a>
         </li>
-        <li class="nav-item">   
+        <li class="nav-item">
           <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'transaksi.php') ? 'active' : ''; ?>"
             href="../pages/transaksi">
             <div
@@ -323,7 +323,7 @@ $userInfo = $_SESSION['USER_INFO'];
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Modul</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Detail</h6>
+          <h6 class="font-weight-bolder mb-0">Koreksi</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -337,7 +337,9 @@ $userInfo = $_SESSION['USER_INFO'];
             <li class="nav-item d-flex align-items-center">
               <a href="../pages/profil" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none"> <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?></span>
+                <span class="d-sm-inline d-none">
+                  <?php echo isset($_SESSION['USER_INFO']['username']) ? $_SESSION['USER_INFO']['username'] : ''; ?>
+                </span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -444,195 +446,133 @@ $userInfo = $_SESSION['USER_INFO'];
         <section class="min-vh-100 card mb-4">
           <div class="container p-0">
             <div class="card-body w-100">
+              <div class="row">
+                <h6>Pengumpulan</h6>
+                <?php
+                require_once('../crudphp/koneksi.php');
 
+                $id_modul = $_GET['id_modul'];
+
+                $sql_count = "SELECT COUNT(DISTINCT username) AS total_pengumpulan FROM tb_submittugas WHERE id_modul = ?";
+                $row = $koneksi->prepare($sql_count);
+                $row->execute([$id_modul]);
+                $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_pengumpulan'];
+
+                echo '<p class="text-sm">';
+                echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
+                echo '<span class="font-weight-bold ms-1">' . $total_data . ' Telah terkumpul</span>';
+                echo '</p>';
+                ?>
+              </div>
               <?php
               require_once('koneksi.php');
 
               if (isset($_GET['id_modul'])) {
                 $id_modul = $_GET['id_modul'];
 
-
-                $stmt = $koneksi->prepare("SELECT * FROM tb_modul WHERE id_modul = ?");
+                $stmt = $koneksi->prepare("SELECT tb_modul.*, tb_submittugas.keterangan, tb_submittugas.linkpengumpulan, tb_submittugas.id_status, tb_user.*
+        FROM tb_modul
+        INNER JOIN tb_submittugas ON tb_modul.id_modul = tb_submittugas.id_modul
+        INNER JOIN tb_user ON tb_submittugas.username = tb_user.username
+        WHERE tb_modul.id_modul = ?");
                 $stmt->execute([$id_modul]);
-                $data_modul = $stmt->fetch(PDO::FETCH_ASSOC);
+                $data_modul = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 if ($data_modul) {
-
-                  ?>
-
-
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="col-lg-6 col-7">
-                        <h6>Detail Modul</h6>
-
-                      </div>
-                      <!-- Gambar Modul -->
-                      <div class="position-relative mb-3">
-                        <a class="d-block border-radius-xl" style=" height: 250px;">
-                          <img src="<?= $data_modul['gambar']; ?>" alt="gambar modul" class="img-fluid border-radius-xl"
-                            style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; object-fit: cover; width: 100%; height: 100%;">
-                        </a>
-
-
-
-                      </div>
-                      <div class=" card-body p-0">
-                        <h5 style="display: none;">
-                          <?= $data_modul['id_modul']; ?>
-                        </h5>
-                        <h5>
-                          <?php
-                          $judul = $data_modul['judul'];
-                          echo $judul;
-                          ?>
-                        </h5>
-
-                        <a href="javascript:;">
-                          <p class="text-gradient text-dark mb-2 text-sm">Rp.
-                            <?= $data_modul['harga']; ?>
-                          </p>
-                        </a>
-                        <p id="keterangan" class="mb-4 text-sm">
-                          <?php
-                          $keterangan = $data_modul['keterangan'];
-                          echo $keterangan; // Hapus pembatas karakter
-                          ?>
-                        </p>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                      <div class="col-lg-6 col-7">
-                        <h6>Pengantar</h6>
-
-                      </div>
-                      <span class="text-sm">
-                        <?php
-                        $tujuan_pembelajaran = $data_modul['tujuan'];
-                        echo $tujuan_pembelajaran;
-                        ?>
-                      </span>
-                    </div>
-                    <div class="card-header pb-0 p-3 d-flex justify-content-between align-items-center">
-                      <div>
-                        <h6>Daftar Bab</h6>
-                        <?php
-                        require_once('../crudphp/koneksi.php');
-
-                        if (isset($_GET['id_modul'])) {
-                          $id_modul = $_GET['id_modul'];
-
-                          $stmt = $koneksi->prepare("SELECT COUNT(*) FROM tb_bab WHERE id_modul = ?");
-                          $stmt->execute([$id_modul]);
-                          $total_data = $stmt->fetchColumn();
-
-                          echo '<p class="text-sm">';
-                          echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                          echo '<span class="font-weight-bold ms-1">' . $total_data . ' Bab dimiliki</span>';
-                          echo '</p>';
-                        }
-                        ?>
-
-
-
-                      </div>
-                      <div class="col-lg-6 col-5 my-auto text-end">
-                        <button id="tombolTambah" class="btn bg-gradient-success"><a style="color: white;"
-                            href="#">Tambah</a></button>
-
-                      </div>
-                    </div>
-                    <?php
-                    $stmt_chapters = $koneksi->prepare("SELECT * FROM tb_bab WHERE id_modul = ?");
-                    $stmt_chapters->execute([$id_modul]);
-                    $data_bab = $stmt_chapters->fetchAll(PDO::FETCH_ASSOC);
-
-                    if ($data_bab) {
-                      foreach ($data_bab as $bab) {
-                        echo '<div class="position-relative mb-1">
-        <div class="d-flex justify-content-between align-items-center bg-gradient-primary badge badge-sm mb-2">
-        <span class="text-sm text-center cursor-pointer ms-1">
-        <a class="btn-link text-center text-danger text-sm edit-hapus" href="#" data-bab-id="' . $bab['id_bab'] . '">
-        <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus/Tambah Subbab" style="font-size: 1.5em;"></i>
-      </a> </span>
-            <span class="text-sm text-wrap cursor-pointer w-100 p-3 text-start badge badge-sm  bab-toggle" data-bab-id="' . $bab['id_bab'] . '" style="line-height: 1.5; text-transform: none;">' . $bab['nama_bab'] . '</span>
-        </div>';
-
-                        $stmt_subbabs = $koneksi->prepare("SELECT * FROM tb_subbab WHERE id_bab = ?");
-                        $stmt_subbabs->execute([$bab['id_bab']]);
-                        $data_subbabs = $stmt_subbabs->fetchAll(PDO::FETCH_ASSOC);
-                        if ($data_subbabs) {
-                          echo '<div class="ms-2 me-2 text-start subbab-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out;" data-bab-id="' . $bab['id_bab'] . '">';
-                          foreach ($data_subbabs as $subbab) {
-                            echo '<div class="mb-2">
-                <div class="d-flex align-items-center bg-gradient-secondary badge badge-sm w-100">
-                    <a class="btn-link text-danger text-sm edit-hapussubbab" href="#" data-subbab-id="' . $subbab['id_subbab'] . '">
-                        <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus/Tambah Materi" style="font-size: 1.5em;"></i>
-                    </a>
-                    <span class="text-sm text-start w-100 badge badge-sm text-white text-wrap subbab-toggle" data-subbab-id="' . $subbab['id_subbab'] . '" style="text-transform: none;"> <a style="color:white;" href="previewsubbab.php?id_modul=' . $bab['id_modul'] . '&id_bab=' . $bab['id_bab'] . '&id_subbab=' . $subbab['id_subbab'] . '">' . $subbab['nama_subbab'] . '</a> </span>
-                    <span class="text-sm text-start w-100 badge badge-sm text-white text-wrap pengantarsubbab-toggle" data-subbab-id="' . $subbab['id_subbab'] . '" style=" display: none; text-transform: none;">' . $subbab['pengantar'] . '</span>
-                </div>
-            </div>';
-                          }
-                          echo '</div>';
-                        }
-                        
-                        echo '</div>';
-                      }
-                    }
-                    
-                    else {
-                      echo '<p>Belum ada bab untuk modul ini.</p>';
-                    }
-                    $stmt_tugas = $koneksi->prepare("SELECT * FROM tb_tugasakhir WHERE id_modul = ?");
-                    $stmt_tugas->execute([$id_modul]);
-                    $data_tugas = $stmt_tugas->fetchAll(PDO::FETCH_ASSOC);
-                    
-                    if ($data_tugas) {
-                      foreach ($data_tugas as $tugas) {
-                          echo '<div class="position-relative mb-1">
-                              <div class="d-flex justify-content-between align-items-center bg-gradient-info badge badge-sm mb-2">
-                                  <span class="text-sm text-center cursor-pointer ms-1">
-                                      <a class="btn-link text-center text-danger text-sm edit-hapus-tugas" href="#" data-tugas-id="' . $tugas['id_tugasAkhir'] . '">
-                                          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus/Koreksi" style="font-size: 1.5em;"></i>
-                                      </a>
-                                  </span>
-                                  <span class="text-sm text-wrap cursor-pointer w-100 p-3 text-start badge badge-sm  tugas-toggle" data-tugas-id="' . $tugas['id_tugasAkhir'] . '" style="line-height: 1.5; text-transform: none;">' . $tugas['keterangan'] . '</span>
-                              </div>
-                          </div>';
-                      }
-                  }
-                   else {
-                        echo '<p>Tidak ada tugas untuk modul ini.</p>';
-                    }
-                    
+                  foreach ($data_modul as $data_submittugas) {
                     ?>
+                    <div class="w-100">
+                      <div class="card card-profile card-plain w-100 mb-3">
+                        <div class="row">
+                          <div class="col-lg-3 mb-0">
+                            <a href="javascript:;">
+                              <div class="position-relative">
+                                <div class="blur-shadow-image">
+                                  <img class="w-100 rounded-3 shadow-lg" src="<?= $data_submittugas['foto_profil']; ?>">
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-lg-9 ps-0">
+                            <div class="card-body text-left">
+                              <div class="d-flex align-items-top justify-content-between">
+                                <div class="p-md-0">
+                                  <h5 class="font-weight-bolder mb-0">
+                                    <?= $data_submittugas['username']; ?>
+                                  </h5>
+                                  <p class="category text-info text-gradient">
+                                    <?= $data_submittugas['nama_lengkap']; ?>
+                                  </p>
+                                </div>
+                                <div class="bb">
+                                  <?php if ($data_submittugas['id_status'] == "1"): ?>
+                                    <span class="badge badge-sm bg-gradient-info">
+                                      Menunggu Persetujuan
+                                    </span>
+                                  <?php elseif ($data_submittugas['id_status'] == "2"): ?>
+                                    <span class="badge badge-sm bg-gradient-success">
+                                      Disetujui
+                                    </span>
+                                  <?php elseif ($data_submittugas['id_status'] == "3"): ?>
+                                    <span class="badge badge-sm bg-gradient-danger">
+                                      Ditolak
+                                    </span>
+                                  <?php endif; ?>
+                                </div>
+                              </div>
+                              <p class="mb-3">
+                                "
+                                <?= $data_submittugas['keterangan']; ?>"
+                              </p>
+                              <div class="d-flex mt-2  gap-2">
+                                <a class="text-info mb-0 p-1" href="<?= $data_submittugas['linkpengumpulan']; ?>"
+                                  target="_blank">
+                                  <i class="fas fa-edit text-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Koreksi" aria-hidden="true"></i>
+                                </a>
+
+                                <a class="text-success mb-0 p-1" href="#" <?php if ($data_submittugas['id_status'] != "1")
+                                  echo "disabled"; ?>
+                                  onclick="<?php if ($data_submittugas['id_status'] == "1")
+                                    echo "konfirchal('{$data_submittugas['id_modul']}', '{$data_submittugas['username']}')"; ?> ">
+                                  <i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Setujui" aria-hidden="true"></i>
+                                </a>
+
+                                <a class="text-danger mb-0 p-1" href="#" <?php if ($data_submittugas['id_status'] != "1")
+                                  echo "disabled"; ?>
+                                  onclick="<?php if ($data_submittugas['id_status'] == "1")
+                                    echo "tolakchal('{$data_submittugas['id_modul']}', '{$data_submittugas['username']}')"; ?>">
+                                  <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Tolak" aria-hidden="true"></i>
+                                </a>
+
+                              </div>
+
+
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <?php
+                  }
                 } else {
-                  echo "Data Modul tidak ditemukan.";
+                  echo "Belum ada yang mengumpulkan.";
                 }
               } else {
                 echo "ID Modul tidak ditemukan.";
               }
               ?>
-                            <div class=" w-100">
-                <div class="card card-plain border">
-                  <div class="card-body d-flex flex-column justify-content-center text-center" id="tombolTambahtugas">
-                    <a href="#">
-                      <h5 class=" text-secondary"><i class="fa fa-plus text-secondary mb-0"></i> Tambah Tugas</h5>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              </div>
+
             </div>
+          </div>
+
         </section>
 
 
-        <?php
-        $koneksi = null;
-        ?>
+
 
       </main>
     </div>
@@ -654,6 +594,9 @@ $userInfo = $_SESSION['USER_INFO'];
       </div>
     </footer>
     </div>
+    <?php
+    $koneksi = null;
+    ?>
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -669,11 +612,11 @@ $userInfo = $_SESSION['USER_INFO'];
             <i class="fa fa-close"></i>
           </button>
         </div>
-    
+        <!-- End Toggle Button -->
       </div>
       <hr class="horizontal dark my-1">
       <div class="card-body pt-sm-3 pt-0">
-
+        <!-- Sidebar Backgrounds -->
         <div>
           <h6 class="mb-0">Warna Sidebar</h6>
         </div>
@@ -688,7 +631,7 @@ $userInfo = $_SESSION['USER_INFO'];
             <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
           </div>
         </a>
-
+        <!-- Sidenav Type -->
         <div class="mt-3">
           <h6 class="mb-0">Jenis Sidebar</h6>
           <p class="text-sm">Pilih antara 2 jenis sidenav yang berbeda.</p>
@@ -700,7 +643,7 @@ $userInfo = $_SESSION['USER_INFO'];
             onclick="sidebarType(this)">Putih</button>
         </div>
         <p class="text-sm d-xl-none d-block mt-2">Anda dapat mengubah jenis sidenav hanya pada tampilan desktop.</p>
-
+        <!-- Navbar Fixed -->
         <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
         </div>
@@ -710,16 +653,14 @@ $userInfo = $_SESSION['USER_INFO'];
         <hr class="horizontal dark my-sm-4">
         <a class="btn bg-gradient-dark w-100" href="#">Coding
           Camp</a>
-        <a class="btn btn-outline-dark w-100"
-          href="#">Lihat Dokumentasi</a>
+        <a class="btn btn-outline-dark w-100" href="#">Lihat Dokumentasi</a>
         <div class="w-100 text-center">
           <h6 class="mt-3">Perlu Bantuan?</h6>
-          <a href="https://instagram.com/codingcamp__"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://instagram.com/codingcamp__" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-instagram me-1" aria-hidden="true"></i> Instagram
           </a>
-          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!"
-            class="btn btn-dark mb-0 me-2" target="_blank">
+          <a href="https://wa.me/6282233236128?text=Hallo%2C%20Aku%20butuh%20bantuan!" class="btn btn-dark mb-0 me-2"
+            target="_blank">
             <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp
           </a>
         </div>
@@ -731,38 +672,74 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    //CRUD Tugas
- document.getElementById('tombolTambahtugas').addEventListener('click', function () {
-  let idModul;
 
+    function konfirchal(id_modul, username) {
+      Swal.fire({
+        title: "Apakah Anda yakin ingin konfirmasi?",
+        icon: "warning",
+        html:
+          '<input type="hidden" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
+          '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' ,
+        showCancelButton: true,
+        confirmButtonText: "Simpan",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const id_modulVal = document.getElementById('id_modul').value;
+          const usernameVal = document.getElementById('username').value;
+
+          return fetch('../crudphp/proses.php?aksi=acctugas', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_modul=' + encodeURIComponent(id_modulVal) + '&username=' + encodeURIComponent(usernameVal),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error during fetch:', error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Telah disetujui`,
+            icon: 'success'
+          }).then(() => {
+            window.location.href = '';
+          });
+        }
+      });
+    }
+    function tolakchal(id_modul, username) {
   Swal.fire({
-    title: "Tambah Tugas",
+    title: "Apakah Anda yakin ingin menolak?",
+    icon: "warning",
     html:
-      '<div class="input-group mt-2">' +
-      '<label class="text-lg font-weight-bold mr-2 mb-0" for="keterangan">Soal</label>' +
-      '<input type="text" id="keterangan" class="swal2-input" />' +
-      '</div>' +
-      '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+      '<input type="hidden" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
+      '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>',
     showCancelButton: true,
-    confirmButtonText: "Tambah",
+    confirmButtonText: "Simpan",
     showLoaderOnConfirm: true,
     preConfirm: () => {
-      const keteranganVal = Swal.getPopup().querySelector('#keterangan').value;
-      idModul = Swal.getPopup().querySelector('#idModul').value;
+      const id_modulVal = document.getElementById('id_modul').value;
+      const usernameVal = document.getElementById('username').value;
 
-      // Validate if the "Soal" field is not empty
-      if (!keteranganVal) {
-        Swal.showValidationMessage('Soal harus diisi!');
-        return false; // Prevent form submission when validation fails
-      }
-
-      return fetch('proses.php?aksi=tambah_tugas', {
+      return fetch('../crudphp/proses.php?aksi=tlktugas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'keterangan=' + encodeURIComponent(keteranganVal) + '&id_modul=' + encodeURIComponent(idModul),
+        body: 'id_modul=' + encodeURIComponent(id_modulVal) + '&username=' + encodeURIComponent(usernameVal),
       })
         .then(response => {
           if (!response.ok) {
@@ -778,136 +755,17 @@ $userInfo = $_SESSION['USER_INFO'];
     allowOutsideClick: () => !Swal.isLoading(),
   }).then((result) => {
     if (result.isConfirmed) {
-      if (result.value && result.value.sukses) {
-        Swal.fire({
-          title: `Berhasil Menambahkan Tugas`,
-          icon: 'success'
-        }).then(() => {
-          window.location.href = 'detailmodul.php?id_modul=' + idModul;
-        });
-      } else {
-        Swal.fire({
-          title: 'Gagal Menambahkan Tugas',
-          icon: 'error'
-        });
-      }
-    }
-  });
-});
-document.querySelectorAll('.edit-hapus-tugas').forEach(function (button) {
-    button.addEventListener('click', function () {
-      let idModul;
-        const tugasId = this.getAttribute('data-tugas-id');
-        const soal = this.closest('.position-relative').querySelector('.tugas-toggle').innerText;
-
-        Swal.fire({
-            title: "Silahkan pilih aksi",
-            icon: "warning",
-            showConfirmButton: true,
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            denyButtonColor: "#d33",
-            cancelButtonColor: "#1fb314",
-            confirmButtonText: "Edit",
-            denyButtonText: "Hapus",
-            cancelButtonText: "Koreksi"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                editTugas(tugasId, soal);
-            } else if (result.isDenied) {
-                deleteTugas(tugasId);
-            } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
-                return;
-            } else {
-              window.location.href = 'koreksitugas.php?id_modul=<?= $data_modul['id_modul']; ?>';
-            }
-        });
-    });
-});
-function editTugas(tugasId, soal) {
-    Swal.fire({
-        title: "Edit Tugas",
-        html:
-            '<input type="hidden" id="idTugas" class="swal2-input" value="' + tugasId + '"/>' +
-            '<input type="text" id="soalTugas" class="swal2-input" value="' + soal + '"/>' +
-            '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Simpan",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            const idTugas = Swal.getPopup().querySelector('#idTugas').value;
-            const soalTugas = Swal.getPopup().querySelector('#soalTugas').value;
-            idModul = Swal.getPopup().querySelector('#idModul').value;
-
-            return fetch('proses.php?aksi=edit_tugas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'id_tugasAkhir=' + encodeURIComponent(idTugas) + '&soal=' + encodeURIComponent(soalTugas),
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(response.statusText);
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    console.error('Error during fetch:', error);
-                    Swal.showValidationMessage(`Request failed: ${error}`);
-                });
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: `Berhasil Mengedit Tugas`,
-                icon: 'success'
-            }).then(() => {
-                // Sesuaikan dengan redirect yang Anda inginkan
-                window.location.href = 'detailmodul.php?id_modul=' + idModul;
-            });
-        }
-    });
-}
-function deleteTugas(tugasId) {
-  Swal.fire({
-    title: 'Apakah anda yakin ingin menghapus Tugas?',
-    html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-    text: "Data yang dihapus tidak bisa dipulihkan",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Hapus'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      fetch(`../crudphp/proses.php?aksi=hapustugas&id_tugasAkhir=${tugasId}`)
-        .then(response => response.json())
-        .then(data => {
-          let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
-          if (data.sukses) {
-            Swal.fire('Sukses!', 'Data berhasil dihapus.', 'success').then(() => {
-              window.location.href = 'detailmodul.php?id_modul=' + idModul;
-            });
-          } else {
-            Swal.fire('Gagal Hapus', 'Data tidak dihapus.', 'error');
-          }
-        })
-        .catch(error => {
-          console.error('Error during fetch:', error);
-          let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
-          Swal.fire('Gagal Hapus', 'Data tidak dihapus.', 'error').then(() => {
-            window.location.href = 'detailmodul.php?id_modul=' + idModul;
-          });
-        });
-    } else {
-      Swal.fire('Batal Hapus', 'Data tidak dihapus.', 'info');
+      Swal.fire({
+        title: `Telah ditolak`,
+        icon: 'success'
+      }).then(() => {
+        window.location.href = ''; // Ganti dengan URL yang sesuai
+      });
     }
   });
 }
-   
+
+
     function confirmLogout() {
       Swal.fire({
         title: 'Konfirmasi',
@@ -927,520 +785,11 @@ function deleteTugas(tugasId) {
       )
     };
   </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let idModul;
-      const babToggles = document.querySelectorAll('.bab-toggle');
-      babToggles.forEach(function (toggle) {
-        toggle.addEventListener('click', function () {
-          const babId = toggle.getAttribute('data-bab-id');
-          const subbabId = toggle.getAttribute('data-subbab-id');
-          const subbabContainer = document.querySelector('.subbab-container[data-bab-id="' + babId + '"]');
-          subbabContainer.style.maxHeight = (subbabContainer.style.maxHeight === '0px' || subbabContainer.style.maxHeight === '') ? subbabContainer.scrollHeight + 'px' : '0';
-        });
-      });
-    });
-
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-
-    //CRUD bab
-    document.querySelectorAll('.edit-hapus').forEach(function (button) {
-      button.addEventListener('click', function () {
-        const babId = this.getAttribute('data-bab-id');
-        const namaBab = this.closest('.position-relative').querySelector('.bab-toggle').innerText;
-
-        Swal.fire({
-          title: "Silahkan pilih aksi",
-          icon: "warning",
-          showConfirmButton: true,
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          denyButtonColor: "#d33",
-          cancelButtonColor: "#1fb314",
-          confirmButtonText: "Edit",
-          denyButtonText: "Hapus",
-          cancelButtonText: "Tambah Subbab"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            editBab(babId, namaBab);
-          } else if (result.isDenied) {
-            deleteBab(babId);
-          } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
-            return;
-          } else {
-            tambahsubBab(babId, namaBab);
-          }
-        });
-      });
-    });
-
-    function tambahsubBab(babId, namaBab) {
-      Swal.fire({
-        title: "Tambah Subbab",
-        html:
-          '<input type="hidden" id="idBab" class="swal2-input" value="' + babId + '"/>' +
-          '<p class="text-lg font-weight-bold mb-4">' + namaBab + '</p>' +
-          '<div class="input-group">' +
-          '<label class="text-lg font-weight-bold mr-2 mb-0" for="judulsubBab">Judul Subbab</label>' +
-          '<input type="text" id="judulsubBab" class="swal2-input" />' +
-          '</div>' +
-          '<div class="input-group">' +
-          '<label class="text-lg font-weight-bold mr-2 mb-0" for="pengantarBab">Deskripsi (opsional)</label>' + // Fixed the label here
-          '<input type="text" id="pengantarBab" class="swal2-input" />' +
-          '</div>' +
-          '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Simpan",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const idBab = document.getElementById('idBab').value;
-          const judulsubBab = document.getElementById('judulsubBab').value;
-          const pengantarBab = document.getElementById('pengantarBab').value;
-          idModul = document.getElementById('idModul').value;
-
-          // Validate if the "Judul Subbab" field is not empty
-          if (!judulsubBab) {
-            Swal.showValidationMessage('Judul Subbab harus diisi');
-            return false; // Prevent form submission when validation fails
-          }
-
-          return fetch('proses.php?aksi=tambah_subbab', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_bab=' + encodeURIComponent(pengantarBab) + '&id_modul=' + encodeURIComponent(idModul),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              Swal.showValidationMessage(`Request failed: ${error}`);
-            });
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `Berhasil Menambah Subbab`,
-            icon: 'success',
-          }).then(() => {
-            window.location.href = 'detailmodul.php?id_modul=' + idModul;
-          });
-        }
-      });
-    }
 
 
-    function editBab(babId, namaBab) {
-      Swal.fire({
-        title: "Edit Bab",
-        html:
-          '<input type="hidden" id="idBab" class="swal2-input" value="' + babId + '"/>' +
-          '<input type="text" id="judulBab" class="swal2-input" value="' + namaBab + '"/>' +
-          '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Simpan",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const idBab = Swal.getPopup().querySelector('#idBab').value;
-          const judulBab = Swal.getPopup().querySelector('#judulBab').value;
-          idModul = Swal.getPopup().querySelector('#idModul').value;
-
-          // Validate if the "Judul Bab" field is not empty
-          if (!judulBab) {
-            Swal.showValidationMessage('Judul bab harus diisi');
-            return false; // Prevent form submission when validation fails
-          }
-
-          return fetch('proses.php?aksi=edit_bab', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_bab=' + encodeURIComponent(judulBab) + '&id_modul=' + encodeURIComponent(idModul),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              Swal.showValidationMessage(`Request failed: ${error}`);
-            });
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `Berhasil Mengedit Bab`,
-            icon: 'success'
-          }).then(() => {
-            window.location.href = 'detailmodul.php?id_modul=' + idModul;
-          });
-        }
-      });
-    }
-
-    function deleteBab(babId) {
-      Swal.fire({
-        title: 'Apakah anda yakinn ingin menghapus Bab?',
-        html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Hapus'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          fetch(`../crudphp/proses.php?aksi=hapusbab&id_bab=${babId}`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.sukses) {
-                let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
-                Swal.fire(
-                  'Sukses!',
-                  'Data berhasil dihapus.',
-                  'success'
-                ).then(() => {
-                  window.location.href = 'detailmodul.php?id_modul=' + idModul;
-                });
-              } else {
-                Swal.fire(
-                  'Gagal Hapus',
-                  'Data tidak dihapus.',
-                  'error'
-                );
-              }
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
-              Swal.fire(
-                'Sukses!',
-                'Data berhasil dihapus.',
-                'success'
-              ).then(() => {
-                window.location.href = 'detailmodul.php?id_modul=' + idModul;
-              });
-            });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
-        }
-      });
-    }
-
-
-    //CRUD subbab
-    document.querySelectorAll('.edit-hapussubbab').forEach(function (button) {
-      button.addEventListener('click', function () {
-        // const babId = this.getAttribute('data-bab-id');
-        const babId = this.closest('.position-relative').querySelector('.bab-toggle').getAttribute('data-bab-id');
-        const subbabId = this.getAttribute('data-subbab-id');
-        const namaBab = this.closest('.position-relative').querySelector('.bab-toggle').innerText;
-        const subbabToggle = document.querySelector('.subbab-toggle[data-subbab-id="' + subbabId + '"]');
-        const namasubBab = subbabToggle.innerText;
-        const pengantarSubbab = this.closest('.position-relative').querySelector('.pengantarsubbab-toggle[data-subbab-id="' + subbabId + '"]').innerText;
-
-        Swal.fire({
-          title: "Silahkan pilih aksi",
-          icon: "warning",
-          showConfirmButton: true,
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          denyButtonColor: "#d33",
-          cancelButtonColor: "#1fb314",
-          confirmButtonText: "Edit",
-          denyButtonText: "Hapus",
-          cancelButtonText: "Tambah Materi"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            editsubBab(subbabId, babId, namasubBab, pengantarSubbab);
-          } else if (result.isDenied) {
-            deletesubBab(subbabId);
-          } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
-            return;
-          } else {
-            const idModulElement = document.querySelector('h5[style="display: none;"]');
-            const idModul = idModulElement.textContent.trim();
-            window.location.href = 'tambahmateri.php?id_modul=' + idModul + '&id_bab=' + babId + '&id_subbab=' + subbabId;
-          }
-        });
-      });
-    });
-
-    function tambahmateri(babId, namaBab) {
-      Swal.fire({
-        title: "Tambah Subbab",
-        html:
-          '<input type="text" id="idBab" class="swal2-input" value="' + babId + '"/>' +
-          '<p class="text-lg font-weight-bold mb-4">' + namasubBab + '</p>' +
-          '<div class="input-group">' +
-          '<label class="text-lg font-weight-bold mr-2 mb-0" for="judulsubBab">Judul Subbab</label>' +
-          '<input type="text" id="judulsubBab" class="swal2-input" />' +
-          '</div>' +
-          '<div class="input-group">' +
-          '<label class="text-lg font-weight-bold mr-2 mb-0" for="pengantarBab">Deskripsi(opsional)</label>' +
-          '<input type="text" id="pengantarBab" class="swal2-input" />' +
-          '</div>' +
-          '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Simpan",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const idBab = document.getElementById('idBab').value;
-          const judulsubBab = document.getElementById('judulsubBab').value;
-          const pengantarBab = document.getElementById('pengantarBab').value;
-          idModul = document.getElementById('idModul').value;
-
-          // Validate if the "Judul Subbab" field is not empty
-          if (!judulsubBab) {
-            Swal.showValidationMessage('Judul Subbab harus diisi');
-            return false; // Prevent form submission when validation fails
-          }
-
-          return fetch('proses.php?aksi=tambah_subbab', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_bab=' + encodeURIComponent(pengantarBab) + '&id_modul=' + encodeURIComponent(idModul),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              Swal.showValidationMessage(`Request failed: ${error}`);
-            });
-        },
-
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `Berhasil Menambah Subbab`,
-            icon: 'success'
-          }).then(() => {
-            window.location.href = 'tambahmateri.php?id_modul=' + idModul;
-          });
-        }
-      });
-    }
-
-    function editsubBab(subbabId, babId, namasubBab, pengantarSubbab) {
-      Swal.fire({
-        title: "Edit Subbab",
-        html:
-          '<input type="hidden" id="subbabId" class="swal2-input" value="' + subbabId + '"/>' +
-          '<input type="hidden" id="babId" class="swal2-input" value="' + babId + '"/>' +
-          '<input type="text" id="judulsubBab" class="swal2-input" value="' + namasubBab + '"/>' +
-          '<input type="text" id="pengantarsubBab" class="swal2-input" value="' + pengantarSubbab + '"/>' +
-          '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Simpan",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const subbabId = Swal.getPopup().querySelector('#subbabId').value;
-          const babId = Swal.getPopup().querySelector('#babId').value;
-          const judulsubBab = Swal.getPopup().querySelector('#judulsubBab').value;
-          const pengantarSubbab = Swal.getPopup().querySelector('#pengantarsubBab').value;
-          idModul = Swal.getPopup().querySelector('#idModul').value;
-
-          // Validate if the "Judul Subbab" field is not empty
-          if (!judulsubBab) {
-            Swal.showValidationMessage('Judul subbab harus diisi');
-            return false; // Prevent form submission when validation fails
-          }
-
-          return fetch('proses.php?aksi=edit_subbab', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'id_subbab=' + encodeURIComponent(subbabId) + '&id_bab=' + encodeURIComponent(babId) + '&nama_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_subbab=' + encodeURIComponent(pengantarSubbab) + '&id_modul=' + encodeURIComponent(idModul),
-          })
-
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              Swal.showValidationMessage(`Request failed: ${error}`);
-            });
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `Berhasil Mengedit Subbab`,
-            icon: 'success'
-          }).then(() => {
-            window.location.href = 'detailmodul.php?id_modul=' + idModul;
-          });
-        }
-      });
-    }
-    function deletesubBab(subbabId) {
-      Swal.fire({
-        title: 'Apakah hhhanda yakin ingin menghapus?',
-        html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Hapus'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          let idModul = document.querySelector('#idModul').value;
-
-          fetch(`../crudphp/proses.php?aksi=hapussubbab&id_subbab=${subbabId}`, {
-            method: 'POST',  // Pastikan ini menggunakan metode POST
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'id_subbab=' + encodeURIComponent(subbabId),
-          })
-
-            .then(response => response.json())
-            .then(data => {
-              if (data.sukses) {
-                Swal.fire(
-                  'Sukses!',
-                  'Data berhasil dihapus.',
-                  'success'
-                ).then(() => {
-                  window.location.href = 'detailmodul.php?id_modul=' + idModul;
-                });
-              } else {
-                Swal.fire(
-                  'Gagal Hapus',
-                  'Data tidak dihapus.',
-                  'error'
-                );
-              }
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
-              Swal.fire(
-                'Sukses!',
-                'Data berhasil dihapus.',
-                'success'
-              ).then(() => {
-                window.location.href = 'detailmodul.php?id_modul=' + idModul;
-              });
-            });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
-        }
-      });
-    }
-
-  </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  <script>
-    document.getElementById('tombolTambah').addEventListener('click', function () {
-      let idModul;
 
-      Swal.fire({
-        title: "Tambah Bab",
-        html:
-          '<input type="text" id="judulBab" class="swal2-input" />' +
-          '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
-        showCancelButton: true,
-        confirmButtonText: "Tambah",
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const judulBab = Swal.getPopup().querySelector('#judulBab').value;
-          idModul = Swal.getPopup().querySelector('#idModul').value;
-
-          // Validate if the "Judul Bab" field is not empty
-          if (!judulBab) {
-            Swal.showValidationMessage('Judul bab harus diisi');
-            return false; // Prevent form submission when validation fails
-          }
-
-          return fetch('proses.php?aksi=tambah_bab', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'judul_bab=' + encodeURIComponent(judulBab) + '&id_modul=' + encodeURIComponent(idModul),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('Error during fetch:', error);
-              Swal.showValidationMessage(`Request failed: ${error}`);
-            });
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `Berhasil Menambahkan Bab`,
-            icon: 'success'
-          }).then(() => {
-            window.location.href = 'detailmodul.php?id_modul=' + idModul;
-          });
-        }
-      });
-    });
-    function confirmLogout() {
-      Swal.fire({
-        title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin keluar?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Ya',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-
-        if (result.isConfirmed) {
-
-          window.location.href = "../pages/logout";
-        }
-
-      }
-      )
-    };
-  </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

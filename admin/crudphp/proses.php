@@ -1297,6 +1297,66 @@ if ($_GET['aksi'] == "hapustugas") {
     // Kembalikan respons JSON
     echo json_encode($response);
 }
+if ($_GET['aksi'] == "acctugas") {
+    $username = $_POST["username"];
+    $id_modul = $_POST["id_modul"];
+
+    try {
+        $sql_update_tugas = "UPDATE tb_submittugas SET id_status = 2 WHERE username = ? AND id_modul=?";
+        $stmt_update_tugas = $koneksi->prepare($sql_update_tugas);
+        $stmt_update_tugas->execute([$username, $id_modul]);
+
+        if ($stmt_update_tugas->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Status tugas berhasil diubah.'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal memperbarui status tugas.'
+            ];
+        }
+    } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+if ($_GET['aksi'] == "tlktugas") {
+    $username = $_POST["username"];
+    $id_modul = $_POST["id_modul"];
+
+    try {
+        $sql_update_tugas = "UPDATE tb_submittugas SET id_status = 3 WHERE username = ? AND id_modul=?";
+        $stmt_update_tugas = $koneksi->prepare($sql_update_tugas);
+        $stmt_update_tugas->execute([$username, $id_modul]);
+
+        if ($stmt_update_tugas->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Status tugas berhasil diubah.'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal memperbarui status tugas.'
+            ];
+        }
+    } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+
+
 
 $koneksi = null;
 
