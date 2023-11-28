@@ -9,18 +9,27 @@ if (empty($_GET)) {
         sc.username, 
         sc.id_challenge, 
         sc.id_status,
+        tc.status_submit,
         c.soal,
         c.tropi,
         c.koin,
         c.id_challenge,
         c.kuota,
         c.id_jenis,
+        jc.nama_jenis,
         c.id_lvlchallenge,
+        lc.jenis_lvl,
         c.timestamp
     FROM 
         tb_submitchallenge AS sc
     JOIN 
-        tb_challenge AS c ON sc.id_challenge = c.id_challenge");
+        tb_challenge AS c ON sc.id_challenge = c.id_challenge
+    LEFT JOIN 
+        tb_jenischallenge AS jc ON c.id_jenis = jc.id_jenis
+    LEFT JOIN 
+        tb_lvlchallenge AS lc ON c.id_lvlchallenge = lc.id_lvlchallenge
+    LEFT JOIN 
+        tb_statuschallenge AS tc ON sc.id_status = tc.id_status");
 
     $result = array();
     while ($row = mysqli_fetch_assoc($query)) {
@@ -30,12 +39,15 @@ if (empty($_GET)) {
             'username' => $row['username'],
             'id_challenge' => $row['id_challenge'],
             'id_status' => $row['id_status'],
+            'status_submit' => $row['status_submit'],
             'soal' => $row['soal'],
             'tropi' => $row['tropi'],
             'koin' => $row['koin'],
             'kuota' => $row['kuota'],
             'id_jenis' => $row['id_jenis'],
+            'nama_jenis' => $row['nama_jenis'],
             'id_lvlchallenge' => $row['id_lvlchallenge'],
+            'jenis_lvl' => $row['jenis_lvl'],
             'timestamp' => $row['timestamp']
         );
     }
@@ -50,18 +62,27 @@ if (empty($_GET)) {
             sc.username, 
             sc.id_challenge, 
             sc.id_status,
+            tc.status_submit,
             c.soal,
             c.tropi,
             c.koin,
             c.id_challenge,
             c.kuota,
             c.id_jenis,
+            jc.nama_jenis,
             c.id_lvlchallenge,
+            lc.jenis_lvl,
             c.timestamp
         FROM 
             tb_submitchallenge AS sc
         JOIN 
             tb_challenge AS c ON sc.id_challenge = c.id_challenge
+        LEFT JOIN 
+            tb_jenischallenge AS jc ON c.id_jenis = jc.id_jenis
+        LEFT JOIN 
+            tb_lvlchallenge AS lc ON c.id_lvlchallenge = lc.id_lvlchallenge
+        LEFT JOIN 
+            tb_statuschallenge AS tc ON sc.id_status = tc.id_status
         WHERE 
             sc.username='$username' AND sc.id_status='$id_status'");
 
@@ -77,18 +98,27 @@ if (empty($_GET)) {
             sc.username, 
             sc.id_challenge, 
             sc.id_status,
+            tc.status_submit,
             c.soal,
             c.tropi,
             c.koin,
             c.id_challenge,
             c.kuota,
             c.id_jenis,
+            jc.nama_jenis,
             c.id_lvlchallenge,
+            lc.jenis_lvl,
             c.timestamp
         FROM 
             tb_submitchallenge AS sc
         JOIN 
             tb_challenge AS c ON sc.id_challenge = c.id_challenge
+        LEFT JOIN 
+            tb_jenischallenge AS jc ON c.id_jenis = jc.id_jenis
+        LEFT JOIN 
+            tb_lvlchallenge AS lc ON c.id_lvlchallenge = lc.id_lvlchallenge
+        LEFT JOIN 
+            tb_statuschallenge AS tc ON sc.id_status = tc.id_status
         WHERE 
             sc.username='$username'");
 
