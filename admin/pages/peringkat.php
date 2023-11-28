@@ -579,26 +579,7 @@ $userInfo = $_SESSION['USER_INFO'];
                   </tbody>
                 </table>
               </div>
-              <div class="card-header pb-0">
 
-                <div class="row">
-                  <div class="col-lg-6 col-7">
-                    <!-- filter rencananya -->
-                  </div>
-                  <div class="col-lg-6 my-auto text-end">
-                    <div class="text-end p-0 border-1"> <!-- Container untuk tombol Next dan Previous -->
-                      <?php if ($current_page > 1): ?>
-                        <a href="?page=<?= $current_page - 1 ?>" class="btn btn-outline-dark">&lt; Previous</a>
-                      <?php endif; ?>
-
-                      <a href="?page=<?= $current_page + 1 ?>" class="btn btn-dark">Next &gt;</a>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
 
             </div>
           </div>
