@@ -456,27 +456,13 @@ $userInfo = $_SESSION['USER_INFO'];
 
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Akun Pengguna</h6>
-                  <?php
-                  require_once('../crudphp/koneksi.php');
-
-
-                  $sql = "SELECT COUNT(*) FROM tb_user"; // Menghitung jumlah data tanpa memuatnya
-                  $row = $koneksi->prepare($sql);
-                  $row->execute();
-                  $total_data = $row->fetchColumn();
-                  // Menampilkan total akun terdaftarr
-                  echo '<p class="text-sm">';
-                  echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
-                  echo '<span class="font-weight-bold ms-1">' . $total_data . ' Akun terdaftar</span>';
-                  echo '</p>';
-                  ?>
+                  <h6>                        <span>
+                          <i class="fas fa-trophy text-warning"></i>
+                     
+                        </span>Peringkat Pengguna</h6>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                  <button class="btn bg-gradient-dark"><a class="text-white" href="../pages/akunMentor"><i
-                        class="fa fa-filter " aria-hidden="true"></i></a></button>
-                  <button class="btn bg-gradient-success"><a style="color: white;"
-                      href="../crudphp/tambahakun.php">Tambah</a></button>
+
 
                 </div>
 
@@ -487,20 +473,17 @@ $userInfo = $_SESSION['USER_INFO'];
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0" id="tabelakun">
                   <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Email
+                    <tr class="ms-3">
+                    <th
+                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ms-3">
+                        NO
                       </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama
-                        Lengkap<br>No hp</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username<br>Nama lengkap
+                      </th>
+
                       <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Hak Akses</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Jenis Kelamin</th>
-                      <th
-                        class="text-uppercase text-lg-start text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        AKsi
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 pe-0">
+                        tropi
                       </th>
 
                     </tr>
@@ -511,10 +494,13 @@ $userInfo = $_SESSION['USER_INFO'];
 
 
                     // Menentukan jumlah item per halaman
-                    $items_per_page = 7;
+                    $items_per_page = 100;
 
                     // Menghitung total data
-                    $sql = "SELECT * FROM tb_user ORDER BY timestamp DESC";
+                    $sql = "SELECT tb_user.username, tb_user.nama_lengkap, tb_tropi.tropi, tb_tropi.tanggal
+                    FROM tb_user
+                    LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username
+                    ORDER BY tb_tropi.tropi DESC";
                     $row = $koneksi->prepare($sql);
                     $row->execute();
                     $hasil = $row->fetchAll(PDO::FETCH_OBJ);
@@ -527,17 +513,28 @@ $userInfo = $_SESSION['USER_INFO'];
                     $start_index = ($current_page - 1) * $items_per_page;
 
                     // Mengambil data dengan membatasi jumlah
-                    $sql = "SELECT * FROM tb_user ORDER BY timestamp DESC LIMIT $start_index, $items_per_page";
+                    $sql = "SELECT tb_user.username, tb_user.nama_lengkap, tb_user.foto_profil, tb_tropi.tropi, tb_tropi.tanggal
+                    FROM tb_user
+                    LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username
+                    ORDER BY tb_tropi.tropi DESC LIMIT $start_index, $items_per_page";
                     $row = $koneksi->prepare($sql);
                     $row->execute();
                     $hasil = $row->fetchAll(PDO::FETCH_OBJ);
                     $no = $start_index + 1; // Inisialisasi nomor
+                    $nomor = 1;
+                    
                     foreach ($hasil as $r) {
-
+                     
                       ?>
 
                       <tr>
+                        <td class="w-2">
+                          <div class="ms-3">
+
+                            <?= $nomor++ ?> </td>
+                          </div>
                         <td>
+                          
                           <div class="d-flex px-2 py-1">
                             <div>
                               <img src="<?= $r->foto_profil; ?>" class="avatar avatar-sm me-3" alt="<?= $r->username; ?>">
@@ -547,54 +544,22 @@ $userInfo = $_SESSION['USER_INFO'];
                                 <?= $r->username; ?>
                               </h6>
                               <p class="text-xs text-secondary mb-0">
-                                <?= $r->email; ?>
+                                <?= $r->nama_lengkap; ?>
                               </p>
                             </div>
                           </div>
                         </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">
-                            <?= $r->nama_lengkap; ?>
-                          </p>
-                          <p class="text-xs text-secondary mb-0">
-                            <?= $r->no_hp; ?>
-                          </p>
-                        <td class="align-middle text-lg-start text-sm">
-                          <?php if ($r->id_lvl == "SPA01"): ?>
-                            <span class="badge badge-sm bg-gradient-primary">Super Admin</span>
-                          <?php elseif ($r->id_lvl == "ADM01"): ?>
-                            <span class="badge badge-sm bg-gradient-success">Admin</span>
-                          <?php elseif ($r->id_lvl == "MTR01"): ?>
-                            <span class="badge badge-sm bg-gradient-info">Mentor</span>
-                          <?php elseif ($r->id_lvl == "USR01"): ?>
-                            <span class="badge badge-sm bg-gradient-warning">Pengguna</span>
-                          <?php else: ?>
-                            <span class="badge badge-sm bg-gradient-primary">
-                              <?= $r->id_l; ?>
-                            </span>
-                          <?php endif; ?>
-                        </td>
+                    
 
 
-                        <td class="align-middle text-lg-start">
-                          <span class="text-secondary text-xs font-weight-bold">
-                            <?= $r->jenis_kelamin; ?>
-                          </span>
-                          <!-- <span class="text-secondary text-xs font-weight-bold"><?= $r->timestamp; ?></span> -->
-                        </td>
-                        <td class="align-middle text-lg-start">
-                          <div class=" text-start m-0">
 
-                            <a class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/editakun.php?username=" . $r->username; ?>">
-                              <i class="fas fa-pencil-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit Data"></i>
-                            </a>
-                            <a class="btn-link text-danger text-gradient mb-0 text-sm"
-                              onclick="confirmDelete('<?= $r->username; ?>')" href="#">
-                              <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Hapus Data"></i>
-                            </a>
+                        <td class="w-10">
+                          <div class="ps-3 text-start">
+
+                          <span>
+                          <i class="fas fa-trophy text-warning"></i>
+                     
+                        </span> <?= $r->tropi; ?>
 
 
                           </div>
