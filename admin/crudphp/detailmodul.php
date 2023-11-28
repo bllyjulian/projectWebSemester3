@@ -820,7 +820,7 @@ document.querySelectorAll('.edit-hapus-tugas').forEach(function (button) {
             } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
                 return;
             } else {
-              window.location.href = 'koreksitugas.php?id_modul=<?= $data_modul['id_modul']; ?>';
+                window.location.href = 'koreksitugas.php?id_modul=<?= $data_modul['id_modul']; ?>&id_tugasAkhir='+tugasId;
             }
         });
     });

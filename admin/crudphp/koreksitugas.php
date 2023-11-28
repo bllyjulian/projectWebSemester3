@@ -452,12 +452,13 @@ $userInfo = $_SESSION['USER_INFO'];
                 require_once('../crudphp/koneksi.php');
 
                 $id_modul = $_GET['id_modul'];
-
-                $sql_count = "SELECT COUNT(DISTINCT username) AS total_pengumpulan FROM tb_submittugas WHERE id_modul = ?";
+                $id_tugas = $_GET['id_tugasAkhir'];
+                
+                $sql_count = "SELECT COUNT(DISTINCT username) AS total_pengumpulan FROM tb_submittugas WHERE id_modul = ? AND id_tugasAkhir=?";
                 $row = $koneksi->prepare($sql_count);
-                $row->execute([$id_modul]);
+                $row->execute([$id_modul, $id_tugas]); // Tambahkan parameter $id_tugas di sini
                 $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_pengumpulan'];
-
+                
                 echo '<p class="text-sm">';
                 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
                 echo '<span class="font-weight-bold ms-1">' . $total_data . ' Telah terkumpul</span>';
@@ -467,16 +468,20 @@ $userInfo = $_SESSION['USER_INFO'];
               <?php
               require_once('koneksi.php');
 
-              if (isset($_GET['id_modul'])) {
+              if (isset($_GET['id_modul']) && isset($_GET['id_tugasAkhir'])) {
                 $id_modul = $_GET['id_modul'];
-
-                $stmt = $koneksi->prepare("SELECT tb_modul.*, tb_submittugas.keterangan, tb_submittugas.linkpengumpulan, tb_submittugas.id_status, tb_user.*
-        FROM tb_modul
-        INNER JOIN tb_submittugas ON tb_modul.id_modul = tb_submittugas.id_modul
-        INNER JOIN tb_user ON tb_submittugas.username = tb_user.username
-        WHERE tb_modul.id_modul = ?");
-                $stmt->execute([$id_modul]);
-                $data_modul = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $id_tugas = $_GET['id_tugasAkhir'];
+            
+                $stmt = $koneksi->prepare("SELECT tb_modul.*, tb_submittugas.keterangan AS keterangantugas, tb_submittugas.linkpengumpulan, tb_statustugas.id_status, tb_user.*
+                FROM tb_modul
+                INNER JOIN tb_tugasakhir ON tb_modul.id_modul = tb_tugasakhir.id_modul
+                INNER JOIN tb_submittugas ON tb_tugasakhir.id_tugasAkhir = tb_submittugas.id_tugasAkhir
+                INNER JOIN tb_statustugas ON tb_submittugas.id_status = tb_statustugas.id_status
+                INNER JOIN tb_user ON tb_submittugas.username = tb_user.username
+                WHERE tb_modul.id_modul = ? AND tb_tugasakhir.id_tugasAkhir = ?");
+        
+            $stmt->execute([$id_modul, $id_tugas]);
+            $data_modul = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 if ($data_modul) {
                   foreach ($data_modul as $data_submittugas) {
@@ -522,7 +527,7 @@ $userInfo = $_SESSION['USER_INFO'];
                               </div>
                               <p class="mb-3">
                                 "
-                                <?= $data_submittugas['keterangan']; ?>"
+                                <?= $data_submittugas['keterangantugas']; ?>"
                               </p>
                               <div class="d-flex mt-2  gap-2">
                                 <a class="text-info mb-0 p-1" href="<?= $data_submittugas['linkpengumpulan']; ?>"
