@@ -1181,7 +1181,7 @@ if ($_GET['aksi'] == "tlkchal") {
             $stmt_update_challenge = $koneksi->prepare($sql_update_challenge);
             $stmt_update_challenge->execute([$username, $id_challenge]); // Tambahkan $id_challenge ke execute
 
-            if ($stmt_update_challenge->rowCount() > 0) {
+            if ($stmt_update_challenge->rowCount() >= 0) {
                 $response = [
                     'sukses' => true,
                     'pesan' => 'Status challenge berhasil diubah menjadi 3.'
