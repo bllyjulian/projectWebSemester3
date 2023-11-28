@@ -507,10 +507,10 @@ $userInfo = $_SESSION['USER_INFO'];
                                 <div class="bb">
                                   <?php if ($data_challenge['id_status'] == "1"): ?>
                                     <span class="badge badge-sm bg-gradient-info">
-                                      Diproses
+                                      Menunggu Persetujuan
                                     </span>
                                   <?php elseif ($data_challenge['id_status'] == "2"): ?>
-                                    <span class="badge badge-sm bg-gradient-warning">
+                                    <span class="badge badge-sm bg-gradient-success">
                                       Disetujui
                                     </span>
                                   <?php elseif ($data_challenge['id_status'] == "3"): ?>
@@ -520,8 +520,7 @@ $userInfo = $_SESSION['USER_INFO'];
                                   <?php endif; ?>
                                 </div>
                               </div>
-
-                              <p class="mb-4 h-10 bg-gradient-info">
+                              <p class="mb-3">
                                 "
                                 <?= $data_challenge['keterangan']; ?>"
                               </p>
@@ -539,12 +538,8 @@ $userInfo = $_SESSION['USER_INFO'];
 
 
                               <div class="d-flex mt-2  gap-2">
-                                <a class="text-info mb-0 p-1" href="#" onclick="konfirchal(
-                                '<?= $data_challenge['id_challenge']; ?>',
-                                '<?= $data_challenge['username']; ?>',
-                                '<?= $data_challenge['tropi']; ?>',
-                                '<?= $data_challenge['koin']; ?>'
-                              )">
+                                <a class="text-info mb-0 p-1" href="<?= $data_challenge['linkpengumpulan']; ?>"
+                                  target="_blank">
                                   <i class="fas fa-edit text-info" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Koreksi" aria-hidden="true"></i>
                                 </a>
@@ -559,7 +554,7 @@ $userInfo = $_SESSION['USER_INFO'];
                                     title="Setujui" aria-hidden="true"></i>
                                 </a>
 
-                                <a class="text-danger mb-0 p-1" href="#" onclick="konfirchal(
+                                <a class="text-danger mb-0 p-1" href="#" onclick="tolakchal(
                                   '<?= $data_challenge['id_challenge']; ?>',
                                   '<?= $data_challenge['username']; ?>',
                                   '<?= $data_challenge['tropi']; ?>',
@@ -699,28 +694,28 @@ $userInfo = $_SESSION['USER_INFO'];
 
     function konfirchal(id_challenge, username, tropi, koin) {
       Swal.fire({
-        title: "Apakah Anda yakin ingin konfirmasi transaksi?",
+        title: "Apakah Anda yakin ingin konfirmasi?",
         icon: "warning",
         html:
-          '<input type="text" id="id_challenge" class="swal2-input" value="' + id_challenge + '"/>' +
-          '<input type="text" id="username" class="swal2-input" value="' + username + '"/>' +
-          '<input type="text" id="tropi" class="swal2-input" value="' + tropi + '" readonly/>' +
-          '<input type="text" id="koin" class="swal2-input" value="' + koin + '"/>',
+          '<input type="hidden" id="id_challenge" class="swal2-input" value="' + id_challenge + '"/>' +
+          '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' +
+          '<input type="hidden" id="tropi" class="swal2-input" value="' + tropi + '" readonly/>' +
+          '<input type="hidden" id="koin" class="swal2-input" value="' + koin + '"/>',
         showCancelButton: true,
         confirmButtonText: "Simpan",
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          const id_transaksiVal = document.getElementById('id_transaksi').value;
+          const id_challengeVal = document.getElementById('id_challenge').value;
           const usernameVal = document.getElementById('username').value;
-          const idModul = document.getElementById('idModul').value;
-          const koindipakaiVal = document.getElementById('koindipakai').value;
+          const tropiVal = document.getElementById('tropi').value;
+          const koinVal = document.getElementById('koin').value;
 
-          return fetch('../crudphp/proses.php?aksi=transaksisetuju', {
+          return fetch('../crudphp/proses.php?aksi=accchal', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'id_transaksi=' + encodeURIComponent(id_transaksiVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_modul=' + encodeURIComponent(idModul) + '&koin_dipakai=' + encodeURIComponent(koindipakaiVal),
+            body: 'id_challenge=' + encodeURIComponent(id_challengeVal) + '&username=' + encodeURIComponent(usernameVal) + '&tropi=' + encodeURIComponent(tropiVal) + '&koin=' + encodeURIComponent(koinVal),
           })
             .then(response => {
               if (!response.ok) {
@@ -737,10 +732,58 @@ $userInfo = $_SESSION['USER_INFO'];
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
-            title: `Transaksi Berhasil`,
+            title: `Telah disetujui`,
             icon: 'success'
           }).then(() => {
-            window.location.href = 'transaksi';
+            window.location.href = '';
+          });
+        }
+      });
+    }
+    function tolakchal(id_challenge, username, tropi, koin) {
+      Swal.fire({
+        title: "Apakah Anda yakin ingin menolak?",
+        icon: "warning",
+        html:
+          '<input type="hidden" id="id_challenge" class="swal2-input" value="' + id_challenge + '"/>' +
+          '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' +
+          '<input type="hidden" id="tropi" class="swal2-input" value="' + tropi + '" readonly/>' +
+          '<input type="hidden" id="koin" class="swal2-input" value="' + koin + '"/>',
+        showCancelButton: true,
+        confirmButtonText: "Simpan",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const id_challengeVal = document.getElementById('id_challenge').value;
+          const usernameVal = document.getElementById('username').value;
+          const tropiVal = document.getElementById('tropi').value;
+          const koinVal = document.getElementById('koin').value;
+
+          return fetch('../crudphp/proses.php?aksi=tlkchal', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_challenge=' + encodeURIComponent(id_challengeVal) + '&username=' + encodeURIComponent(usernameVal) + '&tropi=' + encodeURIComponent(tropiVal) + '&koin=' + encodeURIComponent(koinVal),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error during fetch:', error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Telah ditolak`,
+            icon: 'success'
+          }).then(() => {
+            window.location.href = '';
           });
         }
       });

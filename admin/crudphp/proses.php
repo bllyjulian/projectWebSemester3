@@ -1112,6 +1112,97 @@ if ($_GET['aksi'] == "editchal") {
 
     echo json_encode($response);
 }
+if ($_GET['aksi'] == "accchal") {
+    $username = $_POST["username"];
+    $koin = $_POST["koin"];
+    $tropi = $_POST["tropi"];
+
+    try {
+        if ($koin >= 0) {
+            $id_challenge = $_POST["id_challenge"];
+
+            $sql_update_transaksi = "UPDATE tb_submitchallenge SET id_status = 2 WHERE username = ?";
+            $stmt_update_transaksi = $koneksi->prepare($sql_update_transaksi);
+            $stmt_update_transaksi->execute([$username]);
+
+            if ($stmt_update_transaksi->rowCount() > 0) {
+                $sql_update_koin = "UPDATE tb_koin SET koin = koin + ? WHERE username = ?";
+                $stmt_update_koin = $koneksi->prepare($sql_update_koin);
+                $stmt_update_koin->execute([$koin, $username]);
+
+                if ($stmt_update_koin->rowCount() > 0) {
+                    $sql_update_tropi = "UPDATE tb_tropi SET tropi = tropi + ? WHERE username = ?";
+                    $stmt_update_tropi = $koneksi->prepare($sql_update_tropi);
+                    $stmt_update_tropi->execute([$tropi, $username]);
+
+                    if ($stmt_update_tropi->rowCount() > 0) {
+                        $response = [
+                            'sukses' => true,
+                            'pesan' => 'Challenge berhasil di setujui. Koin dan tropi telah ditambahkan.'
+                        ];
+                    } else {
+                        $response = [
+                            'sukses' => false,
+                            'pesan' => 'Gagal menambahkan tropi.'
+                        ];
+                    }
+                } else {
+                    $response = [
+                        'sukses' => false,
+                        'pesan' => 'Gagal menambahkan koin.'
+                    ];
+                }
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal memperbarui status transaksi.'
+                ];
+            }
+        }
+    } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+if ($_GET['aksi'] == "tlkchal") {
+    $username = $_POST["username"];
+    $koin = $_POST["koin"];
+    $tropi = $_POST["tropi"];
+
+    try {
+        if ($koin >= 0) {
+            $id_challenge = $_POST["id_challenge"];
+
+            $sql_update_transaksi = "UPDATE tb_submitchallenge SET id_status = 3 WHERE username = ?";
+            $stmt_update_transaksi = $koneksi->prepare($sql_update_transaksi);
+            $stmt_update_transaksi->execute([$username]);
+
+            if ($stmt_update_transaksi->rowCount() > 0) {
+                $response = [
+                    'sukses' => true,
+                    'pesan' => 'Status challenge berhasil diubah menjadi 3.'
+                ];
+            } else {
+                $response = [
+                    'sukses' => false,
+                    'pesan' => 'Gagal memperbarui status challenge.'
+                ];
+            }
+        }
+    } catch (PDOException $e) {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+
 $koneksi = null;
 
 ?>
