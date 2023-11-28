@@ -451,118 +451,141 @@ $userInfo = $_SESSION['USER_INFO'];
                 <?php
                 require_once('../crudphp/koneksi.php');
 
-                // Menghitung jumlah total transaksi (jumlah baris unik dalam kolom id_transaksi)
-                $sql_count = "SELECT COUNT(DISTINCT username) AS total_pengumpulan FROM tb_submitchallenge";
+                $id_challenge = $_GET['id_challenge'];
+
+                $sql_count = "SELECT COUNT(DISTINCT username) AS total_pengumpulan FROM tb_submitchallenge WHERE id_challenge = ?";
                 $row = $koneksi->prepare($sql_count);
-                $row->execute();
+                $row->execute([$id_challenge]);
                 $total_data = $row->fetch(PDO::FETCH_ASSOC)['total_pengumpulan'];
 
-                // Menampilkan total transaksi
                 echo '<p class="text-sm">';
                 echo '<i class="fa fa-check text-info" aria-hidden="true"></i>';
                 echo '<span class="font-weight-bold ms-1">' . $total_data . ' Telah terkumpul</span>';
                 echo '</p>';
                 ?>
-
-
               </div>
               <?php
-require_once('koneksi.php');
+              require_once('koneksi.php');
 
-if (isset($_GET['id_challenge'])) {
-    $id_challenge = $_GET['id_challenge'];
+              if (isset($_GET['id_challenge'])) {
+                $id_challenge = $_GET['id_challenge'];
 
-    $stmt = $koneksi->prepare("SELECT tb_challenge.*, tb_submitchallenge.keterangan, tb_submitchallenge.linkpengumpulan, tb_submitchallenge.id_status, tb_user.*
+                $stmt = $koneksi->prepare("SELECT tb_challenge.*, tb_submitchallenge.keterangan, tb_submitchallenge.linkpengumpulan, tb_submitchallenge.id_status, tb_user.*
         FROM tb_challenge
         INNER JOIN tb_submitchallenge ON tb_challenge.id_challenge = tb_submitchallenge.id_challenge
         INNER JOIN tb_user ON tb_submitchallenge.username = tb_user.username
         WHERE tb_challenge.id_challenge = ?");
-    $stmt->execute([$id_challenge]);
-    $data_challenges = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $stmt->execute([$id_challenge]);
+                $data_challenges = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($data_challenges) {
-        foreach ($data_challenges as $data_challenge) {
-?>
-            <div class="w-100 mb-3">
-                <div class="card card-profile card-plain w-100">
-                    <div class="row">
-                        <div class="col-lg-3">
+                if ($data_challenges) {
+                  foreach ($data_challenges as $data_challenge) {
+                    ?>
+                    <div class="w-100">
+                      <div class="card card-profile card-plain w-100">
+                        <div class="row">
+                          <div class="col-lg-3 mb-0">
                             <a href="javascript:;">
-                                <div class="position-relative">
-                                    <div class="blur-shadow-image">
-                                        <img class="w-100 rounded-3 shadow-lg" src="<?= $data_challenge['foto_profil']; ?>">
-                                    </div>
+                              <div class="position-relative">
+                                <div class="blur-shadow-image">
+                                  <img class="w-100 rounded-3 shadow-lg" src="<?= $data_challenge['foto_profil']; ?>">
                                 </div>
+                              </div>
                             </a>
-                        </div>
-                        <div class="col-lg-9 ps-0 my-auto">
+                          </div>
+                          <div class="col-lg-9 ps-0">
                             <div class="card-body text-left">
-                                <div class="d-flex align-items-top justify-content-between">
-                                    <div class="p-md-0">
-                                        <h5 class="font-weight-bolder mb-0">
-                                            <?= $data_challenge['username']; ?>
-                                        </h5>
-                                        <p class="category text-info text-gradient">
-                                            <?= $data_challenge['nama_lengkap']; ?>
-                                        </p>
-                                    </div>
-                                    <div class="bb">
-                                        <?php if ($data_challenge['id_status'] == "1"): ?>
-                                            <span class="badge badge-sm bg-gradient-info">
-                                                Diproses
-                                            </span>
-                                        <?php elseif ($data_challenge['id_status'] == "2"): ?>
-                                            <span class="badge badge-sm bg-gradient-warning">
-                                                Disetujui
-                                            </span>
-                                        <?php elseif ($data_challenge['id_status'] == "3"): ?>
-                                            <span class="badge badge-sm bg-gradient-danger">
-                                                Ditolak
-                                            </span>
-                                        <?php endif; ?>
-                                    </div>
+                              <div class="d-flex align-items-top justify-content-between">
+                                <div class="p-md-0">
+                                  <h5 class="font-weight-bolder mb-0">
+                                    <?= $data_challenge['username']; ?>
+                                  </h5>
+                                  <p class="category text-info text-gradient">
+                                    <?= $data_challenge['nama_lengkap']; ?>
+                                  </p>
                                 </div>
-
-                                <p class="mb-4">
-                                    "<?= $data_challenge['keterangan']; ?>"
-                                </p>
-                                <div class="d-flex mb-1 gap-2">
-                                    <span>
-                                        <i class="fas fa-trophy text-warning"></i>
-                                        <?= $data_challenge['tropi']; ?>
+                                <div class="bb">
+                                  <?php if ($data_challenge['id_status'] == "1"): ?>
+                                    <span class="badge badge-sm bg-gradient-info">
+                                      Diproses
                                     </span>
-                                    <span>
-                                        <i class="fas fa-coins text-warning"></i>
-                                        <?= $data_challenge['koin']; ?>
+                                  <?php elseif ($data_challenge['id_status'] == "2"): ?>
+                                    <span class="badge badge-sm bg-gradient-warning">
+                                      Disetujui
                                     </span>
+                                  <?php elseif ($data_challenge['id_status'] == "3"): ?>
+                                    <span class="badge badge-sm bg-gradient-danger">
+                                      Ditolak
+                                    </span>
+                                  <?php endif; ?>
                                 </div>
+                              </div>
 
-                                <button type="button" class="btn btn-facebook btn-simple btn-lg mb-0 px-2 ps-2">
-                                    <i class="fas fa-edit text-info" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Koreksi" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btn btn-twitter btn-simple btn-lg mb-0 px-2">
-                                    <i class="fas fa-check-circle text-success " data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Setujui" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btn btn-github btn-simple btn-lg mb-0 px-2">
-                                    <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Tolak" aria-hidden="true"></i>
-                                </button>
+                              <p class="mb-4 h-10 bg-gradient-info">
+                                "
+                                <?= $data_challenge['keterangan']; ?>"
+                              </p>
+                              <div class="d-flex mb-1 gap-2">
+                                <span>
+                                  <i class="fas fa-trophy text-warning"></i>
+                                  <?= $data_challenge['tropi']; ?>
+                                </span>
+                                <span>
+                                  <i class="fas fa-coins text-warning"></i>
+                                  <?= $data_challenge['koin']; ?>
+                                </span>
+                              </div>
+
+
+
+                              <div class="d-flex mt-2  gap-2">
+                                <a class="text-info mb-0 p-1" href="#" onclick="konfirchal(
+                                '<?= $data_challenge['id_challenge']; ?>',
+                                '<?= $data_challenge['username']; ?>',
+                                '<?= $data_challenge['tropi']; ?>',
+                                '<?= $data_challenge['koin']; ?>'
+                              )">
+                                  <i class="fas fa-edit text-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Koreksi" aria-hidden="true"></i>
+                                </a>
+
+                                <a class="text-success mb-0 p-1" href="#" onclick="konfirchal(
+                                '<?= $data_challenge['id_challenge']; ?>',
+                                '<?= $data_challenge['username']; ?>',
+                                '<?= $data_challenge['tropi']; ?>',
+                                '<?= $data_challenge['koin']; ?>'
+                              )">
+                                  <i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Setujui" aria-hidden="true"></i>
+                                </a>
+
+                                <a class="text-danger mb-0 p-1" href="#" onclick="konfirchal(
+                                  '<?= $data_challenge['id_challenge']; ?>',
+                                  '<?= $data_challenge['username']; ?>',
+                                  '<?= $data_challenge['tropi']; ?>',
+                                  '<?= $data_challenge['koin']; ?>'
+                                )">
+                                  <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Tolak" aria-hidden="true"></i>
+                                </a>
+                              </div>
+
+
+
                             </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-<?php
-        }
-    } else {
-        echo "Data Modul tidak ditemukan.";
-    }
-} else {
-    echo "ID Modul tidak ditemukan.";
-}
-?>
+                    <?php
+                  }
+                } else {
+                  echo "Belum ada yang mengumpulkan.";
+                }
+              } else {
+                echo "ID Challenge tidak ditemukan.";
+              }
+              ?>
 
             </div>
           </div>
@@ -673,55 +696,52 @@ if (isset($_GET['id_challenge'])) {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    function confirmDelete(id_materi) {
+
+    function konfirchal(id_challenge, username, tropi, koin) {
       Swal.fire({
-        title: 'Apakah anda yakin ingin menghapus?',
-        text: "Data yang dihapus tidak bisa dipulihkan",
-        icon: 'warning',
+        title: "Apakah Anda yakin ingin konfirmasi transaksi?",
+        icon: "warning",
+        html:
+          '<input type="text" id="id_challenge" class="swal2-input" value="' + id_challenge + '"/>' +
+          '<input type="text" id="username" class="swal2-input" value="' + username + '"/>' +
+          '<input type="text" id="tropi" class="swal2-input" value="' + tropi + '" readonly/>' +
+          '<input type="text" id="koin" class="swal2-input" value="' + koin + '"/>',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Hapus'
+        confirmButtonText: "Simpan",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const id_transaksiVal = document.getElementById('id_transaksi').value;
+          const usernameVal = document.getElementById('username').value;
+          const idModul = document.getElementById('idModul').value;
+          const koindipakaiVal = document.getElementById('koindipakai').value;
+
+          return fetch('../crudphp/proses.php?aksi=transaksisetuju', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_transaksi=' + encodeURIComponent(id_transaksiVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_modul=' + encodeURIComponent(idModul) + '&koin_dipakai=' + encodeURIComponent(koindipakaiVal),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error during fetch:', error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
-            type: 'POST',
-            url: 'proses.php?aksi=hapusmateri',
-            data: { id_materi: id_materi },
-            dataType: 'json',
-            success: function (response) {
-              if (response.sukses) {
-                Swal.fire(
-                  'Sukses!',
-                  'Data berhasil dihapus.',
-                  'success'
-                ).then(() => {
-                  location.reload();
-                });
-              } else {
-                Swal.fire(
-                  'Gagal!',
-                  'Terjadi kesalahan saat menghapus data.',
-                  'error'
-                );
-              }
-            },
-            error: function () {
-              Swal.fire(
-                'Sukses!',
-                'Data berhasil dihapus.',
-                'success'
-              ).then(() => {
-                location.reload();
-              });
-            }
+          Swal.fire({
+            title: `Transaksi Berhasil`,
+            icon: 'success'
+          }).then(() => {
+            window.location.href = 'transaksi';
           });
-        } else {
-          Swal.fire(
-            'Batal Hapus',
-            'Data tidak dihapus.',
-            'info'
-          );
         }
       });
     }

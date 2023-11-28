@@ -552,11 +552,11 @@ $userInfo = $_SESSION['USER_INFO'];
                         </span>
                       </div>
                       <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-secondary mb-2"><a
+                        <button type="button" class="btn btn-outline-secondary mb-1"><a
                             class="btn-link text-dark text-gradient mb-0 text-sm"
                             href="<?= "../crudphp/detailchallenge?id_challenge=" . $r->id_challenge; ?>">
 
-                            Detail</a></button>
+                              Detail  </a></button>
                         <div class=" text-start m-0">
 
                           <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="editchal(
@@ -572,7 +572,7 @@ $userInfo = $_SESSION['USER_INFO'];
                           <a class="btn-link text-danger text-gradient mb-0 text-sm"
                             onclick="confirmDelete('<?= $r->id_challenge; ?>')" href="#">
                             <i class="far fa-trash-alt me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
-                              data-bs-placement="top" title="Hapus Modul"></i>
+                              data-bs-placement="top" title="Hapus Challenge"></i>
                           </a>
 
 

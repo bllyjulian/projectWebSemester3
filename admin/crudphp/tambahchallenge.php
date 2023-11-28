@@ -465,14 +465,14 @@ $userInfo = $_SESSION['USER_INFO'];
                     <div class="d-flex justify-content-lg-between align-items-center gap-10">
                       <label class="text-lg font-weight-bold" for="judul_materi">Jenis</label>
                       <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" id="tambahjenischallenge">
-                        <i class="fas fa-plus me-2 ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
+                        <i class="fas fa-plus ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip"
                           data-bs-placement="top" title="Tambah Jenis"></i>
                       </a>
                     </div>
                     <div class="dropdown w-100">
                       <button class="btn btn-outline-dark dropdown-toggle text-start w-100" type="button"
                         id="dropdownMenujenis" data-bs-toggle="dropdown" aria-expanded="false">
-                        Pilihan
+                        Pilihan Jenis
                       </button>
                       <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                         <?php
@@ -493,9 +493,8 @@ $userInfo = $_SESSION['USER_INFO'];
                         ?>
                       </ul>
                     </div>
-                    <input type="text" class="form-control" required name="id_jenis" id="id_jenis" autocomplete="off">
+                    <input type="text" class="form-control d-none" required name="id_jenis" id="id_jenis" autocomplete="off">
                   </div>
-
                   <div class="form-group">
                     <label class="text-lg font-weight-bold" for="id_lvlchallenge">Level</label>
                     <select class="form-control" required name="id_lvlchallenge" id="id_lvlchallenge">
