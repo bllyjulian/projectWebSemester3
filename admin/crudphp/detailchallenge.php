@@ -482,7 +482,7 @@ $userInfo = $_SESSION['USER_INFO'];
                   foreach ($data_challenges as $data_challenge) {
                     ?>
                     <div class="w-100">
-                      <div class="card card-profile card-plain w-100">
+                      <div class="card card-profile card-plain w-100 mb-3">
                         <div class="row">
                           <div class="col-lg-3 mb-0">
                             <a href="javascript:;">
