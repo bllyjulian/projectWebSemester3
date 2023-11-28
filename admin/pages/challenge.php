@@ -514,7 +514,7 @@ $userInfo = $_SESSION['USER_INFO'];
             <div class="row d-block ">
               <?php foreach ($data_to_display as $r): ?>
                 <div class="mb-3 w-100">
-                  <div class="card card-blog card-plain border-1">
+                  <div class="card card-blog card-plain border-2">
                     <div class="card-body p-3">
                       <div class="d-flex gap-1 pb-2">
                         <span class="badge badge-sm bg-gradient-primary">#
@@ -543,19 +543,20 @@ $userInfo = $_SESSION['USER_INFO'];
                       <div class="d-flex mb-3 gap-2">
 
                         <span>
-                          <?= $r->tropi; ?> Tropi
+                          <i class="fas fa-trophy text-warning"></i>
+                          <?= $r->tropi; ?>
                         </span>
                         <span>
-                          <?= $r->koin; ?> Koin
+                          <i class="fas fa-coins text-warning"></i>
+                          <?= $r->koin; ?>
                         </span>
-
                       </div>
                       <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0"><a
-                              class="btn-link text-dark text-gradient mb-0 text-sm"
-                              href="<?= "../crudphp/detailchallenge?id_challenge=" . $r->id_challenge; ?>">
+                        <button type="button" class="btn btn-outline-secondary mb-2"><a
+                            class="btn-link text-dark text-gradient mb-0 text-sm"
+                            href="<?= "../crudphp/detailchallenge?id_challenge=" . $r->id_challenge; ?>">
 
-                              Lihat</a></button>
+                            Detail</a></button>
                         <div class=" text-start m-0">
 
                           <a class="btn-link text-dark text-gradient mb-0 text-sm" href="#" onclick="editchal(

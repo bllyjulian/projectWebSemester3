@@ -15,7 +15,7 @@ $userInfo = $_SESSION['USER_INFO'];
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.png">
   <title>
-    Preview Materi
+    Detail Challenge
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -467,66 +467,105 @@ $userInfo = $_SESSION['USER_INFO'];
 
               </div>
               <?php
-              require_once('koneksi.php');
+require_once('koneksi.php');
 
-              if (isset($_GET['id_challenge'])) {
-                $id_challenge = $_GET['id_challenge'];
+if (isset($_GET['id_challenge'])) {
+    $id_challenge = $_GET['id_challenge'];
 
-                $stmt = $koneksi->prepare("SELECT tb_challenge.*, tb_submitchallenge.keterangan, tb_submitchallenge.linkpengumpulan, tb_user.*
-                FROM tb_challenge
-                INNER JOIN tb_submitchallenge ON tb_challenge.id_challenge = tb_submitchallenge.id_challenge
-                INNER JOIN tb_user ON tb_submitchallenge.username = tb_user.username
-                WHERE tb_challenge.id_challenge =?");
-                $stmt->execute([$id_challenge]);
-                $data_challenges = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $koneksi->prepare("SELECT tb_challenge.*, tb_submitchallenge.keterangan, tb_submitchallenge.linkpengumpulan, tb_submitchallenge.id_status, tb_user.*
+        FROM tb_challenge
+        INNER JOIN tb_submitchallenge ON tb_challenge.id_challenge = tb_submitchallenge.id_challenge
+        INNER JOIN tb_user ON tb_submitchallenge.username = tb_user.username
+        WHERE tb_challenge.id_challenge = ?");
+    $stmt->execute([$id_challenge]);
+    $data_challenges = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if ($data_challenges) {
-                  foreach ($data_challenges as $data_challenge) {
-                    ?>
+    if ($data_challenges) {
+        foreach ($data_challenges as $data_challenge) {
+?>
+            <div class="w-100 mb-3">
+                <div class="card card-profile card-plain w-100">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <a href="javascript:;">
+                                <div class="position-relative">
+                                    <div class="blur-shadow-image">
+                                        <img class="w-100 rounded-3 shadow-lg" src="<?= $data_challenge['foto_profil']; ?>">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-9 ps-0 my-auto">
+                            <div class="card-body text-left">
+                                <div class="d-flex align-items-top justify-content-between">
+                                    <div class="p-md-0">
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <?= $data_challenge['username']; ?>
+                                        </h5>
+                                        <p class="category text-info text-gradient">
+                                            <?= $data_challenge['nama_lengkap']; ?>
+                                        </p>
+                                    </div>
+                                    <div class="bb">
+                                        <?php if ($data_challenge['id_status'] == "1"): ?>
+                                            <span class="badge badge-sm bg-gradient-info">
+                                                Diproses
+                                            </span>
+                                        <?php elseif ($data_challenge['id_status'] == "2"): ?>
+                                            <span class="badge badge-sm bg-gradient-warning">
+                                                Disetujui
+                                            </span>
+                                        <?php elseif ($data_challenge['id_status'] == "3"): ?>
+                                            <span class="badge badge-sm bg-gradient-danger">
+                                                Ditolak
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
 
-<div class="row">
-  <div class="col-md-190 bg-gradient-danger">
-    <div class="card card-profile card-plain d-flex justify-content-lg-between">
-      <div class="z-index-1">
-        <div class="position-relative w-100">
-          <div class="blur-shadow-avatar">
-            <img class="avatar avatar-xxl shadow-lg" src="<?= $data_challenge['foto_profil']; ?>">
-          </div>
-        </div>
-      </div>
-      <div class="card-body ps-0">
-        <h5 class="mb-0">Alec Thompson</h5>
-        <p class="text-muted">CEO / Co-Founder</p>
-        <p>
-          And I love you like Kanye loves Kanye. We need to restart the human foundation.
-        </p>
-        <button type="button" class="btn-icon-only btn-simple btn btn-lg btn-twitter" data-toggle="tooltip" data-placement="bottom" title="Follow me!">
-          <span class="btn-inner--icon"><i class="fab fa-twitter" aria-hidden="true"></i></span>
-        </button>
-        <button type="button" class="btn-icon-only btn-simple btn btn-lg btn-dribbble" data-toggle="tooltip" data-placement="bottom" title="Follow me!">
-          <span class="btn-inner--icon"><i class="fab fa-dribbble" aria-hidden="true"></i></span>
-        </button>
-        <button type="button" class="btn-icon-only btn-simple btn btn-lg btn-linkedin" data-toggle="tooltip" data-placement="bottom" title="Follow me!">
-          <span class="btn-inner--icon"><i class="fab fa-linkedin" aria-hidden="true"></i></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+                                <p class="mb-4">
+                                    "<?= $data_challenge['keterangan']; ?>"
+                                </p>
+                                <div class="d-flex mb-1 gap-2">
+                                    <span>
+                                        <i class="fas fa-trophy text-warning"></i>
+                                        <?= $data_challenge['tropi']; ?>
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-coins text-warning"></i>
+                                        <?= $data_challenge['koin']; ?>
+                                    </span>
+                                </div>
 
-
-                     
-                      <?php
-                  }
-                } else {
-                  echo "Data Modul tidak ditemukan.";
-                }
-              } else {
-                echo "ID Modul tidak ditemukan.";
-              }
-              ?>
-              </div>
+                                <button type="button" class="btn btn-facebook btn-simple btn-lg mb-0 px-2 ps-2">
+                                    <i class="fas fa-edit text-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Koreksi" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-twitter btn-simple btn-lg mb-0 px-2">
+                                    <i class="fas fa-check-circle text-success " data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Setujui" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-github btn-simple btn-lg mb-0 px-2">
+                                    <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Tolak" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+<?php
+        }
+    } else {
+        echo "Data Modul tidak ditemukan.";
+    }
+} else {
+    echo "ID Modul tidak ditemukan.";
+}
+?>
+
+            </div>
+          </div>
 
         </section>
 
