@@ -1172,16 +1172,16 @@ if ($_GET['aksi'] == "tlkchal") {
     $username = $_POST["username"];
     $koin = $_POST["koin"];
     $tropi = $_POST["tropi"];
+    $id_challenge = $_POST["id_challenge"]; // Dipindahkan ke luar kondisi if
 
     try {
         if ($koin >= 0) {
-            $id_challenge = $_POST["id_challenge"];
+            // Perbarui status challenge hanya jika kondisi koin memenuhi syarat
+            $sql_update_challenge = "UPDATE tb_submitchallenge SET id_status = 3 WHERE username = ? AND id_challenge=?";
+            $stmt_update_challenge = $koneksi->prepare($sql_update_challenge);
+            $stmt_update_challenge->execute([$username, $id_challenge]); // Tambahkan $id_challenge ke execute
 
-            $sql_update_transaksi = "UPDATE tb_submitchallenge SET id_status = 3 WHERE username = ?";
-            $stmt_update_transaksi = $koneksi->prepare($sql_update_transaksi);
-            $stmt_update_transaksi->execute([$username]);
-
-            if ($stmt_update_transaksi->rowCount() > 0) {
+            if ($stmt_update_challenge->rowCount() > 0) {
                 $response = [
                     'sukses' => true,
                     'pesan' => 'Status challenge berhasil diubah menjadi 3.'
@@ -1192,6 +1192,11 @@ if ($_GET['aksi'] == "tlkchal") {
                     'pesan' => 'Gagal memperbarui status challenge.'
                 ];
             }
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Nilai koin tidak memenuhi syarat untuk mengubah status challenge.'
+            ];
         }
     } catch (PDOException $e) {
         $response = [
@@ -1200,6 +1205,96 @@ if ($_GET['aksi'] == "tlkchal") {
         ];
     }
 
+    echo json_encode($response);
+}
+
+if ($_GET['aksi'] == "tambah_tugas") {
+    $keterangan = $_POST["keterangan"];
+    $id_modul = $_POST["id_modul"];
+
+    $data = array($keterangan, $id_modul);
+
+    try {
+        $sql = "INSERT INTO tb_tugasakhir (keterangan, id_modul) VALUES (?, ?)";
+        $stmt = $koneksi->prepare($sql);
+
+        $stmt->execute($data);
+
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil menambahkan tugas'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal menambahkan tugas'
+            ];
+        }
+    } catch (PDOException $e) {
+        // Tangani kesalahan PDO jika terjadi
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+if ($_GET['aksi'] == "edit_tugas") {
+    $id_tugasAkhir = $_POST["id_tugasAkhir"];
+    $keterangan = $_POST["soal"];
+
+    $data = array($keterangan, $id_tugasAkhir);
+
+    try {
+        $sql = "UPDATE tb_tugasakhir SET keterangan=? WHERE id_tugasAkhir=?";
+        $stmt = $koneksi->prepare($sql);
+
+        $stmt->execute($data);
+
+        if ($stmt->rowCount() > 0) {
+            $response = [
+                'sukses' => true,
+                'pesan' => 'Berhasil Mengedit tugas'
+            ];
+        } else {
+            $response = [
+                'sukses' => false,
+                'pesan' => 'Gagal mengedit tugas'
+            ];
+        }
+    } catch (PDOException $e) {
+        // Tangani kesalahan PDO jika terjadi
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ];
+    }
+
+    echo json_encode($response);
+}
+if ($_GET['aksi'] == "hapustugas") {
+    $id_tugasAkhir = $_GET["id_tugasAkhir"];
+
+    // Jalankan query DELETE
+    $stmt = $koneksi->prepare("DELETE FROM tb_tugasakhir WHERE id_tugasAkhir = ?");
+    $stmt->execute([$id_tugasAkhir]);
+
+    // Berikan respons JSON
+    if ($stmt->rowCount() > 0) {
+        $response = [
+            'sukses' => true,
+            'pesan' => 'Data berhasil dihapus.'
+        ];
+    } else {
+        $response = [
+            'sukses' => false,
+            'pesan' => 'Gagal menghapus data.'
+        ];
+    }
+
+    // Kembalikan respons JSON
     echo json_encode($response);
 }
 

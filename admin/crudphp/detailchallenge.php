@@ -739,7 +739,7 @@ $userInfo = $_SESSION['USER_INFO'];
         title: "Apakah Anda yakin ingin menolak?",
         icon: "warning",
         html:
-          '<input type="hidden" id="id_challenge" class="swal2-input" value="' + id_challenge + '"/>' +
+          '<input type="text" id="id_challenge" class="swal2-input" value="' + id_challenge + '"/>' +
           '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' +
           '<input type="hidden" id="tropi" class="swal2-input" value="' + tropi + '" readonly/>' +
           '<input type="hidden" id="koin" class="swal2-input" value="' + koin + '"/>',

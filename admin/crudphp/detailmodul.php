@@ -580,9 +580,33 @@ $userInfo = $_SESSION['USER_INFO'];
                         
                         echo '</div>';
                       }
-                    } else {
+                    }
+                    
+                    else {
                       echo '<p>Belum ada bab untuk modul ini.</p>';
                     }
+                    $stmt_tugas = $koneksi->prepare("SELECT * FROM tb_tugasakhir WHERE id_modul = ?");
+                    $stmt_tugas->execute([$id_modul]);
+                    $data_tugas = $stmt_tugas->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    if ($data_tugas) {
+                      foreach ($data_tugas as $tugas) {
+                          echo '<div class="position-relative mb-1">
+                              <div class="d-flex justify-content-between align-items-center bg-gradient-info badge badge-sm mb-2">
+                                  <span class="text-sm text-center cursor-pointer ms-1">
+                                      <a class="btn-link text-center text-danger text-sm edit-hapus-tugas" href="#" data-tugas-id="' . $tugas['id_tugasAkhir'] . '">
+                                          <i class="fa fa-info-circle text-center text-white cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit/Hapus/Tambah Subbab" style="font-size: 1.5em;"></i>
+                                      </a>
+                                  </span>
+                                  <span class="text-sm text-wrap cursor-pointer w-100 p-3 text-start badge badge-sm  tugas-toggle" data-tugas-id="' . $tugas['id_tugasAkhir'] . '" style="line-height: 1.5; text-transform: none;">' . $tugas['keterangan'] . '</span>
+                              </div>
+                          </div>';
+                      }
+                  }
+                   else {
+                        echo '<p>Tidak ada tugas untuk modul ini.</p>';
+                    }
+                    
                     ?>
                     <?php
                 } else {
@@ -594,8 +618,8 @@ $userInfo = $_SESSION['USER_INFO'];
               ?>
                             <div class=" w-100">
                 <div class="card card-plain border">
-                  <div class="card-body d-flex flex-column justify-content-center text-center">
-                    <a href="../crudphp/tambahmodul">
+                  <div class="card-body d-flex flex-column justify-content-center text-center" id="tombolTambahtugas">
+                    <a href="#">
                       <h5 class=" text-secondary"><i class="fa fa-plus text-secondary mb-0"></i> Tambah Tugas</h5>
                     </a>
                   </div>
@@ -707,6 +731,263 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    //CRUD Tugas
+ document.getElementById('tombolTambahtugas').addEventListener('click', function () {
+  let idModul;
+
+  Swal.fire({
+    title: "Tambah Tugas",
+    html:
+      '<div class="input-group mt-2">' +
+      '<label class="text-lg font-weight-bold mr-2 mb-0" for="keterangan">Soal</label>' +
+      '<input type="text" id="keterangan" class="swal2-input" />' +
+      '</div>' +
+      '<input type="text" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    showCancelButton: true,
+    confirmButtonText: "Tambah",
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      const keteranganVal = Swal.getPopup().querySelector('#keterangan').value;
+      idModul = Swal.getPopup().querySelector('#idModul').value;
+
+      // Validate if the "Soal" field is not empty
+      if (!keteranganVal) {
+        Swal.showValidationMessage('Soal harus diisi!');
+        return false; // Prevent form submission when validation fails
+      }
+
+      return fetch('proses.php?aksi=tambah_tugas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'keterangan=' + encodeURIComponent(keteranganVal) + '&id_modul=' + encodeURIComponent(idModul),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        });
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      if (result.value && result.value.sukses) {
+        Swal.fire({
+          title: `Berhasil Menambahkan Tugas`,
+          icon: 'success'
+        }).then(() => {
+          window.location.href = 'detailmodul.php?id_modul=' + idModul;
+        });
+      } else {
+        Swal.fire({
+          title: 'Gagal Menambahkan Tugas',
+          icon: 'error'
+        });
+      }
+    }
+  });
+});
+document.querySelectorAll('.edit-hapus-tugas').forEach(function (button) {
+    button.addEventListener('click', function () {
+      let idModul;
+        const tugasId = this.getAttribute('data-tugas-id');
+        const soal = this.closest('.position-relative').querySelector('.tugas-toggle').innerText;
+
+        Swal.fire({
+            title: "Silahkan pilih aksi",
+            icon: "warning",
+            showConfirmButton: true,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            denyButtonColor: "#d33",
+            cancelButtonColor: "#1fb314",
+            confirmButtonText: "Edit",
+            denyButtonText: "Hapus",
+            cancelButtonText: "Koreksi"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                editTugas(tugasId, soal);
+            } else if (result.isDenied) {
+                deleteTugas(tugasId);
+            } else if (result.isDismissed && result.dismiss === Swal.DismissReason.backdrop) {
+                return;
+            } else {
+                tambahSubBab(tugasId, soal);
+            }
+        });
+    });
+});
+function editTugas(tugasId, soal) {
+    Swal.fire({
+        title: "Edit Tugas",
+        html:
+            '<input type="text" id="idTugas" class="swal2-input" value="' + tugasId + '"/>' +
+            '<input type="text" id="soalTugas" class="swal2-input" value="' + soal + '"/>' +
+            '<input type="text" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+        showCancelButton: true,
+        confirmButtonText: "Simpan",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            const idTugas = Swal.getPopup().querySelector('#idTugas').value;
+            const soalTugas = Swal.getPopup().querySelector('#soalTugas').value;
+            idModul = Swal.getPopup().querySelector('#idModul').value;
+
+            return fetch('proses.php?aksi=edit_tugas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id_tugasAkhir=' + encodeURIComponent(idTugas) + '&soal=' + encodeURIComponent(soalTugas),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error('Error during fetch:', error);
+                    Swal.showValidationMessage(`Request failed: ${error}`);
+                });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: `Berhasil Mengedit Tugas`,
+                icon: 'success'
+            }).then(() => {
+                // Sesuaikan dengan redirect yang Anda inginkan
+                window.location.href = 'detailmodul.php?id_modul=' + idModul;
+            });
+        }
+    });
+}
+function deleteTugas(tugasId) {
+  Swal.fire({
+    title: 'Apakah anda yakin ingin menghapus Tugas?',
+    html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+    text: "Data yang dihapus tidak bisa dipulihkan",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`../crudphp/proses.php?aksi=hapustugas&id_tugasAkhir=${tugasId}`)
+        .then(response => response.json())
+        .then(data => {
+          let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
+          if (data.sukses) {
+            Swal.fire('Sukses!', 'Data berhasil dihapus.', 'success').then(() => {
+              window.location.href = 'detailmodul.php?id_modul=' + idModul;
+            });
+          } else {
+            Swal.fire('Gagal Hapus', 'Data tidak dihapus.', 'error');
+          }
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          let idModul = document.querySelector('#idModul').value; // Ambil nilai idModul
+          Swal.fire('Gagal Hapus', 'Data tidak dihapus.', 'error').then(() => {
+            window.location.href = 'detailmodul.php?id_modul=' + idModul;
+          });
+        });
+    } else {
+      Swal.fire('Batal Hapus', 'Data tidak dihapus.', 'info');
+    }
+  });
+}
+
+    function Koreksitugas(tugasId, soal) {
+      Swal.fire({
+        title: "Tambah Subbab",
+        html:
+          '<input type="hidden" id="idBab" class="swal2-input" value="' + babId + '"/>' +
+          '<p class="text-lg font-weight-bold mb-4">' + namaBab + '</p>' +
+          '<div class="input-group">' +
+          '<label class="text-lg font-weight-bold mr-2 mb-0" for="judulsubBab">Judul Subbab</label>' +
+          '<input type="text" id="judulsubBab" class="swal2-input" />' +
+          '</div>' +
+          '<div class="input-group">' +
+          '<label class="text-lg font-weight-bold mr-2 mb-0" for="pengantarBab">Deskripsi (opsional)</label>' + // Fixed the label here
+          '<input type="text" id="pengantarBab" class="swal2-input" />' +
+          '</div>' +
+          '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
+        showCancelButton: true,
+        confirmButtonText: "Simpan",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const idBab = document.getElementById('idBab').value;
+          const judulsubBab = document.getElementById('judulsubBab').value;
+          const pengantarBab = document.getElementById('pengantarBab').value;
+          idModul = document.getElementById('idModul').value;
+
+          // Validate if the "Judul Subbab" field is not empty
+          if (!judulsubBab) {
+            Swal.showValidationMessage('Judul Subbab harus diisi');
+            return false; // Prevent form submission when validation fails
+          }
+
+          return fetch('proses.php?aksi=tambah_subbab', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_bab=' + encodeURIComponent(idBab) + '&judul_subbab=' + encodeURIComponent(judulsubBab) + '&pengantar_bab=' + encodeURIComponent(pengantarBab) + '&id_modul=' + encodeURIComponent(idModul),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error during fetch:', error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Berhasil Menambah Subbab`,
+            icon: 'success',
+          }).then(() => {
+            window.location.href = 'detailmodul.php?id_modul=' + idModul;
+          });
+        }
+      });
+    }
+   
+    function confirmLogout() {
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin keluar?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+
+          window.location.href = "../pages/logout";
+        }
+
+      }
+      )
+    };
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       let idModul;
@@ -877,7 +1158,7 @@ $userInfo = $_SESSION['USER_INFO'];
 
     function deleteBab(babId) {
       Swal.fire({
-        title: 'Apakah anda yakinn ingin menghapus?',
+        title: 'Apakah anda yakinn ingin menghapus Bab?',
         html: '<input type="hidden" id="idModul" class="swal2-input" value="<?= $data_modul['id_modul']; ?>" readonly/>',
         text: "Data yang dihapus tidak bisa dipulihkan",
         icon: 'warning',
