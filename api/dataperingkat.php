@@ -5,7 +5,7 @@ header('Content-Type: application/json;charset=utf8');
 if (empty($_GET)) {
     $query = mysqli_query($connection, "SELECT tb_user.username, tb_user.nama_lengkap, tb_user.foto_profil, tb_tropi.tropi, tb_tropi.tanggal
     FROM tb_user
-    LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username
+    LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username  WHERE tb_tropi.tropi != 0
     ORDER BY tb_tropi.tropi DESC");
 
     $result = array();

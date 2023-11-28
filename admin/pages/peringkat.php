@@ -500,6 +500,7 @@ $userInfo = $_SESSION['USER_INFO'];
                     $sql = "SELECT tb_user.username, tb_user.nama_lengkap, tb_tropi.tropi, tb_tropi.tanggal
                     FROM tb_user
                     LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username
+                    WHERE tb_tropi.tropi != 0
                     ORDER BY tb_tropi.tropi DESC";
                     $row = $koneksi->prepare($sql);
                     $row->execute();
@@ -515,7 +516,7 @@ $userInfo = $_SESSION['USER_INFO'];
                     // Mengambil data dengan membatasi jumlah
                     $sql = "SELECT tb_user.username, tb_user.nama_lengkap, tb_user.foto_profil, tb_tropi.tropi, tb_tropi.tanggal
                     FROM tb_user
-                    LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username
+                    LEFT JOIN tb_tropi ON tb_user.username = tb_tropi.username  WHERE tb_tropi.tropi != 0
                     ORDER BY tb_tropi.tropi DESC LIMIT $start_index, $items_per_page";
                     $row = $koneksi->prepare($sql);
                     $row->execute();
