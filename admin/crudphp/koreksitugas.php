@@ -472,7 +472,7 @@ $userInfo = $_SESSION['USER_INFO'];
                 $id_modul = $_GET['id_modul'];
                 $id_tugas = $_GET['id_tugasAkhir'];
             
-                $stmt = $koneksi->prepare("SELECT tb_modul.*, tb_submittugas.keterangan AS keterangantugas, tb_submittugas.linkpengumpulan, tb_statustugas.id_status, tb_user.*
+                $stmt = $koneksi->prepare("SELECT tb_modul.*,tb_submittugas.id_tugasAkhir, tb_submittugas.keterangan AS keterangantugas, tb_submittugas.linkpengumpulan, tb_statustugas.id_status, tb_user.*
                 FROM tb_modul
                 INNER JOIN tb_tugasakhir ON tb_modul.id_modul = tb_tugasakhir.id_modul
                 INNER JOIN tb_submittugas ON tb_tugasakhir.id_tugasAkhir = tb_submittugas.id_tugasAkhir
@@ -502,8 +502,10 @@ $userInfo = $_SESSION['USER_INFO'];
                             <div class="card-body text-left">
                               <div class="d-flex align-items-top justify-content-between">
                                 <div class="p-md-0">
+                                  <h5><?= $data_submittugas['id_tugasAkhir']; ?></h5>
                                   <h5 class="font-weight-bolder mb-0">
                                     <?= $data_submittugas['username']; ?>
+
                                   </h5>
                                   <p class="category text-info text-gradient">
                                     <?= $data_submittugas['nama_lengkap']; ?>
@@ -539,7 +541,12 @@ $userInfo = $_SESSION['USER_INFO'];
                                 <a class="text-success mb-0 p-1" href="#" <?php if ($data_submittugas['id_status'] != "1")
                                   echo "disabled"; ?>
                                   onclick="<?php if ($data_submittugas['id_status'] == "1")
-                                    echo "konfirchal('{$data_submittugas['id_modul']}', '{$data_submittugas['username']}')"; ?> ">
+                                    echo "konfirchal(
+                                  '{$data_submittugas['id_modul']}',
+                                  '{$data_submittugas['id_tugasAkhir']}',
+                                   '{$data_submittugas['username']}')"; ?> 
+                                   
+                                   ">
                                   <i class="fas fa-check-circle text-success" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Setujui" aria-hidden="true"></i>
                                 </a>
@@ -547,7 +554,10 @@ $userInfo = $_SESSION['USER_INFO'];
                                 <a class="text-danger mb-0 p-1" href="#" <?php if ($data_submittugas['id_status'] != "1")
                                   echo "disabled"; ?>
                                   onclick="<?php if ($data_submittugas['id_status'] == "1")
-                                    echo "tolakchal('{$data_submittugas['id_modul']}', '{$data_submittugas['username']}')"; ?>">
+                                    echo "tolakchal(
+                                  '{$data_submittugas['id_modul']}',
+                                  '{$data_submittugas['id_tugasAkhir']}',
+                                   '{$data_submittugas['username']}')"; ?>">
                                   <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Tolak" aria-hidden="true"></i>
                                 </a>
@@ -681,11 +691,12 @@ $userInfo = $_SESSION['USER_INFO'];
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
 
-    function konfirchal(id_modul, username) {
+    function konfirchal(id_modul,id_tugasAkhir, username) {
       Swal.fire({
         title: "Apakah Anda yakin ingin konfirmasi?",
         icon: "warning",
         html:
+          '<input type="text" id="id_tugas" class="swal2-input" value="' + id_tugasAkhir + '"/>' +
           '<input type="hidden" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
           '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' ,
         showCancelButton: true,
@@ -694,13 +705,14 @@ $userInfo = $_SESSION['USER_INFO'];
         preConfirm: () => {
           const id_modulVal = document.getElementById('id_modul').value;
           const usernameVal = document.getElementById('username').value;
+          const idtugasVal = document.getElementById('id_tugas').value;
 
           return fetch('../crudphp/proses.php?aksi=acctugas', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'id_modul=' + encodeURIComponent(id_modulVal) + '&username=' + encodeURIComponent(usernameVal),
+        body: 'id_modul=' + encodeURIComponent(id_modulVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_tugasAkhir=' + encodeURIComponent(idtugasVal),
           })
             .then(response => {
               if (!response.ok) {
@@ -725,26 +737,28 @@ $userInfo = $_SESSION['USER_INFO'];
         }
       });
     }
-    function tolakchal(id_modul, username) {
+    function tolakchal(id_modul,id_tugasAkhir, username) {
   Swal.fire({
     title: "Apakah Anda yakin ingin menolak?",
     icon: "warning",
     html:
-      '<input type="hidden" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
-      '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>',
+      '<input type="text" id="id_tugas" class="swal2-input" value="' + id_tugasAkhir + '"/>' +
+      '<input type="text" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
+      '<input type="text" id="username" class="swal2-input" value="' + username + '"/>',
     showCancelButton: true,
     confirmButtonText: "Simpan",
     showLoaderOnConfirm: true,
     preConfirm: () => {
       const id_modulVal = document.getElementById('id_modul').value;
       const usernameVal = document.getElementById('username').value;
+      const idtugasVal = document.getElementById('id_tugas').value;
 
       return fetch('../crudphp/proses.php?aksi=tlktugas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'id_modul=' + encodeURIComponent(id_modulVal) + '&username=' + encodeURIComponent(usernameVal),
+        body: 'id_modul=' + encodeURIComponent(id_modulVal) + '&username=' + encodeURIComponent(usernameVal) + '&id_tugasAkhir=' + encodeURIComponent(idtugasVal),
       })
         .then(response => {
           if (!response.ok) {

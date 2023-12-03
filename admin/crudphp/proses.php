@@ -1300,11 +1300,12 @@ if ($_GET['aksi'] == "hapustugas") {
 if ($_GET['aksi'] == "acctugas") {
     $username = $_POST["username"];
     $id_modul = $_POST["id_modul"];
+    $id_tugasAkhir = $_POST["id_tugasAkhir"];
 
     try {
-        $sql_update_tugas = "UPDATE tb_submittugas SET id_status = 2 WHERE username = ? AND id_modul=?";
+        $sql_update_tugas = "UPDATE tb_submittugas SET id_status = 2 WHERE username = ? AND id_modul=? AND id_tugasAkhir=?";
         $stmt_update_tugas = $koneksi->prepare($sql_update_tugas);
-        $stmt_update_tugas->execute([$username, $id_modul]);
+        $stmt_update_tugas->execute([$username, $id_modul, $id_tugasAkhir]);
 
         if ($stmt_update_tugas->rowCount() > 0) {
             $response = [
@@ -1329,11 +1330,12 @@ if ($_GET['aksi'] == "acctugas") {
 if ($_GET['aksi'] == "tlktugas") {
     $username = $_POST["username"];
     $id_modul = $_POST["id_modul"];
+    $id_tugasAkhir = $_POST["id_tugasAkhir"];
 
     try {
-        $sql_update_tugas = "UPDATE tb_submittugas SET id_status = 3 WHERE username = ? AND id_modul=?";
+        $sql_update_tugas = "UPDATE tb_submittugas SET id_status = 3 WHERE username = ? AND id_modul=? AND id_tugasAkhir=?";
         $stmt_update_tugas = $koneksi->prepare($sql_update_tugas);
-        $stmt_update_tugas->execute([$username, $id_modul]);
+        $stmt_update_tugas->execute([$username, $id_modul, $id_tugasAkhir]);
 
         if ($stmt_update_tugas->rowCount() > 0) {
             $response = [
