@@ -453,7 +453,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Postingan</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Modul</p>
                     <h5 class="font-weight-bolder mb-0">
                       232
                       <span class="text-success text-sm font-weight-bolder">+54</span>
@@ -475,7 +475,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Akun terdaftar</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Event</p>
                     <h5 class="font-weight-bolder mb-0">
                       <!-- 2,300
                       <span class="text-success text-sm font-weight-bolder">+3%</span> -->
@@ -512,7 +512,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Event Terdaftar</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Tantangan</p>
                     <h5 class="font-weight-bolder mb-0">
                       <?php
                       require_once('../crudphp/koneksi.php');
@@ -547,7 +547,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Modul Terjual</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Modul terjual</p>
                     <h5 class="font-weight-bolder mb-0">
                       17
                       <span class="text-success text-sm font-weight-bolder">+5</span>
@@ -602,8 +602,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <span class="mask bg-gradient-dark"></span>
               <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
                 <h5 id="greeting" class="text-white font-weight-bolder mb-4 pt-2"> username</h5>
-                <p class="text-white">Kendalikan Coding Camp dari sini, upload modul, pantau postingan, buat kuis, dan
-                  pantau postingan.</p>
+                <p class="text-white">Kendalikan Coding Camp dari sini, upload modul dan buat tantangan.</p>
                 <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
                   Baca lebih lanjut
                   <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
@@ -790,7 +789,7 @@ $userInfo = $_SESSION['USER_INFO'];
                     <i class="ni ni-html5 text-danger text-gradient"></i>
                   </span>
                   <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">New order #1832412</h6>
+                    <h6 class="text-dark text-sm font-weight-bold mb-0">Billy, Membeli modul Kelas JavaScript Dasar</h6>
                     <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 11 PM</p>
                   </div>
                 </div>
@@ -799,7 +798,7 @@ $userInfo = $_SESSION['USER_INFO'];
                     <i class="ni ni-cart text-info text-gradient"></i>
                   </span>
                   <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">Server payments for April</h6>
+                    <h6 class="text-dark text-sm font-weight-bold mb-0">Alfandy, Membeli modul Kelas Kotlin </h6>
                     <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
                   </div>
                 </div>
