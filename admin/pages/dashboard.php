@@ -876,7 +876,7 @@ $query = "SELECT
           INNER JOIN 
             tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
           ORDER BY tb_transaksi.tanggal_transaksi DESC
-          LIMIT 5";
+          LIMIT 4";
 
 $result = $koneksi->prepare($query);
 $result->execute();
