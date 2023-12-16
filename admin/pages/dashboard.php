@@ -455,8 +455,23 @@ $userInfo = $_SESSION['USER_INFO'];
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Modul</p>
                     <h5 class="font-weight-bolder mb-0">
-                      232
-                      <span class="text-success text-sm font-weight-bolder">+54</span>
+                      <!-- 2,300
+                      <span class="text-success text-sm font-weight-bolder">+3%</span> -->
+                      <?php
+                      require_once('../crudphp/koneksi.php');
+
+                      // Menghitung total data
+                      $sql = "SELECT COUNT(*) FROM tb_modul";
+                      $row = $koneksi->prepare($sql);
+                      $row->execute();
+                      $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                      
+                      // Menampilkan total akun terdaftar
+                      echo '<div class="numbers">';
+                      echo '<h5 class="font-weight-bolder mb-0">' . $total_data . '</h5>';
+                      echo '</div>';
+                      ?>
+
                     </h5>
                   </div>
                 </div>
@@ -483,7 +498,7 @@ $userInfo = $_SESSION['USER_INFO'];
                       require_once('../crudphp/koneksi.php');
 
                       // Menghitung total data
-                      $sql = "SELECT COUNT(*) FROM tb_admin";
+                      $sql = "SELECT COUNT(*) FROM tb_event";
                       $row = $koneksi->prepare($sql);
                       $row->execute();
                       $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
@@ -518,7 +533,7 @@ $userInfo = $_SESSION['USER_INFO'];
                       require_once('../crudphp/koneksi.php');
 
                       // Menghitung total data
-                      $sql = "SELECT COUNT(*) FROM tb_event";
+                      $sql = "SELECT COUNT(*) FROM tb_challenge";
                       $row = $koneksi->prepare($sql);
                       $row->execute();
                       $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
@@ -549,8 +564,20 @@ $userInfo = $_SESSION['USER_INFO'];
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Modul terjual</p>
                     <h5 class="font-weight-bolder mb-0">
-                      17
-                      <span class="text-success text-sm font-weight-bolder">+5</span>
+                      <?php
+                      require_once('../crudphp/koneksi.php');
+
+                      // Menghitung total data
+                      $sql = "SELECT COUNT(*) FROM tb_transaksi WHERE id_status= 3";
+                      $row = $koneksi->prepare($sql);
+                      $row->execute();
+                      $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                      
+                      // Menampilkan total event terdaftar
+                      echo '<div class="numbers">';
+                      echo '<h5 class="font-weight-bolder mb-0">' . $total_data . '</h5>';
+                      echo '</div>';
+                      ?>
                     </h5>
                   </div>
                 </div>
@@ -621,12 +648,12 @@ $userInfo = $_SESSION['USER_INFO'];
                   <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
                 </div>
               </div>
-              <h6 class="ms-2 mt-4 mb-0"> Active Users </h6>
-              <p class="text-sm ms-2"> (<span class="font-weight-bolder">+23%</span>) than last week </p>
+              <h6 class="ms-2 mt-4 mb-0"> Data Transaksi </h6>
+              <p class="text-sm ms-2"> (<span class="font-weight-bolder">+23%</span>) Minggu ini </p>
               <div class="container border-radius-lg">
                 <div class="row">
                   <div class="col-3 py-3 ps-0">
-                    <div class="d-flex mb-2">
+                    <div class="d-flex ">
                       <div
                         class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="10px" height="10px" viewBox="0 0 40 44" version="1.1"
@@ -648,9 +675,24 @@ $userInfo = $_SESSION['USER_INFO'];
                           </g>
                         </svg>
                       </div>
-                      <p class="text-xs mt-1 mb-0 font-weight-bold">Users</p>
+                      <p class="text-xs mb-0 font-weight-bold">Belum<br>dibayar</p>
                     </div>
-                    <h4 class="font-weight-bolder">36K</h4>
+                      <h4 class="font-weight-bolder ">
+                      <?php
+                      require_once('../crudphp/koneksi.php');
+
+                      // Menghitung total data
+                      $sql = "SELECT COUNT(*) FROM tb_transaksi WHERE id_status= 1";
+                      $row = $koneksi->prepare($sql);
+                      $row->execute();
+                      $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                      
+                      // Menampilkan total event terdaftar
+                      echo '<div class="numbers">';
+                      echo '<h5 class="font-weight-bolder">' . $total_data . '</h5>';
+                      echo '</div>';
+                      ?>
+                    </h4>
                     <div class="progress w-75">
                       <div class="progress-bar bg-dark w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                         aria-valuemax="100"></div>
@@ -685,11 +727,26 @@ $userInfo = $_SESSION['USER_INFO'];
                           </g>
                         </svg>
                       </div>
-                      <p class="text-xs mt-1 mb-0 font-weight-bold">Clicks</p>
+                      <p class="text-xs mt-1 mb-0 font-weight-bold">Pending</p>
                     </div>
-                    <h4 class="font-weight-bolder">2m</h4>
+                    <h4 class="font-weight-bolder ">
+                      <?php
+                      require_once('../crudphp/koneksi.php');
+
+                      // Menghitung total data
+                      $sql = "SELECT COUNT(*) FROM tb_transaksi WHERE id_status= 2";
+                      $row = $koneksi->prepare($sql);
+                      $row->execute();
+                      $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                      
+                      // Menampilkan total event terdaftar
+                      echo '<div class="numbers">';
+                      echo '<h5 class="font-weight-bolder">' . $total_data . '</h5>';
+                      echo '</div>';
+                      ?>
+                    </h4>
                     <div class="progress w-75">
-                      <div class="progress-bar bg-dark w-90" role="progressbar" aria-valuenow="90" aria-valuemin="0"
+                      <div class="progress-bar bg-dark w-20" role="progressbar" aria-valuenow="90" aria-valuemin="0"
                         aria-valuemax="100"></div>
                     </div>
                   </div>
@@ -716,9 +773,24 @@ $userInfo = $_SESSION['USER_INFO'];
                           </g>
                         </svg>
                       </div>
-                      <p class="text-xs mt-1 mb-0 font-weight-bold">Sales</p>
+                      <p class="text-xs mt-1 mb-0 font-weight-bold">Selesai</p>
                     </div>
-                    <h4 class="font-weight-bolder">435$</h4>
+                    <h4 class="font-weight-bolder ">
+                      <?php
+                      require_once('../crudphp/koneksi.php');
+
+                      // Menghitung total data
+                      $sql = "SELECT COUNT(*) FROM tb_transaksi WHERE id_status= 3";
+                      $row = $koneksi->prepare($sql);
+                      $row->execute();
+                      $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                      
+                      // Menampilkan total event terdaftar
+                      echo '<div class="numbers">';
+                      echo '<h5 class="font-weight-bolder">' . $total_data . '</h5>';
+                      echo '</div>';
+                      ?>
+                    </h4>
                     <div class="progress w-75">
                       <div class="progress-bar bg-dark w-30" role="progressbar" aria-valuenow="30" aria-valuemin="0"
                         aria-valuemax="100"></div>
@@ -750,9 +822,24 @@ $userInfo = $_SESSION['USER_INFO'];
                           </g>
                         </svg>
                       </div>
-                      <p class="text-xs mt-1 mb-0 font-weight-bold">Items</p>
+                      <p class="text-xs mt-1 mb-0 font-weight-bold">Ditolak</p>
                     </div>
-                    <h4 class="font-weight-bolder">43</h4>
+                    <h4 class="font-weight-bolder ">
+                      <?php
+                      require_once('../crudphp/koneksi.php');
+
+                      // Menghitung total data
+                      $sql = "SELECT COUNT(*) FROM tb_transaksi WHERE id_status= 4";
+                      $row = $koneksi->prepare($sql);
+                      $row->execute();
+                      $total_data = $row->fetchColumn(); // Mengambil hasil perhitungan
+                      
+                      // Menampilkan total event terdaftar
+                      echo '<div class="numbers">';
+                      echo '<h5 class="font-weight-bolder">' . $total_data . '</h5>';
+                      echo '</div>';
+                      ?>
+                    </h4>
                     <div class="progress w-75">
                       <div class="progress-bar bg-dark w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0"
                         aria-valuemax="100"></div>
@@ -772,56 +859,49 @@ $userInfo = $_SESSION['USER_INFO'];
                 <span class="font-weight-bold">24%</span> this month
               </p>
             </div>
-            <div class="card-body p-3">
-              <div class="timeline timeline-one-side">
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-bell-55 text-success text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-success text-sm font-weight-bold mb-0">Reyhan, Membeli modul Kelas JavaScript Dasar
-                    </h6>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">29 Oktober 7:20 PM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-html5 text-danger text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">Billy, Membeli modul Kelas JavaScript Dasar</h6>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 11 PM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-cart text-info text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">Alfandy, Membeli modul Kelas Kotlin </h6>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-credit-card text-warning text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">New card added for order #4395133</h6>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">20 DEC 2:20 AM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-key-25 text-primary text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">Unlock packages for development</h6>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
-                  </div>
-                </div>
-              </div>
+            <?php
+// Lakukan koneksi ke database
+require_once('../crudphp/koneksi.php');
+
+// Lakukan kueri SQL
+$query = "SELECT 
+            tb_transaksi.username AS username,
+            tb_user.nama_lengkap AS nama,
+            tb_modul.judul AS judul_modul,
+            tb_transaksi.tanggal_transaksi
+          FROM 
+            tb_transaksi
+          INNER JOIN 
+            tb_user ON tb_transaksi.username = tb_user.username
+          INNER JOIN 
+            tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
+          ORDER BY tb_transaksi.tanggal_transaksi DESC
+          LIMIT 5";
+
+$result = $koneksi->prepare($query);
+$result->execute();
+$rows = $result->fetchAll(PDO::FETCH_ASSOC);
+
+echo '<div class="card-body p-3">
+        <div class="timeline timeline-one-side">';
+
+foreach ($rows as $row) {
+    echo '<div class="timeline-block mb-3">
+            <span class="timeline-step">
+              <i class="ni ni-cart text-info text-gradient"></i>
+            </span>
+            <div class="timeline-content">
+              <h6 class="text-dark text-sm font-weight-bold mb-0">' . $row['username'] . ', Membeli modul ' . $row['judul_modul'] . '</h6>
+              <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">' . date("d M Y g:i A", strtotime($row['tanggal_transaksi'])) . '</p>
             </div>
+          </div>';
+}
+
+echo '</div></div>';
+
+$koneksi = null;
+?>
+
           </div>
         </div>
 
@@ -837,7 +917,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <h6>Grafik Penjualan</h6>
               <p class="text-sm">
                 <i class="fa fa-arrow-up text-success"></i>
-                <span class="font-weight-bold">+413</span> di 2023
+                <span class="font-weight-bold">+413</span> di Tahun 2023
               </p>
             </div>
             <div class="card-body p-3">
@@ -1005,9 +1085,9 @@ $userInfo = $_SESSION['USER_INFO'];
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"],
         datasets: [{
-          label: "Sales",
+          label: "Terjual",
           tension: 0.4,
           borderWidth: 0,
           borderRadius: 4,
@@ -1086,30 +1166,52 @@ $userInfo = $_SESSION['USER_INFO'];
       data: {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-          label: "Mobile apps",
+          label: "Website Development",
           tension: 0.4,
           borderWidth: 0,
           pointRadius: 0,
-          borderColor: "#cb0c9f",
+          borderColor: "#ff8802",
           borderWidth: 3,
           backgroundColor: gradientStroke1,
           fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500, 300, 100, 200],
+          data: [450, 300, 340, 220, 500, 250, 400, 230, 500, 300, 100, 200],
           maxBarThickness: 6
 
         },
         {
-          label: "Websites",
+          label: "Mobile Development",
           tension: 0.4,
           borderWidth: 0,
           pointRadius: 0,
-          borderColor: "#3A416F",
+          borderColor: "#027fff",
           borderWidth: 3,
           backgroundColor: gradientStroke2,
           fill: true,
           data: [30, 90, 40, 140, 290, 290, 340, 230, 400, 200, 400, 100],
           maxBarThickness: 6
-        },
+        }, {
+          label: "Database",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5A5224",
+          borderWidth: 3,
+          backgroundColor: gradientStroke2,
+          fill: true,
+          data: [180, 30, 10, 14, 220, 210, 240, 130, 300, 400, 500, 60],
+          maxBarThickness: 6
+        }, {
+          label: "Game Development",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#1ae9ff",
+          borderWidth: 3,
+          backgroundColor: gradientStroke2,
+          fill: true,
+          data: [250, 140, 80, 15, 40, 20, 30, 45, 30, 50, 70, 60],
+          maxBarThickness: 6
+        }
         ],
       },
       options: {

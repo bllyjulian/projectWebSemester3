@@ -502,7 +502,7 @@ $userInfo = $_SESSION['USER_INFO'];
                             <div class="card-body text-left">
                               <div class="d-flex align-items-top justify-content-between">
                                 <div class="p-md-0">
-                                  <h5><?= $data_submittugas['id_tugasAkhir']; ?></h5>
+                                  <h5 class="d-none"><?= $data_submittugas['id_tugasAkhir']; ?></h5>
                                   <h5 class="font-weight-bolder mb-0">
                                     <?= $data_submittugas['username']; ?>
 
@@ -696,7 +696,7 @@ $userInfo = $_SESSION['USER_INFO'];
         title: "Apakah Anda yakin ingin konfirmasi?",
         icon: "warning",
         html:
-          '<input type="text" id="id_tugas" class="swal2-input" value="' + id_tugasAkhir + '"/>' +
+          '<input type="hidden" id="id_tugas" class="swal2-input" value="' + id_tugasAkhir + '"/>' +
           '<input type="hidden" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
           '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>' ,
         showCancelButton: true,
@@ -742,9 +742,9 @@ $userInfo = $_SESSION['USER_INFO'];
     title: "Apakah Anda yakin ingin menolak?",
     icon: "warning",
     html:
-      '<input type="text" id="id_tugas" class="swal2-input" value="' + id_tugasAkhir + '"/>' +
-      '<input type="text" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
-      '<input type="text" id="username" class="swal2-input" value="' + username + '"/>',
+      '<input type="hidden" id="id_tugas" class="swal2-input" value="' + id_tugasAkhir + '"/>' +
+      '<input type="hidden" id="id_modul" class="swal2-input" value="' + id_modul + '"/>' +
+      '<input type="hidden" id="username" class="swal2-input" value="' + username + '"/>',
     showCancelButton: true,
     confirmButtonText: "Simpan",
     showLoaderOnConfirm: true,
