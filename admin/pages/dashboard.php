@@ -856,7 +856,7 @@ $userInfo = $_SESSION['USER_INFO'];
               <h6>History Pemesanan</h6>
               <p class="text-sm">
                 <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-                <span class="font-weight-bold">24%</span> this month
+                <span class="font-weight-bold">19%</span> di bulan ini
               </p>
             </div>
             <?php
@@ -876,7 +876,7 @@ $query = "SELECT
           INNER JOIN 
             tb_modul ON tb_transaksi.id_modul = tb_modul.id_modul
           ORDER BY tb_transaksi.tanggal_transaksi DESC
-          LIMIT 4";
+          LIMIT 5";
 
 $result = $koneksi->prepare($query);
 $result->execute();
@@ -891,7 +891,7 @@ foreach ($rows as $row) {
               <i class="ni ni-cart text-info text-gradient"></i>
             </span>
             <div class="timeline-content">
-              <h6 class="text-dark text-sm font-weight-bold mb-0">' . $row['username'] . ', Membeli modul ' . $row['judul_modul'] . '</h6>
+              <h6 class="text-dark text-sm font-weight-bold mb-0"><span class="text-primary">' . $row['username'] . '</span>, Membeli modul <span class="text-info">' . $row['judul_modul'] . '</span></h6>
               <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">' . date("d M Y g:i A", strtotime($row['tanggal_transaksi'])) . '</p>
             </div>
           </div>';
@@ -902,6 +902,7 @@ echo '</div></div>';
 $koneksi = null;
 ?>
 
+
           </div>
         </div>
 
@@ -910,7 +911,7 @@ $koneksi = null;
 
 
       </div>
-      <div class="row my-4">
+      <div class="row my-4 text">
         <div class="">
           <div class="card z-index-2">
             <div class="card-header pb-0">
