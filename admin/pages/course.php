@@ -529,7 +529,7 @@ $userInfo = $_SESSION['USER_INFO'];
                         <p id="keterangan" class="mb-4 text-sm">
                           <?php
                           $keterangan = $r->keterangan;
-                          echo strlen($keterangan) > 50 ? substr($keterangan, 0, 50) . '...' : $keterangan;
+                          echo strlen($keterangan) > 60 ? substr($keterangan, 0, 60) . '...' : $keterangan;
                           ?>
                         </p>
 
