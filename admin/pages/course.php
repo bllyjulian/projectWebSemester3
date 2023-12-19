@@ -517,7 +517,7 @@ $userInfo = $_SESSION['USER_INFO'];
                         <h5>
                           <?php
                           $judul = $r->judul;
-                          echo strlen($judul) > 35 ? substr($judul, 0, 45) . '...' : $judul;
+                          echo strlen($judul) > 50 ? substr($judul, 0, 50) . '...' : $judul;
                           ?>
                         </h5>
 
