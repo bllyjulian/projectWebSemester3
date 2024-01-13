@@ -127,12 +127,12 @@
               <form method="post" action="../admin/crudphp/proses.php?aksi=login" id="formlogin" class='mx-3 my-3'>
                 <div class="mb-3">
                   <label class="text-lg font-weight-bold" for="user">Username</label>
-                  <input type="text" class="mt-2 form-control" id="user" name="user" autocomplete="off">
+                  <input type="text" class="mt-2 form-control" id="user" name="user" autocomplete="off" placeholder="bllyy">
                 </div>
                 <div class="form-group">
                   <label class="text-lg font-weight-bold" for="pass">Password</label>
                   <div class="input-group1">
-                    <input type="password" class="form-control" name="pass" id="password" placeholder=""
+                    <input type="password" class="form-control" name="pass" id="password" placeholder="12345678"
                       autocomplete="off">
                     <span class="bb" style="cursor: pointer;">
                       <i class="fas fa-eye" id="togglePassword"></i>
